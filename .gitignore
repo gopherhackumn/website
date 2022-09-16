@@ -4,5 +4,10 @@
 !.keep
 
 /public/
+/resources
+
+.hugo_build.lock
+.direnv
+result*
 
 *.bak

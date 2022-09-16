@@ -1,4 +1,4 @@
-name: "Check site validity"
+name: "Deploy website"
 on:
   push
 jobs:
@@ -8,7 +8,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: nixbuild/nix-quick-install-action@v5
         with:
-          nix_version: 2.4pre20201205_a5d85d0
+          nix_version: 2.9.2
           nix_conf: experimental-features = nix-command flakes
       - name: nix build
-        run: nix build -L .#site
+        run: nix build -o result-public -L
+      - name: deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: result-public

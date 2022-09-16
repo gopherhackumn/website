@@ -4,21 +4,11 @@ compile_sass = true
 generate_feed = true
 feed_filename = "rss.xml"
 highlight_code = true
-title = "ACM UMN"
+title = "GopherHack"
 
 # Enable if you want to check, but this is slow and dip doesn't send us back logs afaik.
 # check_external_links = true
 
 taxonomies = [
     {name = "tags", rss = true}
-]
-
-[extra]
-nav_links = [
-	{ url = "/room", text = "Room" },
-    { url = "/events", text = "Events" },
-    { url = "/contact", text = "Contact" },
-    { url = "/newsletters", text = "Newsletters" },
-    { url = "/resources", text = "Resources" },
-    { url = "/involvement", text = "Get	Involved" },
 ]

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+    </title>
+
+    {{ $style := resources.Get "sass/main.scss" | resources.ToCSS }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+    <link rel="stylesheet" href="/font-awesome.min.css" />
+    <link rel="icon" href="/acm-logo.png" />
+    {{ block "header" . }} {{ end }}
+</head>
+
+<body>
+    <header>
+        {{ partial "navbar" . }}
+    </header>
+    <div style="min-height: 50vh;">
+        {{ block "content" . }}{{ end }}
+    </div>
+    <footer class="site-footer site-footer--sticky">
+        {{ partial "footer" . }}
+    </footer>
+</body>
+
+</html>

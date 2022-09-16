@@ -1,0 +1,5 @@
+nav_links:
+- { url: "/events", text: "Events" }
+- { url: "/pages/officers", text: "Officers" }
+- { url: "/resources", text: "Resources" }
+- { url: "/contact", text: "Contact" }

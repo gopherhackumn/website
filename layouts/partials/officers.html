@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>x500</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range .Site.Data.officers }}
+    <tr>
+      <td>{{ .name }}</td>
+      <td>{{ .title }}</td>
+      <td>{{ .x500 }}</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

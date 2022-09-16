@@ -6,16 +6,17 @@
 
   outputs = { self, nixpkgs, utils }:
     utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        devShell = pkgs.mkShell { buildInputs = with pkgs; [ zola ]; };
+      let pkgs = import nixpkgs { inherit system; };
+      in rec {
+        devShell = pkgs.mkShell { inputsFrom = with packages; [ site ]; };
+        defaultPackage = packages.site;
         packages.site = pkgs.stdenv.mkDerivation {
           name = "site";
           src = pkgs.nix-gitignore.gitignoreSource [ ] ./.;
 
-          buildInputs = with pkgs; [ zola ];
+          buildInputs = with pkgs; [ zola hugo ];
           phases = [ "unpackPhase" "buildPhase" ];
-          buildPhase = "zola build -o $out";
+          buildPhase = "hugo -d $out";
         };
       });
 }

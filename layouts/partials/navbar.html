@@ -1,0 +1,11 @@
+<div class="container">
+    <a href="/" class="title nocolorlink">{{ .Site.Title }}</a>
+
+    <div id="nav">
+        {{ range $.Site.Data.nav_links.nav_links }}
+            <a href="{{ .url }}" class="link">{{ .text }}</a>
+        {{ end }}
+    </div>
+</div>
+
+<br/>
