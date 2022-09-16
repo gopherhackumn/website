@@ -1,5 +1,5 @@
-GopherHac Website
-=================
+GopherHack Website
+==================
 
 The main website for GopherHack @ UMN. Cribbed directly from [ACM]
 
