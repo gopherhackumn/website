@@ -309,11 +309,11 @@ h4,
 h5,
 h6,
 b {
-  color: #8201ac;
+  color: #62019c;
   font-weight: 400; }
 
 *::selection {
-  background-color: #8201ac;
+  background-color: #62019c;
   color: white; }
 
 a {
@@ -322,11 +322,11 @@ a {
   a:not(.nocolorlink) {
     position: relative;
     text-decoration: none;
-    color: #8201ac; }
+    color: #62019c; }
     a:not(.nocolorlink):before {
       content: "";
       position: absolute;
-      background-color: #8201ac;
+      background-color: #62019c;
       width: 100%;
       height: 1px;
       bottom: 0;
@@ -372,7 +372,7 @@ abbr[title] {
 header {
   padding-bottom: 25px;
   padding-top: 30px;
-  border-top: 10px solid #8201ac;
+  border-top: 10px solid #62019c;
   list-style-type: none;
   font-size: 1.3em; }
   @media only screen and (max-width: 33.75em) {
@@ -380,7 +380,7 @@ header {
       padding-bottom: 0; } }
   header a.title {
     margin-right: 30px;
-    color: #8201ac;
+    color: #62019c;
     font-size: 1.2em;
     font-weight: 300; }
     @media only screen and (max-width: 33.75em) {

@@ -2892,15 +2892,6 @@ Ok!</description>
     
     <item>
       <title></title>
-      <link>/pages/officers/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/pages/officers/</guid>
-      <description>Officers    Name Title x500     Jaden Rodriguez President rodr0571   Youssef Zahar VP zahar022   Max Jytyla VP of Events jytyl004   Michael Zhang Treasurer zhan4854    </description>
-    </item>
-    
-    <item>
-      <title></title>
       <link>/sb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -2910,14 +2901,11 @@ Ok!</description>
     
     <item>
       <title>Contact</title>
-      <link>/contact/</link>
+      <link>/pages/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contact/</guid>
-      <description>Social Twitter - Github - Facebook - Keybase - Suggestion Box
-Join our Discord, our IRC, and our Mailing List!
-Contact Club officer contact/mailing list: acm@umn.edu. (This is the preferred contact for club business.)
-Officers    Position Person UMN Email     President Kelton OBrien obri0707@umn.edu   Vice President Andrew Pan pan00111@umn.edu   Systems Admin Shaun Loo loo00013@umn.edu   Treasurer Minnerva Zou zou00086@umn.edu   Treasurer Autumn Kenyon kenyo133@umn.</description>
+      <guid>/pages/contact/</guid>
+      <description>Social  Discord  Officers    Name Title x500     Jaden Rodriguez President rodr0571   Youssef Zahar VP zahar022   Max Jytyla VP of Events jytyl004   Michael Zhang Treasurer zhan4854    </description>
     </item>
     
     <item>
