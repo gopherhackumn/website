@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Newsletters on GopherHack</title>
+    <link>/newsletters/</link>
+    <description>Recent content in Newsletters on GopherHack</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 28 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/newsletters/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2020-09-28 Newsletter</title>
+      <link>/newsletters/newsletter-2020-09-28/</link>
+      <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2020-09-28/</guid>
+      <description>Upcoming event announcements
+Hello all,
+Here are some of the events we have coming up in the near future:
+UNIX Classes
+Over the next few weeks we will be teaching four classes on the UNIX command line, covering a range of topics from the basics you&amp;rsquo;ll need for your CSCI classes to some more advanced material in later meetings. The first class will be held on October 6th at 6pm and will cover shell basics.</description>
+    </item>
+    
+    <item>
+      <title>2020-09-15 Newsletter</title>
+      <link>/newsletters/newsletter-2020-09-15/</link>
+      <pubDate>Tue, 15 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2020-09-15/</guid>
+      <description>Updates on social distancing, fall events, and more
+Hello all,
+Now that the fall semester is officially underway, the ACM officers have some announcements we&amp;rsquo;d like to share with our members:
+Reduced Room Access
+In order to attempt to combat the spread of COVID-19, regular member access to our room in Keller Hall has been suspended for the foreseeable future. If you absolutely need to enter the room for some reason, you can email our systems administrator Hemant at gouni008@umn.</description>
+    </item>
+    
+    <item>
+      <title>Spock Birthday</title>
+      <link>/newsletters/spock-birthday/</link>
+      <pubDate>Mon, 06 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/spock-birthday/</guid>
+      <description>Spock Birthday
+Spock Birthday</description>
+    </item>
+    
+    <item>
+      <title>2019-10-26 Newsletter</title>
+      <link>/newsletters/newsletter-2019-10-26/</link>
+      <pubDate>Sat, 26 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-10-26/</guid>
+      <description>MinneHack! You may have already heard, but MinneHack registration in open! MinneHack is a 24 hour hackathon right here at the University of Minnesota hosted by yours truly, ACM UMN. You can register for MinneHack here: https://minnehack.io
+Upcoming Events Software Design Competition Final Presentations On Monday, the Software Design Competition teams will be presenting their final projects. Come see their awesome applications and have a slice of pizza while you are at it!</description>
+    </item>
+    
+    <item>
+      <title>2019-10-14 Newsletter</title>
+      <link>/newsletters/newsletter-2019-10-14/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-10-14/</guid>
+      <description>Software Design Competition Hello current and future members of the ACM Hivemind, Just wanted to let you all know that our annual Software Design Competition is coming up! The prompt will be announced this coming Monday, October 14th, at 6:30pm in Keller 3-230. You and your team will have a week to design your software, then the following Monday, October 21st at 6:30pm your design will be judged. After this you will have a week to implement your design, and on Monday October 28th your implementation will be judged and we will award prizes to the group with the highest combined score.</description>
+    </item>
+    
+    <item>
+      <title>2019-10-06 Newsletter</title>
+      <link>/newsletters/newsletter-2019-10-06/</link>
+      <pubDate>Sun, 06 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-10-06/</guid>
+      <description>MinneHack Registration is Open! In case you didn&amp;rsquo;t hear before&amp;hellip; MinneHack registration is now open! You can check it out and register at https://minnehack.io.
+Upcoming ACM Events Donuts with the CS&amp;amp;E Department Join ACM UMN and members of the CS&amp;amp;E department for donuts, coffee, and discussion! Mon Oct 7 at 9:00 AM.
+Target Site Visit Postponed Last time we sent out a form to select a date for the Target Site Visit.</description>
+    </item>
+    
+    <item>
+      <title>2019-09-29 Newsletter</title>
+      <link>/newsletters/newsletter-2019-09-29/</link>
+      <pubDate>Sun, 29 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-09-29/</guid>
+      <description>MinneHack Registration is Open!! We at ACM UMN are already hard at work getting ready for MinneHack 2020 and we are pleased to announce that registration for MinneHack 2020 is finally open! If you have never heard of MinneHack before, MinneHack is a 24 hour hackathon where you get together in teams of up to 4 people and hack together a solution to a provided prompt in less than a day.</description>
+    </item>
+    
+    <item>
+      <title>2019-09-22 Newsletter</title>
+      <link>/newsletters/newsletter-2019-09-22/</link>
+      <pubDate>Sun, 22 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-09-22/</guid>
+      <description>Interested In Helping out ACM? We are always looking for help running events and the organization. If you are interested in being an officer or just helping out, please fill out this form: https://z.umn.edu/ACMLeadership, or come talk to us in Keller 2-204.
+Upcoming Events UNIX Class 3: Pipes, Filters, Jobs, and Processes New to UNIX? Join ACM UMN to learn about the operating system used on many of the CSE Labs machines.</description>
+    </item>
+    
+    <item>
+      <title>2019-09-15 Newsletter</title>
+      <link>/newsletters/newsletter-2019-09-15/</link>
+      <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-09-15/</guid>
+      <description>Welcome (Back) to ACM UMN! Welcome to new members and welcome back to old members! We&amp;rsquo;ve got lots of great events planned for this year, including old favorites such as MinneHack and Software Design Competition, as well as a new event: Paper Reading Pals.
+Events This Week UNIX Class 2: Git and Github New to UNIX? Join ACM UMN to learn about the operating system used on many of the CSE Labs machines.</description>
+    </item>
+    
+    <item>
+      <title>2019-08-31 Newsletter</title>
+      <link>/newsletters/newsletter-2019-08-31/</link>
+      <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-08-31/</guid>
+      <description>Welcome to the U of M! Thanks for your interest in ACM!
+We are the Association for Computing Machinery, University of Minnesota, Twin Cities student chapter. We work to promote knowledge and greater interest in the science, design, development, language, management, and applications of modern computing on the Twin Cities campus and around the Twin Cities area.
+Membership: We have some great member benefits, including 24 hour room access, access to our servers and server room, free color printing, and full access to our discord server.</description>
+    </item>
+    
+    <item>
+      <title>2019-08-03 Newsletter</title>
+      <link>/newsletters/newsletter-2019-08-03/</link>
+      <pubDate>Sat, 03 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-08-03/</guid>
+      <description>Howdy ACMers, We hope you all are having great summers! We have just a few quick updates for you about goings on at ACM.
+ We just got done deciding the dates for most of the fall ACM events and just wanted to let you know whats going on during the first couple months of the school year.
+These events are also listed on our website. (https://acm.umn.edu/events/)
+Donuts with the Department - Sep 9, 9-10 AM in the IMA Reception Room (Keller 3rd Floor) The first event of the year where you can get to know CSE professors, grad TAs, other CSE faculty, and other students through a social event with free donuts and coffee.</description>
+    </item>
+    
+    <item>
+      <title>2019-04-04 Newsletter</title>
+      <link>/newsletters/newsletter-2019-04-04/</link>
+      <pubDate>Thu, 04 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-04-04/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Officer Elections:
+ ACM UMN will be holding officer elections for next year very soon. If you would like to run, you can sign up in our room in Keller Hall between now and 4/8. You must be a paid member of ACM UMN to vote in our officer elections.</description>
+    </item>
+    
+    <item>
+      <title>2019-03-12 Newsletter</title>
+      <link>/newsletters/newsletter-2019-03-12/</link>
+      <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-03-12/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Coffee &amp;amp; Donuts with the CS&amp;amp;E Department:
+ Come grab some refreshments and chat with professors, researchers, advisors, and other students in the computer science and engineering department. This event will be held in Keller Hall 3-176 on Thursday, March 14th.    Officer Elections:
+ ACM UMN will be holding officer elections for next year after spring break.</description>
+    </item>
+    
+    <item>
+      <title>2019-02-26 Newsletter</title>
+      <link>/newsletters/newsletter-2019-02-26/</link>
+      <pubDate>Tue, 26 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2019-02-26/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Coffee &amp;amp; Donuts with the CS&amp;amp;E Department:
+ Come grab some refreshments and chat with professors, researchers, advisors, and other students in the computer science and engineering department. This event will be held in Keller Hall 3-176 on Thursday, March 14th.    Officer Elections:
+ ACM UMN will be holding officer elections for next year after spring break.</description>
+    </item>
+    
+    <item>
+      <title>2018-12-03 Newsletter</title>
+      <link>/newsletters/newsletter-2018-12-03/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-12-03/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Study for Finals with ACM:
+ Come get in a last bit of studing before finals and eat some pizza with ACM. This event will be held in Keller Hall 2-260 from 7:00 PM to 9:30 PM on December 10th.    Lightning Talks:
+ Want to share your passion with others?</description>
+    </item>
+    
+    <item>
+      <title>2018-11-12 Newsletter</title>
+      <link>/newsletters/newsletter-2018-11-12/</link>
+      <pubDate>Mon, 12 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-11-12/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Epic Think Talk:
+ This Thursday at 6:00 PM, ACM UMN will be hosting a Think Talk sponsored by Epic in Tate Hall 101. Epic is a company that makes healthcare software for mid-size and large medical groups, hospitals and integrated healthcare organizations. Representatives from Epic will be talking about building security into enterprise applications.</description>
+    </item>
+    
+    <item>
+      <title>2018-11-07 Newsletter</title>
+      <link>/newsletters/newsletter-2018-11-07/</link>
+      <pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-11-07/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Fall LAN Party:
+ On November 16th from 6:00 PM to 2:00 AM, ACM, IEEE, and UMN Esports will be hosting a LAN party in the Keller atrium. There will be tournaments set up for popular video games such as Overwatch, Hearthstone, Rocket League, and more. Free pizza and soda will also be provided.</description>
+    </item>
+    
+    <item>
+      <title>2018-10-29 Newsletter</title>
+      <link>/newsletters/newsletter-2018-10-29/</link>
+      <pubDate>Mon, 29 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-10-29/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Software Design Competition:
+ The third and final meeting of our Software Design Competition will be held today, October 29nd in Bruininks Hall 131A at 6:00 PM. This meeting will be the implementation week judging. Following this week&amp;rsquo;s meeting, The judges will decide on the overall first and second place winners of the competition.</description>
+    </item>
+    
+    <item>
+      <title>2018-10-22 Newsletter</title>
+      <link>/newsletters/newsletter-2018-10-22/</link>
+      <pubDate>Mon, 22 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-10-22/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Software Design Competition:
+ The second meeting of our Software Design Competition, will be held today, October 22nd in Bruininks Hall 131A at 6:00 PM. This meeting will be the design week judging and implementation week kickoff. Following this week&amp;rsquo;s meeting, contestants will have one week to develop a prototype before the implementation week judging.</description>
+    </item>
+    
+    <item>
+      <title>2018-10-15 Newsletter</title>
+      <link>/newsletters/newsletter-2018-10-15/</link>
+      <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-10-15/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Software Design Competition:
+ The first meeting of our Software Design Competition, the design week kickoff, will be held today, October 15th in Bruininks Hall 131A at 6:00 PM. Participation is absolutely free. Sign up at this link or learn more at our website.    Boston Scientific Think Talk:</description>
+    </item>
+    
+    <item>
+      <title>2018-10-08 Newsletter</title>
+      <link>/newsletters/newsletter-2018-10-08/</link>
+      <pubDate>Mon, 08 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-10-08/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Coffee &amp;amp; Donunts with the CS&amp;amp;E Department:
+ Come grab some refreshments and meet professors, researchers, advisors, and other students in the computer science and engineering department. This event will be held in the main floor of Keller Hall, above the atrium tomorrow on Tuesday, October 9th at 11 am.</description>
+    </item>
+    
+    <item>
+      <title>2018-10-01 Newsletter</title>
+      <link>/newsletters/newsletter-2018-10-01/</link>
+      <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-10-01/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  UNIX Classes:
+ ACM UMN is teaching UNIX classes on Fridays in Mechanical Engineering room 108 from 12:00 to 1:00. This week we are teaching our fourth and final UNIX Class on pipes and filters. If you&amp;rsquo;ve never really used UNIX or the command line before, this is a great primer.</description>
+    </item>
+    
+    <item>
+      <title>2018-09-24 Newsletter</title>
+      <link>/newsletters/newsletter-2018-09-24/</link>
+      <pubDate>Mon, 24 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-09-24/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks:
+  Coffee &amp;amp; Donunts with the CS&amp;amp;E Department:
+ Come grab some refreshments and meet professors, researchers, advisors, and other students in the computer science and engineering department. This event will be held in the main floor of Keller Hall, above the atrium on Tuesday, September 25th.    UNIX Classes:</description>
+    </item>
+    
+    <item>
+      <title>2018-09-17 Newsletter</title>
+      <link>/newsletters/newsletter-2018-09-17/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-09-17/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks and months:
+  Polaris Think Talk:
+ On September 20th, ACM UMN will be hosting a Think Talk with Polaris from 6:00 pm to 7:30 pm in Bruininks 220. A representative from Polaris will be talking about Machine Learning and App Development. To learn more about Polaris, stop by the Think Talk and talk to the Polaris representative.</description>
+    </item>
+    
+    <item>
+      <title>2018-09-10 Newsletter</title>
+      <link>/newsletters/newsletter-2018-09-10/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-09-10/</guid>
+      <description>Hello ACM UMN members,
+Here are some of the events we have coming up in the next few weeks and months:
+  We will be holding a resume and interview prep event on September 12th in Keller Hall 3-210 from 6:00 to 8:00 pm. Come by to find out what hiring reps are looking for and get tips to improve your resume. Representatives from SPS Commerce will be there. Pizza will also be provided for event attendees.</description>
+    </item>
+    
+    <item>
+      <title>2018-09-03 Newsletter</title>
+      <link>/newsletters/newsletter-2018-09-03/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter-2018-09-03/</guid>
+      <description>Hello ACM UMN members,
+With the fall semester about to begin, we&amp;rsquo;d like to update you on some of the events we have scheduled in the next few months:
+  We will be holding a resume and interview prep event on September 12th in Keller Hall 3-210 from 6:00 to 8:00 pm. Come by to find out what hiring reps are looking for and get tips to improve your resume.</description>
+    </item>
+    
+    <item>
+      <title>2018-08-07 Newsletter</title>
+      <link>/newsletters/newsletter/</link>
+      <pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/newsletter/</guid>
+      <description>Hello ACM@UMN members,
+Hope you&amp;rsquo;re all enjoying your summers. Here are some of the events we have coming up this summer and early next semester:
+  Software Development Competition: The Software Development Competition, or SDC for short, is like a hackathon in miniature. Students are tasked with designing a piece of software to solve a problem. They then create a concept and prototype a solution to fit the requirements of the problem.</description>
+    </item>
+    
+    <item>
+      <title>New Website</title>
+      <link>/newsletters/new-website/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/newsletters/new-website/</guid>
+      <description>This is the first blog post!
+This post demonstrates how posts show up in our new website!
+Why does every sentence end with an exclamation mark!
+I guess I&amp;rsquo;m just really excited!
+Ok!</description>
+    </item>
+    
+  </channel>
+</rss>

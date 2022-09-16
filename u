@@ -1,0 +1,3 @@
+git clone https://github.com/acmumn/unix-f19-1.git
+cd unix-f19-1/directory
+bash
