@@ -1,7 +1,0 @@
-+++
-+++
-
-# Officers
-
-{{< partial "officers" >}}
-
