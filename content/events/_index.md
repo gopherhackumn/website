@@ -1,4 +1,10 @@
 +++
-template = "events.html"
-sort_by = "date"
+title = "Events"
+type = "page"
+
+[cascade]
+type = "page"
+layout = "single"
 +++
+
+{{< partial "event-listing" >}}

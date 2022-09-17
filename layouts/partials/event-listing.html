@@ -1,0 +1,24 @@
+{{ $events := .Site.GetPage "/events" }}
+
+<div class="timeline">
+  <div class="line">
+    <div class="timeline-path"></div>
+    <div class="timeline-item--offset"></div>
+
+    {{ range $index, $event := $events.Pages }}
+    <!-- Start on odd... -->
+    {{ $isEven := not (modBool $index 2) }}
+    <div
+      class="timeline-item timeline-item--{{ if $isEven }}even{{ else }}odd{{ end }}"
+    >
+      <div class="timeline-item-node"></div>
+      <a class="panel panel--bold nocolorlink" href="{{ $event.Permalink }}">
+        <h4>{{ $event.Title }}</h4>
+        <small class="event-subtitle"> {{ $event.Date }} </small>
+        <div>{{ $event.Summary }}</div>
+        <small class="panel-ctlm"><i>Click to learn more</i></small>
+      </a>
+    </div>
+    {{ end }}
+  </div>
+</div>
