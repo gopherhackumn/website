@@ -14,5 +14,15 @@
       <description>Social  Discord  Officers    Name Title x500     Jaden Rodriguez President rodr0571   Youssef Zahar VP zahar022   Max Jytyla VP of Events jytyl004   Michael Zhang Treasurer zhan4854    </description>
     </item>
     
+    <item>
+      <title>Resources</title>
+      <link>/pages/resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/pages/resources/</guid>
+      <description>ACM UMN Produced UNIX Class content for the F2021 semester will be posted here soon.
+Some books (including some books required for CSCI and MATH courses) may be checked out from our club library if you are a member. Generally we do not allow people to check books out for a whole semester, but you are free to reference them or check them out to use for an open-book test.</description>
+    </item>
+    
   </channel>
 </rss>
