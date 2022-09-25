@@ -11,13 +11,12 @@ footer_icons:
 - name: Email
   icon: fa-solid fa-envelope
   href: mailto@zhan4854@umn.edu
+
 - name: GitHub
   icon: fa-brands fa-github
   href: https://github.com/gopherhackumn
+
 - name: Discord
   icon: fa-brands fa-discord
   href: https://discord.gg/sSkTSbYm8J
-- name: RSS
-  icon: fa-solid fa-rss
-  href: rss.xml
 
