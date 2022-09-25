@@ -1,5 +1,7 @@
 {{ $events := .Site.GetPage "/events" }}
 
+{{ len $events.Pages }}
+
 <div class="timeline">
   <div class="line">
     <div class="timeline-path"></div>
@@ -14,7 +16,9 @@
       <div class="timeline-item-node"></div>
       <a class="panel panel--bold nocolorlink" href="{{ $event.Permalink }}">
         <h4>{{ $event.Title }}</h4>
-        <small class="event-subtitle"> {{ $event.Date }} </small>
+        <small class="event-subtitle">
+          {{ $event.Date.Format "January 2, 2006" }}
+        </small>
         <div>{{ $event.Summary }}</div>
         <small class="panel-ctlm"><i>Click to learn more</i></small>
       </a>
