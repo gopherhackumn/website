@@ -1,4 +1,0 @@
-nav_links:
-- { url: "/events", text: "Events" }
-- { url: "/pages/resources", text: "Resources" }
-- { url: "/pages/contact", text: "Contact" }

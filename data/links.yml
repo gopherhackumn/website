@@ -1,0 +1,21 @@
+nav:
+- { url: "/events", text: "Events" }
+- { url: "/pages/resources", text: "Resources" }
+- { url: "/pages/contact", text: "Contact" }
+
+footer_links:
+- url: javascript:void(0)
+  text: GopherLink
+
+footer_icons:
+- icon: fa-solid fa-rss
+  href: rss.xml
+
+- icon: fa-solid fa-envelope
+  href: mailto@zhan4854@umn.edu
+
+- icon: fa-brands fa-github
+  href: https://github.com/gopherhackumn
+
+- icon: fa-brands fa-discord
+  href: https://discord.gg/sSkTSbYm8J

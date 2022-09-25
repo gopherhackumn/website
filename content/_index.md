@@ -2,6 +2,4 @@
 type = "page"
 +++
 
-asdf
-
-This is the home page!
+Welcome to GopherHack!

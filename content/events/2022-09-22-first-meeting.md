@@ -7,4 +7,4 @@ Come join us for pizza and hacking!
 
 <!--more-->
 
-
+CTF Details: https://ctf.gopherhack.com/

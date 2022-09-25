@@ -10,7 +10,9 @@
 
     {{ $style := resources.Get "sass/main.scss" | resources.ToCSS }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
-    <link rel="stylesheet" href="/font-awesome.min.css" />
+
+    {{ $fontAwesome := resources.Get "sass/font-awesome-all.min.css" | resources.ToCSS }}
+    <link rel="stylesheet" href="{{ $fontAwesome.RelPermalink }}" />
     <link rel="icon" href="/acm-logo.png" />
     {{ block "header" . }} {{ end }}
 </head>

@@ -2,7 +2,7 @@
     <a href="/" class="title nocolorlink">{{ .Site.Title }}</a>
 
     <div id="nav">
-        {{ range $.Site.Data.nav_links.nav_links }}
+        {{ range $.Site.Data.links.nav }}
             <a href="{{ .url }}" class="link">{{ .text }}</a>
         {{ end }}
     </div>
