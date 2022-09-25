@@ -5,42 +5,14 @@
     <link>/events/</link>
     <description>Recent content in Events on GopherHack</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 14 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="/events/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="/events/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>UNIX Class 1: Shell Basics</title>
-      <link>/events/2022-09-14-unix-class-1/</link>
-      <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
+      <title>First meeting of the fall!</title>
+      <link>/events/2022-09-22-first-meeting/</link>
+      <pubDate>Thu, 22 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>/events/2022-09-14-unix-class-1/</guid>
-      <description>Learn practical UNIX skills!
-What are the UNIX Class Topics? These first UNIX Class will be on shell basics! If you&amp;rsquo;ve never really used UNIX or the command line before, this is a great primer. This skill is really important for your computer science classes! You will end up using the skills you learn here all throught the CSCI cirriculum.
-What do I need to know before I attend? No prior knowledge of UNIX is required :)</description>
-    </item>
-    
-    <item>
-      <title>About ACM 2</title>
-      <link>/events/2022-09-13-about-acm-2/</link>
-      <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/2022-09-13-about-acm-2/</guid>
-      <description>Come in and get to know us! With food! Pizza food! We don&amp;rsquo;t bite, we promise.
-What is this? Come and meet the ACM UMN! We&amp;rsquo;ll give a tour of the room, outline our event schedule, and answer any burning questions that might arise.
-Pizza will be provided.
-Where is this? The ACM room, Keller Hall 2-204.
-Organizer  Andrew/Kelton  </description>
-    </item>
-    
-    <item>
-      <title>About ACM 1</title>
-      <link>/events/2022-09-08-about-acm-1/</link>
-      <pubDate>Thu, 08 Sep 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/2022-09-08-about-acm-1/</guid>
-      <description>Come in and get to know us! With food! Pizza food! We don&amp;rsquo;t bite, we promise.
-What is this? Come and meet the ACM UMN! We&amp;rsquo;ll give a tour of the room, outline our event schedule, and answer any burning questions that might arise.
-Pizza will be provided.
-Where is this? The ACM room, Keller Hall 2-204.
-Organizer  Andrew/Kelton  </description>
+      <guid>/events/2022-09-22-first-meeting/</guid>
+      <description>&lt;p&gt;Come join us for pizza and hacking!&lt;/p&gt;</description>
     </item>
     
   </channel>

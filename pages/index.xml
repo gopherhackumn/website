@@ -20,8 +20,11 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/pages/resources/</guid>
-      <description>ACM UMN Produced UNIX Class content for the F2021 semester will be posted here soon.
-Some books (including some books required for CSCI and MATH courses) may be checked out from our club library if you are a member. Generally we do not allow people to check books out for a whole semester, but you are free to reference them or check them out to use for an open-book test.</description>
+      <description>CTFTime CTFTime is the authoritative source of all CTF competitions, including event listing, team ranking, and a centralized writeup directory.
+Activity-based Resources These are good places to start looking for challenges.
+General:
+ OverTheWire wargames: Several hosted services that help you practice offensive security CTFLearn: Hosts many CTF challenges PicoCTF: CMU-hosted high school CTF, challenges are up to stay so good practice material  Crypto:
+ CryptoPals: Hands-on introduction to cryptographic principles, including block / stream ciphers, randomness, Diffie-Hellman, RSA, and more  Binary-exploit / Reversing:</description>
     </item>
     
   </channel>
