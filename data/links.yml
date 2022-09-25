@@ -8,14 +8,16 @@ footer_links:
   text: GopherLink
 
 footer_icons:
-- icon: fa-solid fa-rss
+- name: Email
+  icon: fa-solid fa-envelope
+  href: mailto@zhan4854@umn.edu
+- name: GitHub
+  icon: fa-brands fa-github
+  href: https://github.com/gopherhackumn
+- name: Discord
+  icon: fa-brands fa-discord
+  href: https://discord.gg/sSkTSbYm8J
+- name: RSS
+  icon: fa-solid fa-rss
   href: rss.xml
 
-- icon: fa-solid fa-envelope
-  href: mailto@zhan4854@umn.edu
-
-- icon: fa-brands fa-github
-  href: https://github.com/gopherhackumn
-
-- icon: fa-brands fa-discord
-  href: https://discord.gg/sSkTSbYm8J

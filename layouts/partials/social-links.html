@@ -1,0 +1,7 @@
+<ul>
+  {{ range $.Site.Data.links.footer_icons }}
+  <li>
+    <a href="{{ .href }}">{{ .name }}</a>
+  </li>
+  {{ end }}
+</ul>

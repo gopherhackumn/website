@@ -6,8 +6,7 @@ template = "page.html"
 Social
 =============
 
-- [Discord](https://discord.com/invite/sSkTSbYm8J)
-
+{{< partial "social-links" >}}
 
 Officers
 ========

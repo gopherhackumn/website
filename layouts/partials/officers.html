@@ -9,7 +9,11 @@
   <tbody>
     {{ range .Site.Data.officers }}
     <tr>
-      <td>{{ .name }}</td>
+      <td>
+        {{ if .link }}<a href="{{ .link }}">{{ end }}
+          {{ .name }}
+        {{ if .link }}</a>{{ end }}
+      </td>
       <td>{{ .title }}</td>
       <td>{{ .x500 }}</td>
     </tr>
