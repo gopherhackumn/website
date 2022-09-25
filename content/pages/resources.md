@@ -63,3 +63,4 @@ Web:
 - [CyberChef](https://gchq.github.io/CyberChef): A swiss-army knife for data
     manipulation, including encoding / decoding, encryption / decryption,
     compression / decompression, and other ciphers and analyses
+- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): "A list of useful payloads and bypass for Web Application Security and Pentest/CTF"
