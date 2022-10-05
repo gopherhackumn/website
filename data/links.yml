@@ -5,7 +5,7 @@ nav:
 - { url: "/pages/contact", text: "Contact" }
 
 footer_links:
-- url: javascript:void(0)
+- url: https://twin-cities-umn.presence.io/organization/gopherhack-4489
   text: GopherLink
 
 footer_icons:
