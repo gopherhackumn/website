@@ -1,6 +1,7 @@
 .*
 !.github
 !.gitignore
+!.gitattributes
 !.keep
 
 /public/
