@@ -15,6 +15,17 @@
     </item>
     
     <item>
+      <title>Past Events</title>
+      <link>/pages/past-events/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/pages/past-events/</guid>
+      <description>  2022-09-22 Meeting
+This was our first meeting of the fall! We had pizza and hosted a CTF with a grab-bag of challenges.
+ Challenge sources    </description>
+    </item>
+    
+    <item>
       <title>Resources</title>
       <link>/pages/resources/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
