@@ -15,6 +15,26 @@
     <link rel="stylesheet" href="/sass/font-awesome-all.min.css" />
     <link rel="icon" href="/acm-logo.png" />
      
+    
+    <style>
+        .gopher {
+            display: grid;
+            place-items: center;
+            position: absolute; 
+            bottom: 120px;
+            transition: transform 0.5s;
+        }
+        .gopher:hover {
+            transform: translateY(50px);
+        }
+        #eyes, #eyes img {
+            position: absolute;
+        }
+        .eye {
+            opacity: 0.6;
+        }
+    </style>
+    
 </head>
 
 <body>
@@ -105,6 +125,41 @@ compression / decompression, and other ciphers and analyses</li>
 
 
     </div>
+    
+    <div class="gopher">
+        <img src="/logo.png"/ id="anchor" width="120" height="100">
+        <div id="eyes">
+            <img src="/eye2.png" class="eye" width="20" height="20"
+            style="top : -24px; left : -5px;">
+            <img src="/eye2.png" class="eye" width="20" height="20" 
+            style="top : -24px; left : 28px;">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const anchor = document.getElementById("anchor");
+            const rect = anchor.getBoundingClientRect();
+            const anchorX = rect.left + rect.width / 2;
+            const anchorY = rect.top + rect.height / 2;
+            const angleDeg = angle(x, y, anchorX, anchorY);
+            const eyes = document.querySelectorAll(".eye")
+            anchor.style.filter = `hue-rotate(${angleDeg}deg)`
+            eyes.forEach(eye => {
+                eye.style.transform = `rotate(${angleDeg - 40}deg)`;
+            })
+        })
+
+        function angle(cx, cy, ex, ey) {
+            const dy = ey - cy;
+            const dx = ex - cx;
+            const rad = Math.atan2(dy, dx);
+            const deg = rad * 180 / Math.PI;
+            return deg;
+        }
+    </script>
+    
     <footer class="site-footer site-footer--sticky">
         <div class="container">
   <div class="row">
