@@ -14,7 +14,7 @@
           name = "site";
           src = pkgs.nix-gitignore.gitignoreSource [ ] ./.;
 
-          buildInputs = with pkgs; [ zola hugo ];
+          buildInputs = with pkgs; [ hugo ];
           phases = [ "unpackPhase" "buildPhase" ];
           buildPhase = "hugo -d $out";
         };
