@@ -11,7 +11,7 @@ footer_links:
 footer_icons:
 - name: Email
   icon: fa-solid fa-envelope
-  href: mailto:zhan4854@umn.edu
+  href: mailto:hack@umn.edu
 
 - name: GitHub
   icon: fa-brands fa-github
