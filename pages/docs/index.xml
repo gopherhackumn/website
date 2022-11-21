@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docs on GopherHack</title>
+    <link>/pages/docs/</link>
+    <description>Recent content in Docs on GopherHack</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="/pages/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GopherHack Constitution</title>
+      <link>/pages/docs/constitution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/pages/docs/constitution/</guid>
+      <description>ARTICLE I - GENERAL   Section 1: The official name of this organization shall be GopherHack
+  Section 2: The club shall operate as a non-profit organization.
+  Section 3: The student group will comply with all University policies and procedures, as well as local, state, and federal laws and regulations.
+  Section 4: This organization shall exist for the following purposes:
+ To present and learn cyber security topics and tools, and prepare the membership for competitions, including but not limited to reverse engineering, web/network security, steganography, and cryptography.</description>
+    </item>
+    
+  </channel>
+</rss>
