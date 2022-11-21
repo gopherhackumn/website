@@ -39,7 +39,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/pages/contact/</guid>
-      <description>Social   Email   GitHub   Discord   Officers    Name Title x500      Jaden Rodriguez  President rodr0571    Youssef Zahar  Vice President zahar022    Max Jytyla  VP of Events jytyl004    Michael Zhang   Treasurer zhan4854    Anthony Narlock   Marketing Director narlo041    Daniel Chang   Officer of Gopherhack chan1975    </description>
+      <description>Social    Email   GitHub   Discord   Officers     Name Title x500      Jaden Rodriguez  President rodr0571    Youssef Zahar  Vice President zahar022    Max Jytyla  VP of Events jytyl004    Michael Zhang   Treasurer zhan4854    Anthony Narlock   Marketing Director narlo041    Daniel Chang   Officer of Gopherhack chan1975    </description>
     </item>
     
     <item>
@@ -48,7 +48,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/pages/docs/constitution/</guid>
-      <description>ARTICLE I - GENERAL   Section 1: The official name of this organization shall be GopherHack
+      <description>ARTICLE I - GENERAL    Section 1: The official name of this organization shall be GopherHack
   Section 2: The club shall operate as a non-profit organization.
   Section 3: The student group will comply with all University policies and procedures, as well as local, state, and federal laws and regulations.
   Section 4: This organization shall exist for the following purposes:
@@ -75,8 +75,8 @@ This was our first meeting of the fall! We had pizza and hosted a CTF with a gra
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/pages/resources/</guid>
-      <description>CTFTime CTFTime is the authoritative source of all CTF competitions, including event listing, team ranking, and a centralized writeup directory.
-Activity-based Resources These are good places to start looking for challenges.
+      <description>CTFTime  CTFTime is the authoritative source of all CTF competitions, including event listing, team ranking, and a centralized writeup directory.
+Activity-based Resources  These are good places to start looking for challenges.
 General:
  OverTheWire wargames: Several hosted services that help you practice offensive security CTFLearn: Hosts many CTF challenges PicoCTF: CMU-hosted high school CTF, challenges are up to stay so good practice material  Crypto:
  CryptoPals: Hands-on introduction to cryptographic principles, including block / stream ciphers, randomness, Diffie-Hellman, RSA, and more  Binary-exploit / Reversing:</description>
