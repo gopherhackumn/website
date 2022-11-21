@@ -2,6 +2,7 @@ nav:
 - { url: "/events", text: "Events" }
 - { url: "/pages/resources", text: "Resources" }
 - { url: "/pages/past-events", text: "Past Events" }
+- { url: "/pages/docs", text: "Docs" }
 - { url: "/pages/contact", text: "Contact" }
 
 footer_links:
