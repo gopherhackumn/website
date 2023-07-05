@@ -158,9 +158,36 @@
   src: url("/fonts/OpenSans/OpenSans-Bold.ttf");
   font-weight: bold; }
 
+@font-face {
+  font-family: "IBM 3278";
+  src: url("/fonts/CoolRetro/1971-ibm-3278/3270-Regular.ttf"); }
+
+@font-face {
+  font-family: "Apple 2";
+  src: url("/fonts/CoolRetro/1977-apple2/PrintChar21.ttf"); }
+
+@font-face {
+  font-family: "Commodore PET";
+  src: url("/fonts/CoolRetro/1977-commodore-pet/PetMe.ttf"); }
+
+@font-face {
+  font-family: "Atari 400-800";
+  src: url("/fonts/CoolRetro/1979-atari-400-800/AtariClassic-Regular.ttf"); }
+
+@font-face {
+  font-family: "IBM PC";
+  src: url("/fonts/CoolRetro/1981-ibm-pc/PxPlus_IBM_BIOS.ttf"); }
+
+@font-face {
+  font-family: "Commodore 64";
+  src: url("/fonts/CoolRetro/1982-commodore64/C64_Pro_Mono-STYLE.ttf"); }
+
+@font-face {
+  font-family: "IBM PC VGA";
+  src: url("/fonts/CoolRetro/1985-ibm-pc-vga/PxPlus_IBM_VGA8.ttf"); }
+
 body {
-  font-family: "font";
-  font-weight: 300; }
+  font-family: "font"; }
 
 /* all the timeline stuff is ripped straight from https://sydjs.com/meetups  */
 .timeline * {
