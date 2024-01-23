@@ -1,13 +1,13 @@
-- name: Jaden Rodriguez
-  x500: rodr0571
+- name: Max Jytyla
+  x500: jytyl004
   title: President
 
 - name: Youssef Zahar
   x500: zahar022
   title: Vice President
 
-- name: Max Jytyla
-  x500: jytyl004
+- name: Gustavo Sakamoto de Toledo
+  x500: detol001
   title: VP of Events
 
 - name: Michael Zhang
@@ -15,10 +15,9 @@
   title: Treasurer
   link: https://mzhang.io
 
-- name: Anthony Narlock
-  x500: narlo041
+- name: Sam Gause
+  x500: Gause030
   title: Marketing Director
-  link: https://anthonynarlock.com
 
 - name: Daniel Chang
   x500: chan1975
