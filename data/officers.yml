@@ -1,25 +1,20 @@
-- name: Max Jytyla
-  x500: jytyl004
+- name: Sam Gause
+  x500: Gause030
   title: President
-
-- name: Youssef Zahar
-  x500: zahar022
-  title: Vice President
 
 - name: Gustavo Sakamoto de Toledo
   x500: detol001
-  title: VP of Events
+  title: Vice President
 
 - name: Michael Zhang
   x500: zhan4854
   title: Treasurer
   link: https://mzhang.io
 
-- name: Sam Gause
-  x500: Gause030
-  title: Marketing Director
+- name: Hassan Fares
+  x500: fares011
+  title: VP of Events
 
-- name: Daniel Chang
-  x500: chan1975
-  title: Officer of Gopherhack
-  link: https://danielchang2002.github.io
+- name: Keegan Volk
+  x500: volk0171
+  title: Marketing Director
