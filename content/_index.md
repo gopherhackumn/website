@@ -4,34 +4,6 @@ type = "page"
 
 Welcome to GopherHack!
 
-### Spring 2024
+### GopherHack Events Calendar
 
-We meet every week at the following times:
-
-|Location|Day|Time|
-|---|---|---|
-|Keller Hall 3-210|Wednesdays|5:30-6:30|
-
-### Fall 2023
-
-We meet every week at the following times:
-
-|Location|Day|Time|
-|---|---|---|
-|Keller Hall 3-230|Wednesdays|5:30-6:30|
-
-### Spring 2023
-
-We meet every week at the following times:
-
-|Location|Day|Time|
-|---|---|---|
-|Keller Hall 3-125|Wednesdays|5:30-6:30|
-
-### Fall 2022
-
-We meet every week at the following times:
-
-|Location|Day|Time|
-|---|---|---|
-|Keller Hall 3-230|Thursdays|5:30-6:30|
+<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&bgcolor=%23ffffff&mode=WEEK&src=aGFja0B1bW4uZWR1&color=%237CB342" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
