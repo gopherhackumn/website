@@ -1,0 +1,19 @@
+{{ define "content" }}
+
+<div class="container">
+    <h1 style="font-weight: inherit;">Signing in...</h1>
+</div>
+
+<script type="module">
+const params = new URLSearchParams(location.search)
+const eventName = params.get("eventId") ?? "";
+const url = `https://script.google.com/a/macros/umn.edu/s/AKfycbxjTWw61X02AyfmYGXDi7WOlibHtw6JK2rTxSLj2rQZRnCoznY9FUFBatOibchbrZPZ/exec?eventId=${eventId}`
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    location.href = url;
+});
+</script>
+
+
+{{ end }}
+
