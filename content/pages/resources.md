@@ -10,6 +10,16 @@ listing, team ranking, and a centralized writeup directory.
 
 [CTFTime]: https://ctftime.org
 
+## Tools
+
+- [Awesome CTF](https://github.com/apsdehal/awesome-ctf): List of CTF tools
+- [Day 18 Essential CTF Tools](https://int0x33.medium.com/day-18-essential-ctf-tools-1f9af1552214):
+    List of CTF tools
+- [CyberChef](https://gchq.github.io/CyberChef): A swiss-army knife for data
+    manipulation, including encoding / decoding, encryption / decryption,
+    compression / decompression, and other ciphers and analyses
+- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): "A list of useful payloads and bypass for Web Application Security and Pentest/CTF"
+
 ## Activity-based Resources
 
 These are good places to start looking for challenges.
@@ -54,13 +64,3 @@ Web:
 - csci 4211
 - csci 5271
 - math 5248
-
-## Tools
-
-- [Awesome CTF](https://github.com/apsdehal/awesome-ctf): List of CTF tools
-- [Day 18 Essential CTF Tools](https://int0x33.medium.com/day-18-essential-ctf-tools-1f9af1552214):
-    List of CTF tools
-- [CyberChef](https://gchq.github.io/CyberChef): A swiss-army knife for data
-    manipulation, including encoding / decoding, encryption / decryption,
-    compression / decompression, and other ciphers and analyses
-- [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): "A list of useful payloads and bypass for Web Application Security and Pentest/CTF"
