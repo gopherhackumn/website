@@ -76,10 +76,7 @@ This was our first meeting of the fall! We had pizza and hosted a CTF with a gra
       
       <guid>/pages/resources/</guid>
       <description>CTFTime  CTFTime is the authoritative source of all CTF competitions, including event listing, team ranking, and a centralized writeup directory.
-Activity-based Resources  These are good places to start looking for challenges.
-General:
- OverTheWire wargames: Several hosted services that help you practice offensive security CTFLearn: Hosts many CTF challenges PicoCTF: CMU-hosted high school CTF, challenges are up to stay so good practice material  Crypto:
- CryptoPals: Hands-on introduction to cryptographic principles, including block / stream ciphers, randomness, Diffie-Hellman, RSA, and more  Binary-exploit / Reversing:</description>
+Tools   Awesome CTF: List of CTF tools Day 18 Essential CTF Tools: List of CTF tools CyberChef: A swiss-army knife for data manipulation, including encoding / decoding, encryption / decryption, compression / decompression, and other ciphers and analyses PayloadsAllTheThings: &amp;ldquo;A list of useful payloads and bypass for Web Application Security and Pentest/CTF&amp;rdquo;  Activity-based Resources  These are good places to start looking for challenges.</description>
     </item>
     
   </channel>
