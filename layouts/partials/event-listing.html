@@ -1,15 +1,14 @@
 {{ $events := .Site.GetPage "/events" }}
 
-{{ len $events.Pages }}
-
 <div class="timeline">
   <div class="line">
     <div class="timeline-path"></div>
     <div class="timeline-item--offset"></div>
 
-    {{ range $index, $event := $events.Pages }}
+    {{ range $index, $event := first 10 $events.Pages }}
     <!-- Start on odd... -->
     {{ $isEven := not (modBool $index 2) }}
+
     <div
       class="timeline-item timeline-item--{{ if $isEven }}even{{ else }}odd{{ end }}"
     >
