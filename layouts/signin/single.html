@@ -6,7 +6,7 @@
 
 <script type="module">
 const params = new URLSearchParams(location.search)
-const eventName = params.get("eventId") ?? "";
+const eventId = params.get("eventId") ?? "";
 // const url = `https://script.google.com/a/macros/umn.edu/s/AKfycbxjTWw61X02AyfmYGXDi7WOlibHtw6JK2rTxSLj2rQZRnCoznY9FUFBatOibchbrZPZ/exec?eventId=${eventId}`
 const urlStub = "https://script.google.com/a/macros/umn.edu/s/AKfycbyDTdIh8C-6g0E4VxaYXOhYHIl-o51zNmkh4yF_EeFcGJaRawH5is-A2AmJ3JEpFaJO/exec";
 const url = `${urlStub}?eventId=${eventId}`;
