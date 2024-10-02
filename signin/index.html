@@ -71,7 +71,8 @@
 const params = new URLSearchParams(location.search)
 const eventId = params.get("eventId") ?? "";
 
-const urlStub = "https://script.google.com/macros/s/AKfycbxyK3BwZFG5MVWRrtgAuj7rjyCEjUOsfawr0NvVkkuA85Hg0avs0zXVHvkBCdnn-zgE/exec";
+const urlStub = "https://script.google.com/a/macros/umn.edu/s/AKfycbxg8cJS6WQFnLj-cQi3HFWQnPZHL7u_JKrw63_NBxrp0gROyB-JBo2UCOAfL3TFV-1L/exec";
+    
 const url = `${urlStub}?eventId=${eventId}`;
 
 document.addEventListener("DOMContentLoaded", (event) => {
