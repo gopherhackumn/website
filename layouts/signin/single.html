@@ -8,7 +8,7 @@
 const params = new URLSearchParams(location.search)
 const eventId = params.get("eventId") ?? "";
 // const url = `https://script.google.com/a/macros/umn.edu/s/AKfycbxjTWw61X02AyfmYGXDi7WOlibHtw6JK2rTxSLj2rQZRnCoznY9FUFBatOibchbrZPZ/exec?eventId=${eventId}`
-const urlStub = "https://script.google.com/a/macros/umn.edu/s/AKfycbyOrQ-Jxsu6uUZqpDmhBIlanYmNBAcEJcV6_HMUSXa7k7MDLLsh1ohDjMjbyo_dgOY5/exec";
+const urlStub = "https://script.google.com/a/macros/umn.edu/s/AKfycbzuLU1LGJ1jVKx2EEyPGMQpBDF1wQW6MsAUjAajpQEOpvF26No7ixJ54VCcJ3iqvx0h/exec";
 const url = `${urlStub}?eventId=${eventId}`;
 
 document.addEventListener("DOMContentLoaded", (event) => {
