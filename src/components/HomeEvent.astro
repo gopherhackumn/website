@@ -10,7 +10,7 @@ const { event } = Astro.props;
       year: "numeric",
     })
   } -{" "}
-  <a href={`${import.meta.env.BASE_URL}/events/${event.id}/`}>
+  <a href={`${import.meta.env.BASE_URL}events/${event.id}/`}>
     {event.data.title}
   </a>
 </li>
