@@ -1,0 +1,31 @@
+---
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { post: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout>
+  <h1>{post.data.title}</h1>
+
+  <span title={post.data.date.toISOString()}>
+    {
+      post.data.date.toLocaleDateString([], {
+        dateStyle: "full",
+      })
+    }
+  </span>
+
+  <Content />
+</Layout>

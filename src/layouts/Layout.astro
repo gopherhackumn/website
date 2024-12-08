@@ -1,0 +1,78 @@
+---
+import { Content as LeftBar } from "../content/leftBar.md";
+
+import "@fontsource/monaspace-neon";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>GopherHack</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-bar">
+        <LeftBar />
+      </div>
+      <main>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    color: #beb7a2;
+    background-color: black;
+
+    font-size: 0.95rem;
+    font-family: "Monaspace Neon", monospace;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #ffde7a;
+    }
+    a {
+      color: #d63d61;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+
+    width: 972px;
+    margin: auto;
+  }
+
+  .left-bar {
+    flex-basis: 300px;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    table th {
+      text-align: left;
+    }
+  }
+
+  main {
+    flex-grow: 1;
+  }
+</style>

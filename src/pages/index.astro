@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import { Content as HomePage } from "../content/homePage.md";
+import Layout from "../layouts/Layout.astro";
+
+const posts = await getCollection("blog");
+---
+
+<Layout>
+  <HomePage />
+
+  <h2>Recent posts</h2>
+
+  <ul>
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

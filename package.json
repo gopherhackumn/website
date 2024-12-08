@@ -1,0 +1,16 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource/monaspace-neon": "^5.1.0",
+    "@fontsource/monaspace-xenon": "^5.1.0",
+    "astro": "^5.0.3"
+  }
+}
