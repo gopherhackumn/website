@@ -15,6 +15,7 @@ const posts = await getCollection("blog");
     {
       posts.map((post) => (
         <li>
+          {post.data.date.toLocaleDateString([], { dateStyle: "short" })} -
           <a href={`/posts/${post.id}/`}>{post.data.title}</a>
         </li>
       ))

@@ -16,7 +16,9 @@ import "@fontsource/monaspace-neon";
   <body>
     <div class="container">
       <div class="left-bar">
-        <LeftBar />
+        <div class="sticky">
+          <LeftBar />
+        </div>
       </div>
       <main>
         <slot />
@@ -55,7 +57,7 @@ import "@fontsource/monaspace-neon";
     display: flex;
     flex-direction: row;
     gap: 16px;
-    padding-top: 20px;
+    padding-top: 0;
     padding-bottom: 40px;
 
     width: 972px;
@@ -67,6 +69,12 @@ import "@fontsource/monaspace-neon";
     flex-grow: 0;
     flex-shrink: 0;
 
+    .sticky {
+      padding-top: 20px;
+      position: sticky;
+      top: 0;
+    }
+
     table th {
       text-align: left;
     }
@@ -74,5 +82,6 @@ import "@fontsource/monaspace-neon";
 
   main {
     flex-grow: 1;
+    padding-top: 20px;
   }
 </style>

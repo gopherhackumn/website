@@ -9,8 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@fontsource/monaspace-neon": "^5.1.0",
     "@fontsource/monaspace-xenon": "^5.1.0",
-    "astro": "^5.0.3"
+    "astro": "^5.0.3",
+    "typescript": "^5.7.2"
   }
 }
