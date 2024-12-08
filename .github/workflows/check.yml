@@ -6,6 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: print bun version
+        run: bun --version
       - name: install dependencies
         run: bun install --frozen-lockfile
       - name: build
