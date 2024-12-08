@@ -1,0 +1,51 @@
+current:
+  - name: Sam Gause
+    position: President
+    x500: gause030
+
+  - name: Gustavo Sakamoto de Toledo
+    position: Vice President
+    x500: detol001
+
+  - name: Michael Zhang
+    position: Treasurer
+    x500: zhan4854
+
+  - name: Hassan Fares
+    position: VP of Events
+    x500: fares011
+
+  - name: Keegan Volk
+    position: Security Researcher
+    x500: volk0171
+
+  - name: Andrew O'Konski-Magnuson
+    position: Security Researcher
+    x500: okons006
+
+  - name: Alex Tatley
+    position: Security Researcher
+    x500: tatle010
+
+  - name: Sophie Paruzynski
+    position: TEMP Social Media Manager
+    x500: paruz005
+
+  - name: Jack Kolb
+    position: Faculty Advisor
+
+alumni:
+  - name: Jaden Rodriguez
+    position: President
+
+  - name: Youssef Zahar
+    position: Vice President
+
+  - name: Max Jytyla
+    position: VP of Events
+
+  - name: Anthony Narlock
+    position: Marketing Director
+
+  - name: Daniel Chang
+    position: Officer

@@ -2,12 +2,52 @@
 import { getCollection } from "astro:content";
 import { Content as HomePage } from "../content/homePage.md";
 import Layout from "../layouts/Layout.astro";
+import HomeEvent from "../components/HomeEvent.astro";
 
 const posts = await getCollection("blog");
+
+const allEvents = await getCollection("events");
+
+// Website needs to be built periodically for this to work
+const now = new Date();
+
+const pastEvents = allEvents
+  .filter((event) => event.data.date < now)
+  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const upcomingEvents = allEvents
+  .filter((event) => event.data.date > now)
+  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout>
   <HomePage />
+
+  {
+    upcomingEvents.length > 0 && (
+      <>
+        <h2>Upcoming events</h2>
+        <ul>
+          {upcomingEvents.map((event) => (
+            <HomeEvent event={event} />
+          ))}
+        </ul>
+      </>
+    )
+  }
+
+  {
+    pastEvents.length > 0 && (
+      <>
+        <h2>Past Events</h2>
+        <ul>
+          {pastEvents.map((event) => (
+            <HomeEvent event={event} />
+          ))}
+        </ul>
+      </>
+    )
+  }
 
   <h2>Recent posts</h2>
 
@@ -15,8 +55,12 @@ const posts = await getCollection("blog");
     {
       posts.map((post) => (
         <li>
-          {post.data.date.toLocaleDateString([], { dateStyle: "short" })} -
-          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+          {post.data.date.toLocaleDateString([], {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}{" "}
+          -<a href={`/posts/${post.id}/`}>{post.data.title}</a>
         </li>
       ))
     }

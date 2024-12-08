@@ -1,0 +1,31 @@
+---
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const events = await getCollection("events");
+  return events.map((event) => ({
+    params: { event: event.id },
+    props: { event },
+  }));
+}) satisfies GetStaticPaths;
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+---
+
+<Layout>
+  <h1>{event.data.title}</h1>
+
+  <span title={event.data.date.toISOString()}>
+    {
+      event.data.date.toLocaleDateString([], {
+        dateStyle: "full",
+      })
+    }
+  </span>
+
+  <Content />
+</Layout>

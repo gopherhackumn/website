@@ -1,0 +1,16 @@
+---
+const { event } = Astro.props;
+---
+
+<li>
+  {
+    event.data.date.toLocaleDateString([], {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+  } -{" "}
+  <a href={`/events/${event.id}/`}>
+    {event.data.title}
+  </a>
+</li>
