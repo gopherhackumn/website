@@ -20,6 +20,7 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/main'
     steps:
+      - uses: oven-sh/setup-bun@v2
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
@@ -29,6 +30,7 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/rewrite'
     steps:
+      - uses: oven-sh/setup-bun@v2
       - name: build
         run: BASE="/staging/" bunx --bun astro build
       - uses: JamesIves/github-pages-deploy-action@v4
