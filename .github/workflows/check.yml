@@ -13,7 +13,7 @@ jobs:
       - name: install dependencies
         run: bun install --frozen-lockfile
       - name: build
-        run: bun run build
+        run: bunx --bun astro build
 
   deploy:
     runs-on: ubuntu-latest
