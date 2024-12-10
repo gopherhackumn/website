@@ -16,7 +16,7 @@ jobs:
         run: bunx --bun astro build
 
       - uses: JamesIves/github-pages-deploy-action@v4
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         with:
           folder: dist
 
