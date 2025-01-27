@@ -3,7 +3,8 @@ title: Blog
 ---
 
 import BlogList from "../../components/BlogList.astro";
+export const draftsPage = `${import.meta.env.BASE_URL}pages/drafts`;
 
 <BlogList />
 
-<small>See drafts [here](drafts).</small>
+<small>See drafts <a href={draftsPage}>here</a>.</small>
