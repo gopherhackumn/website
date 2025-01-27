@@ -8,6 +8,9 @@ export default defineConfig({
     base: process.env.BASE ?? "/",
     integrations: [mdx()],
     vite: {
-        plugins: [yaml()]
+        plugins: [yaml()],
+        esbuild: {
+            keepNames: true
+        }
     }
 });
