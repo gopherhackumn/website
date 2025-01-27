@@ -1,0 +1,163 @@
+[
+  {
+    "place": 11,
+    "name": "TUCTF 2024",
+    "link": "https://ctftime.org/event/2584",
+    "points": 3226,
+    "ratingPoints": 19.36,
+    "start": "2025-01-24T19:00:00.000Z",
+    "end": "2025-01-26T19:00:00.000Z"
+  },
+  {
+    "place": 178,
+    "name": "KnightCTF 2025",
+    "link": "https://ctftime.org/event/2610",
+    "points": 1350,
+    "ratingPoints": 4.454,
+    "start": "2025-01-20T15:00:00.000Z",
+    "end": "2025-01-21T15:00:00.000Z"
+  },
+  {
+    "place": 325,
+    "name": "Srdnlen CTF 2025",
+    "link": "https://ctftime.org/event/2576",
+    "points": 60,
+    "ratingPoints": 0.503
+  },
+  {
+    "place": 70,
+    "name": "New Year CTF 2025",
+    "link": "https://ctftime.org/event/2582",
+    "points": 4592,
+    "ratingPoints": 5.173
+  },
+  {
+    "place": 92,
+    "name": "UofTCTF 2025",
+    "link": "https://ctftime.org/event/2570",
+    "points": 1407,
+    "ratingPoints": 2.889,
+    "start": "2025-01-11T00:00:00.000Z",
+    "end": "2025-01-13T00:00:00.000Z"
+  },
+  {
+    "place": 122,
+    "name": "IrisCTF 2025",
+    "link": "https://ctftime.org/event/2503",
+    "points": 1066,
+    "ratingPoints": 3.857,
+    "start": "2025-01-04T00:00:00.000Z",
+    "end": "2025-01-06T00:00:00.000Z"
+  },
+  {
+    "place": 1115,
+    "name": "niteCTF 2024",
+    "link": "https://ctftime.org/event/2461",
+    "points": 10,
+    "ratingPoints": 0.058
+  },
+  {
+    "place": 127,
+    "name": "WannaGame Championship 2024",
+    "link": "https://ctftime.org/event/2515",
+    "points": 105,
+    "ratingPoints": 0.445,
+    "start": "2024-12-13T01:00:00.000Z",
+    "end": "2024-12-14T01:00:00.000Z"
+  },
+  {
+    "place": 112,
+    "name": "Platypwn 2024",
+    "link": "https://ctftime.org/event/2407",
+    "points": 300,
+    "ratingPoints": 1.306
+  },
+  {
+    "place": 100,
+    "name": "M*CTF 2024 Junior Quals",
+    "link": "https://ctftime.org/event/2535",
+    "points": 100,
+    "ratingPoints": 0.279
+  },
+  {
+    "place": 199,
+    "name": "Hack The Vote 2024",
+    "link": "https://ctftime.org/event/2498",
+    "points": 1,
+    "ratingPoints": 0.129
+  },
+  {
+    "place": 144,
+    "name": "SpookyCTF 2024",
+    "link": "https://ctftime.org/event/2516",
+    "points": 1860,
+    "ratingPoints": 2.591
+  },
+  {
+    "place": 100,
+    "name": "SunshineCTF 2024",
+    "link": "https://ctftime.org/event/2485",
+    "points": 599,
+    "ratingPoints": 3.192
+  },
+  {
+    "place": 1090,
+    "name": "DEADFACE CTF 2024",
+    "link": "https://ctftime.org/event/2443",
+    "points": 3,
+    "ratingPoints": 0.045
+  },
+  {
+    "place": 72,
+    "name": "CTF MetaRed Mexico Anuies-TIC 2024",
+    "link": "https://ctftime.org/event/2482",
+    "points": 532,
+    "ratingPoints": 0
+  },
+  {
+    "place": 124,
+    "name": "TCP1P CTF 2024: Exploring Nusantara's Digital Realm",
+    "link": "https://ctftime.org/event/2256",
+    "points": 507,
+    "ratingPoints": 1.354
+  },
+  {
+    "place": 208,
+    "name": "IRON CTF 2024",
+    "link": "https://ctftime.org/event/2497",
+    "points": 1318,
+    "ratingPoints": 2.065,
+    "start": "2024-10-05T05:30:00.000Z",
+    "end": "2024-10-06T05:30:00.000Z"
+  },
+  {
+    "place": 55,
+    "name": "BuckeyeCTF 2024",
+    "link": "https://ctftime.org/event/2449",
+    "points": 1803,
+    "ratingPoints": 12.489
+  },
+  {
+    "place": 1017,
+    "name": "UofTCTF 2024",
+    "link": "https://ctftime.org/event/2219",
+    "points": 10,
+    "ratingPoints": 0.041
+  },
+  {
+    "place": 174,
+    "name": "SekaiCTF 2022",
+    "link": "https://ctftime.org/event/1619",
+    "points": 578,
+    "ratingPoints": 1.444,
+    "start": "2022-09-30T16:00:00.000Z",
+    "end": "2022-10-02T16:00:00.000Z"
+  },
+  {
+    "place": 899,
+    "name": "DiceCTF 2022",
+    "link": "https://ctftime.org/event/1541",
+    "points": 1,
+    "ratingPoints": 0.032
+  }
+]

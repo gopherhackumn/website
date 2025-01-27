@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Content as HomePage } from "../content/homePage.md";
 import Layout from "../layouts/Layout.astro";
 import HomeEvent from "../components/HomeEvent.astro";
+import BlogList from "../components/BlogList.astro";
 
 const posts = await getCollection("blog");
 
@@ -17,6 +18,10 @@ const pastEvents = allEvents
 
 const upcomingEvents = allEvents
   .filter((event) => event.data.date > now)
+  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const sortedPosts = posts
+  .filter((post) => !(post.data.draft ?? false))
   .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
@@ -51,21 +56,5 @@ const upcomingEvents = allEvents
 
   <h2>Recent posts</h2>
 
-  <ul>
-    {
-      posts.map((post) => (
-        <li>
-          {post.data.date.toLocaleDateString([], {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })}{" "}
-          -
-          <a href={`${import.meta.env.BASE_URL}posts/${post.id}/`}>
-            {post.data.title}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <BlogList limit={5} />
 </Layout>

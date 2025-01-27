@@ -17,15 +17,31 @@ const { Content } = await render(post);
 ---
 
 <Layout>
-  <h1>{post.data.title}</h1>
+  <h1>
+    {post.data.draft && <span class="draft">[draft]</span>}
+    {post.data.title}
+  </h1>
 
-  <span title={post.data.date.toISOString()}>
-    {
-      post.data.date.toLocaleDateString([], {
-        dateStyle: "full",
-      })
+  <p>
+    <span title={post.data.date.toISOString()}>
+      {
+        post.data.date.toLocaleDateString([], {
+          dateStyle: "full",
+        })
+      }
+    </span>
+    - Authored by {
+      typeof post.data.author === "string"
+        ? post.data.author
+        : post.data.author.join(", ")
     }
-  </span>
+  </p>
 
   <Content />
 </Layout>
+
+<style>
+  .draft {
+    color: yellow;
+  }
+</style>

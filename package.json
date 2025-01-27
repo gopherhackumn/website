@@ -14,10 +14,17 @@
     "@fontsource/monaspace-neon": "^5.1.0",
     "@fontsource/monaspace-xenon": "^5.1.0",
     "astro": "^5.0.3",
+    "cal-parser": "^1.0.2",
+    "cheerio": "^1.0.0",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
+    "@types/bun": "^1.2.0",
     "@types/node": "^22.10.1"
+  },
+  "module": "index.ts",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }

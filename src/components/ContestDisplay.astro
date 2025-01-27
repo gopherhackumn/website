@@ -1,0 +1,119 @@
+---
+const { contests } = Astro.props;
+---
+
+<table>
+  <thead>
+    <tr>
+      <th>Place</th>
+      <th>Name</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      contests.map(
+        ({ name, place, points, ratingPoints, start, end, link }) => {
+          return (
+            <tr>
+              <td>
+                <div class="place">
+                  <span class="placetext">
+                    <span class="number">#</span>
+                    {place}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="ctfinfo">
+                  <div class="name">
+                    <a href={link} target="_blank" rel="noopener">
+                      {name}
+                    </a>
+                  </div>
+                  <div class="time">
+                    {start} - <br /> {end}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="pointsinfo">
+                  <div class="ratingpoints">{ratingPoints} rating</div>
+                  <div class="points">{points} points</div>
+                </div>
+              </td>
+            </tr>
+          );
+        }
+      )
+    }
+  </tbody>
+</table>
+
+<style>
+  table {
+    width: 100%;
+    border: 1px solid gray;
+
+    thead {
+      tr {
+        border-bottom: 1px solid gray;
+      }
+
+      th {
+        text-align: left;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    tbody {
+      td {
+        padding: 0;
+        vertical-align: middle;
+      }
+
+      .place {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        text-align: center;
+        background-color: rgba(255, 0, 0, 0.4);
+        font-size: 1.25rem;
+
+        .placetext {
+          margin-left: -1rem;
+        }
+
+        .number {
+          top: -0.5em;
+          font-size: 75%;
+        }
+
+        clip-path: polygon(
+          0 0,
+          100% 0,
+          calc(100% - 20px) 50%,
+          100% 100%,
+          0 100%
+        );
+      }
+
+      .ctfinfo {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .time {
+          font-size: 0.8rem;
+        }
+      }
+
+      .pointsinfo {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .points {
+          font-size: 75%;
+        }
+      }
+    }
+  }
+</style>
