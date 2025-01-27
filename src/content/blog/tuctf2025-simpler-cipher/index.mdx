@@ -1,5 +1,5 @@
 ---
-title: TUCTF 2025 Simpler Cipher
+title: "TUCTF 2025: Simpler Cipher"
 date: 2025-01-27T06:35:25.235Z
 draft: true
 author: michael
@@ -7,5 +7,79 @@ tags: [crypto]
 ---
 
 import cipher from "./cipher.py?url";
+import solveScript from "./solve.py?url";
 
 For the challenge, we are given <a href={cipher}>this file</a>.
+Unlike typical crypto server challenges, this code does an unusual conversion to binary form.
+
+The encryption algorithm requires 2 pieces we don't know:
+
+1. a secret key, which is 6 bytes long
+2. the conversion tables, `exptables`, found at the top of the file
+
+The algorithm "encrypts" the flag by first running a conversion step by taking
+every 4 bits and converting it to 6 bits through a lookup table. Then, it XORs
+this result against the key in 6-byte chunks. Since the lookup table is unique,
+decryption is the reverse process; first it XORs the given ciphertext, then
+reverses the lookup.
+
+Here is the conversion process, called "expand":
+
+```py
+def expand(ctext):
+    ct=''
+    for i in range(0,len(ctext),4):
+        msb = ctext[i:i+2]
+        lsb = ctext[i+2:i+4]
+        exp = exptables[int(msb,2)][int(lsb,2)]
+        ct+=exp
+    return ct
+```
+
+`ctext` here is a string of either `"1"` or `"0"`. As we can see, the 4 bits are
+broken down into two pieces of 2 bits each, which are treated as indices in a
+two-level lookup table.
+
+Since the challenge server provides us with an encryption oracle, we can brute
+force the unknown tables by using a predictable key. For example, the plaintext
+`"AAAAAA"` and the key `"AAAAAA"` should cancel out, leaving us with all zeroes
+entering the conversion step. This reveals to us what the combination (0, 0)
+maps to in the lookup table.
+
+Using this logic, we can write a function to create a string that enumerates all
+the possible lookup keys. I chose to vary the keys rather than the string. This means I had to ask the encryption oracle for the corresponding ciphertexts of two strings:
+
+- `40620426c8ea`
+- `8cae41414141`
+
+The 41414141 at the end is there because there's only 64 bits of combinations,
+so I padded it to be a multiple of 48 bits (the key size).
+
+After asking the server for the ciphertexts, I got:
+
+- `010101011001101101110011010001000101100001111000101000011110011101101110`
+- `111100110001010010101010010101010101010101010101010101010101010101010101`
+
+Now I can break these into 6-bit chunks and build the lookup tables.
+
+Finally, I know the flag format begins with `TUCTF{`. So I simply brute-forced
+each character of the key until I found it (honestly this could probably have
+been done in a more direct way but this way was faster).
+
+```py
+flagkey = b"AAAAAA"
+for i, c in enumerate(b"TUCTF{"):
+    for j in range(256):
+        newflagkey = list(flagkey)
+        newflagkey[i] = j
+        newflagkey = bytes(newflagkey)
+        flagptxt = decode(flagctxt, newflagkey)
+        if flagptxt[i] == c:
+            flagkey = newflagkey
+            break
+    print(c)
+```
+
+Using this key with the flag that the server gives us reveals the final flag, `TUCTF{tr@ck_th3_exp@nsi0ns_and_r3v3rs3}`.
+
+My final solve script can be found <a href={solveScript}>here</a>.
