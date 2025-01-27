@@ -19,6 +19,10 @@ listing, team ranking, and a centralized writeup directory.
   compression / decompression, and other ciphers and analyses
 - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings): "A list of useful payloads and bypass for Web Application Security and Pentest/CTF"
 
+Forensics:
+
+- [stego-toolkit](https://github.com/DominicBreuker/stego-toolkit): A collection of steganography-related tools.
+
 ## Activity-based Resources
 
 These are good places to start looking for challenges.
@@ -58,8 +62,8 @@ Web:
 
 ## Useful Courses
 
-- csci 2021
-- csci 4061
-- csci 4211
-- csci 5271
-- math 5248
+- CSCI 2021 - Machine Architecture and Organization
+- CSCI 4061 - Intro to Operating Systems
+- CSCI 4211 - Intro to Computer Networks
+- CSCI 5271 - Intro to Computer Security
+- MATH 5248 - Cryptology
