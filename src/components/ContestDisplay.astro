@@ -1,4 +1,8 @@
 ---
+import type { EventDetails } from "../../scripts/scrape";
+interface Props {
+  contests: EventDetails[];
+}
 const { contests } = Astro.props;
 ---
 
@@ -14,13 +18,14 @@ const { contests } = Astro.props;
     {
       contests.map(
         ({ name, place, points, ratingPoints, start, end, link }) => {
+          const startDate = new Date(start);
+          const endDate = new Date(end);
           return (
             <tr>
               <td>
                 <div class="place">
                   <span class="placetext">
-                    <span class="number">#</span>
-                    {place}
+                    <span class="number">#</span>&#8288;{place}
                   </span>
                 </div>
               </td>
@@ -32,7 +37,8 @@ const { contests } = Astro.props;
                     </a>
                   </div>
                   <div class="time">
-                    {start} - <br /> {end}
+                    {startDate.toLocaleDateString([], {})} -
+                    {endDate.toLocaleDateString([], {})}
                   </div>
                 </div>
               </td>
@@ -81,9 +87,12 @@ const { contests } = Astro.props;
 
         .placetext {
           margin-left: -1rem;
+          padding-left: 2rem;
+          padding-right: 2rem;
         }
 
         .number {
+          position: relative;
           top: -0.5em;
           font-size: 75%;
         }

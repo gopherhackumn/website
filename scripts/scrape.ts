@@ -38,12 +38,12 @@ async function handleCtfEvent(
   return { place, name, link, points, ratingPoints, start, end };
 }
 
-interface EventPageDetails {
+export interface EventPageDetails {
   start?: Date;
   end?: Date;
 }
 
-interface EventDetails extends EventPageDetails {
+export interface EventDetails extends EventPageDetails {
   name: string;
   place: number;
   points: number;
