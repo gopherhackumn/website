@@ -8,7 +8,12 @@ async function loadTeamPage(): Promise<EventDetails[]> {
   const dom = loadDom(data);
 
   const placeIcos = dom("td.place_ico");
-  return await Promise.all(placeIcos.map((i, el) => handleCtfEvent(dom, el)));
+  // return await Promise.all(placeIcos.map((i, el) => handleCtfEvent(dom, el)));
+  const result = [];
+  for (const el of placeIcos) {
+    result.push(await handleCtfEvent(dom, el));
+  }
+  return result;
 }
 
 async function handleCtfEvent(
@@ -20,13 +25,16 @@ async function handleCtfEvent(
   const ctfEl = placeEl.next();
   const linkEl = ctfEl.find("a");
   const name = linkEl.text();
-  const link = "https://ctftime.org" + linkEl.attr("href");
+  const linkPart = linkEl.attr("href") ?? "";
+  const link = "https://ctftime.org" + linkPart;
+  const matches = /\/event\/(\d+)/.exec(linkPart);
+  const id = Number.parseInt(matches?.[1]!);
   const pointsEl = ctfEl.next();
   const points = Number.parseFloat(pointsEl.text());
   const ratingPointsEl = pointsEl.next();
   const ratingPoints = Number.parseFloat(ratingPointsEl.text());
 
-  const { start, end } = await loadEventPage(link);
+  const { start, end } = await loadEventPage(id);
   return { place, name, link, points, ratingPoints, start, end };
 }
 
@@ -43,15 +51,24 @@ interface EventDetails extends EventPageDetails {
   link: string;
 }
 
-async function loadEventPage(link: string): Promise<EventPageDetails> {
-  const res = await fetch(link + ".ics");
-  const data = await res.text();
-  const calData = ical.parseString(data);
-  const event = calData.events[0];
-  const start = event?.dtstart?.value;
-  const end = event?.dtend?.value;
+async function loadEventPage(id: number): Promise<EventPageDetails> {
+  const link = `https://ctftime.org/api/v1/events/${id}/`;
+  console.log(link);
+  const res = await fetch(link);
+  let rawData = await res.text();
+  // console.log(rawData);
+  rawData = rawData.replace("\r", "\\r");
+  rawData = rawData.replace("\n", "\\n");
+  const data = JSON.parse(rawData);
+  const startN = Date.parse(data.start);
+  const endN = Date.parse(data.finish);
+  const start = new Date(startN);
+  const end = new Date(endN);
   return { start, end };
 }
 
 const events = await loadTeamPage();
-await writeFile("contests.json", JSON.stringify(events, null, 2));
+await writeFile(
+  "src/content/pages/contests.json",
+  JSON.stringify(events, null, 2)
+);

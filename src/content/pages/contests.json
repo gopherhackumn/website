@@ -22,14 +22,18 @@
     "name": "Srdnlen CTF 2025",
     "link": "https://ctftime.org/event/2576",
     "points": 60,
-    "ratingPoints": 0.503
+    "ratingPoints": 0.503,
+    "start": "2025-01-18T18:00:00.000Z",
+    "end": "2025-01-19T18:00:00.000Z"
   },
   {
     "place": 70,
     "name": "New Year CTF 2025",
     "link": "https://ctftime.org/event/2582",
     "points": 4592,
-    "ratingPoints": 5.173
+    "ratingPoints": 5.173,
+    "start": "2025-01-12T17:00:00.000Z",
+    "end": "2025-01-14T17:00:00.000Z"
   },
   {
     "place": 92,
@@ -54,7 +58,9 @@
     "name": "niteCTF 2024",
     "link": "https://ctftime.org/event/2461",
     "points": 10,
-    "ratingPoints": 0.058
+    "ratingPoints": 0.058,
+    "start": "2024-12-13T12:00:00.000Z",
+    "end": "2024-12-15T12:00:00.000Z"
   },
   {
     "place": 127,
@@ -70,56 +76,72 @@
     "name": "Platypwn 2024",
     "link": "https://ctftime.org/event/2407",
     "points": 300,
-    "ratingPoints": 1.306
+    "ratingPoints": 1.306,
+    "start": "2024-12-07T14:00:00.000Z",
+    "end": "2024-12-08T14:00:00.000Z"
   },
   {
     "place": 100,
     "name": "M*CTF 2024 Junior Quals",
     "link": "https://ctftime.org/event/2535",
     "points": 100,
-    "ratingPoints": 0.279
+    "ratingPoints": 0.279,
+    "start": "2024-11-02T07:00:00.000Z",
+    "end": "2024-11-02T17:00:00.000Z"
   },
   {
     "place": 199,
     "name": "Hack The Vote 2024",
     "link": "https://ctftime.org/event/2498",
     "points": 1,
-    "ratingPoints": 0.129
+    "ratingPoints": 0.129,
+    "start": "2024-11-01T23:00:00.000Z",
+    "end": "2024-11-03T23:00:00.000Z"
   },
   {
     "place": 144,
     "name": "SpookyCTF 2024",
     "link": "https://ctftime.org/event/2516",
     "points": 1860,
-    "ratingPoints": 2.591
+    "ratingPoints": 2.591,
+    "start": "2024-10-25T23:00:00.000Z",
+    "end": "2024-10-27T23:30:00.000Z"
   },
   {
     "place": 100,
     "name": "SunshineCTF 2024",
     "link": "https://ctftime.org/event/2485",
     "points": 599,
-    "ratingPoints": 3.192
+    "ratingPoints": 3.192,
+    "start": "2024-10-19T14:00:00.000Z",
+    "end": "2024-10-21T14:00:00.000Z"
   },
   {
     "place": 1090,
     "name": "DEADFACE CTF 2024",
     "link": "https://ctftime.org/event/2443",
     "points": 3,
-    "ratingPoints": 0.045
+    "ratingPoints": 0.045,
+    "start": "2024-10-18T14:00:00.000Z",
+    "end": "2024-10-20T00:00:00.000Z"
   },
   {
     "place": 72,
     "name": "CTF MetaRed Mexico Anuies-TIC 2024",
     "link": "https://ctftime.org/event/2482",
     "points": 532,
-    "ratingPoints": 0
+    "ratingPoints": 0,
+    "start": "2024-10-15T15:00:00.000Z",
+    "end": "2024-10-16T03:00:00.000Z"
   },
   {
     "place": 124,
     "name": "TCP1P CTF 2024: Exploring Nusantara's Digital Realm",
     "link": "https://ctftime.org/event/2256",
     "points": 507,
-    "ratingPoints": 1.354
+    "ratingPoints": 1.354,
+    "start": "2024-10-11T12:00:00.000Z",
+    "end": "2024-10-13T12:00:00.000Z"
   },
   {
     "place": 208,
@@ -135,14 +157,18 @@
     "name": "BuckeyeCTF 2024",
     "link": "https://ctftime.org/event/2449",
     "points": 1803,
-    "ratingPoints": 12.489
+    "ratingPoints": 12.489,
+    "start": "2024-09-27T20:00:00.000Z",
+    "end": "2024-09-29T20:00:00.000Z"
   },
   {
     "place": 1017,
     "name": "UofTCTF 2024",
     "link": "https://ctftime.org/event/2219",
     "points": 10,
-    "ratingPoints": 0.041
+    "ratingPoints": 0.041,
+    "start": "2024-01-13T17:00:00.000Z",
+    "end": "2024-01-15T04:59:00.000Z"
   },
   {
     "place": 174,
@@ -158,6 +184,8 @@
     "name": "DiceCTF 2022",
     "link": "https://ctftime.org/event/1541",
     "points": 1,
-    "ratingPoints": 0.032
+    "ratingPoints": 0.032,
+    "start": "2022-02-04T21:00:00.000Z",
+    "end": "2022-02-06T21:00:00.000Z"
   }
 ]
