@@ -1,0 +1,218 @@
+---
+import { Image, Picture } from "astro:assets";
+import logo from "../../static/logo.png";
+
+import QrCode from "qrcode-svg";
+const mkQrCode = (s: string) => new QrCode(s).svg({ container: "svg-viewbox" });
+
+const rsvpCode = mkQrCode("https://forms.gle/o58XuPhErhm6TvkU6");
+const discordCode = mkQrCode("https://discord.gg/GSmx6FQFfT");
+const websiteCode = mkQrCode("https://gopherhack.com/");
+
+const underlayText = new Array(30).fill(
+  "01000111&nbsp;01101111&nbsp;01110000&nbsp;01101000&nbsp;01100101&nbsp;01110010&nbsp;01001000&nbsp;01100001&nbsp;01100011&nbsp;01101011"
+);
+---
+
+<div id="poster">
+  <div id="underlay">
+    {
+      underlayText.map((x) => (
+        <>
+          <Fragment set:html={x} />
+          <br />
+        </>
+      ))
+    }
+  </div>
+  <div id="content">
+    <div id="header">
+      <Picture src={logo} alt="A description of my image." />
+      <h1>GopherHack<br />Kickoff&nbsp;Event</h1>
+    </div>
+
+    <div id="terminal">
+      <div id="termheader">
+        <div class="red ball"></div>
+        <div class="yellow ball"></div>
+        <div class="green ball"></div>
+      </div>
+      <div id="termbody">
+        <pre>Welcome to GopherHack 2025.01 (GNU/Linux 6.5.0-44-generic x86_64)
+
+ * Website:     https://gopherhack.com
+ * Discord:     https://discord.gg/GSmx6FQFfT
+ * Support:     mailto:hack@umn.edu
+
+ Kickoff meeting information as of Tue Jan 28 08:21:42 UTC 2025
+
+  Date:       Fri Jan 31, 2025       Pizza:           Yes
+  Time:       17:00 (5:00 PM) CST    Fun:             Yes
+  Room:       Keller Hall 3-125      Users logged in: You
+  Experience: Any
+
+2 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+        </pre>
+      </div>
+    </div>
+
+    <div id="qrcodes">
+      <div class="code">
+        <caption>Discord</caption>
+        <div set:html={discordCode} />
+      </div>
+      <div class="code big">
+        <caption>RSVP</caption>
+        <div set:html={rsvpCode} />
+      </div>
+      <div class="code">
+        <caption>Website</caption>
+        <div set:html={websiteCode} />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --monofont: "PragmataPro Mono Liga", monospace;
+    --sansfont: "Noto Sans", sans-serif;
+  }
+
+  #poster {
+    width: 8.5in;
+    height: 11in;
+    background-color: #222;
+    color: #0f0;
+    font-family: var(--sansfont);
+
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  #underlay {
+    z-index: 20;
+    position: absolute;
+    transform-origin: top;
+    transform: translate(-50%, -10%) rotate(-15deg);
+    font-family: var(--monofont);
+    letter-spacing: 0.1in;
+    font-size: 0.75in;
+    color: rgba(255, 255, 255, 0.03);
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  #content {
+    position: relative;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+
+    padding: 0.5in;
+    gap: 0.25in;
+  }
+
+  #header {
+    width: 100%;
+    display: flex;
+    flex-shrink: 0;
+    min-height: 0;
+    min-width: 0;
+    gap: 0.25in;
+    align-items: center;
+
+    h1 {
+      font-size: 0.7in;
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  #terminal {
+    border-radius: 0.1in;
+    box-shadow: 0 0 0.1in black;
+    border: 1px solid gray;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+  }
+
+  #termheader {
+    padding: 0.25in;
+
+    display: flex;
+    gap: 0.15in;
+
+    .ball {
+      width: 0.18in;
+      aspect-ratio: 1 / 1;
+      border-radius: 100%;
+
+      &.red {
+        background-color: red;
+      }
+      &.yellow {
+        background-color: yellow;
+      }
+      &.green {
+        background-color: green;
+      }
+    }
+  }
+
+  #termbody {
+    flex-grow: 1;
+
+    pre {
+      font-family: var(--monofont);
+      margin: 0;
+      padding: 0.25in;
+      padding-top: 0;
+
+      color: white;
+      font-size: 0.2in;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      line-height: 1.15;
+    }
+  }
+
+  #qrcodes {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .code {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15in;
+      color: #0f0;
+      font-size: 0.3in;
+      font-weight: bold;
+
+      svg {
+        border-radius: 0.1in;
+        min-height: 1.4in;
+        height: 100%;
+        box-shadow: 0 0 0.5in black;
+      }
+    }
+
+    .code.big svg {
+      min-height: 1.75in;
+    }
+  }
+</style>
