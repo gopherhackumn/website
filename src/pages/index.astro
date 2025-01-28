@@ -11,48 +11,10 @@ const allEvents = await getCollection("events");
 
 // Website needs to be built periodically for this to work
 const now = new Date();
-
-const pastEvents = allEvents
-  .filter((event) => event.data.date < now)
-  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const upcomingEvents = allEvents
-  .filter((event) => event.data.date > now)
-  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const sortedPosts = posts
-  .filter((post) => !(post.data.draft ?? false))
-  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout>
   <HomePage />
-
-  {
-    upcomingEvents.length > 0 && (
-      <>
-        <h2>Upcoming events</h2>
-        <ul>
-          {upcomingEvents.map((event) => (
-            <HomeEvent event={event} />
-          ))}
-        </ul>
-      </>
-    )
-  }
-
-  {
-    pastEvents.length > 0 && (
-      <>
-        <h2>Past Events</h2>
-        <ul>
-          {pastEvents.map((event) => (
-            <HomeEvent event={event} />
-          ))}
-        </ul>
-      </>
-    )
-  }
 
   <h2>Recent posts</h2>
 

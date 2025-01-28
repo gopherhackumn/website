@@ -3,6 +3,8 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import contests from "../../content/pages/contests.json";
+import AuthorDisplay from "../../components/AuthorDisplay.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("blog");
@@ -14,6 +16,7 @@ export const getStaticPaths = (async () => {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const contestMap = new Map(contests.events.map((event) => [event.id, event]));
 ---
 
 <Layout>
@@ -22,20 +25,36 @@ const { Content } = await render(post);
     {post.data.title}
   </h1>
 
-  <p>
-    <span title={post.data.date.toISOString()}>
+  <div class="metadata">
+    <div title={post.data.date.toISOString()}>
       {
         post.data.date.toLocaleDateString([], {
           dateStyle: "full",
         })
       }
-    </span>
-    - Authored by {
-      typeof post.data.author === "string"
-        ? post.data.author
-        : post.data.author.join(", ")
+    </div>
+    <div>
+      Authored by {
+        typeof post.data.author === "string" ? (
+          <AuthorDisplay name={post.data.author} />
+        ) : (
+          post.data.author.map((name) => <AuthorDisplay name={name} />)
+        )
+      }
+    </div>
+    {
+      post.data.ctf_id && (
+        <div>
+          CTF:{" "}
+          <a
+            href={`${import.meta.env.BASE_URL}pages/contests#${post.data.ctf_id}`}
+          >
+            {contestMap.get(post.data.ctf_id)?.name}
+          </a>
+        </div>
+      )
     }
-  </p>
+  </div>
 
   <Content />
 </Layout>
@@ -43,5 +62,10 @@ const { Content } = await render(post);
 <style>
   .draft {
     color: yellow;
+  }
+
+  .metadata {
+    font-size: 90%;
+    color: rgba(255, 255, 255, 0.5);
   }
 </style>

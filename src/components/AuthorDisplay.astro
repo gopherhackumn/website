@@ -1,0 +1,9 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<a href={`${import.meta.env.BASE_URL}authors/${name}`}>{name}</a>
