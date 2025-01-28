@@ -17,6 +17,7 @@ export const getStaticPaths = (async () => {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const contestMap = new Map(contests.events.map((event) => [event.id, event]));
+const tags = post.data.tags ?? [];
 ---
 
 <Layout>
@@ -54,9 +55,12 @@ const contestMap = new Map(contests.events.map((event) => [event.id, event]));
         </div>
       )
     }
+    {tags.length > 0 && <div>Tags: {tags.join(", ")}</div>}
   </div>
 
-  <Content />
+  <div class="postContent">
+    <Content />
+  </div>
 </Layout>
 
 <style>
@@ -67,5 +71,11 @@ const contestMap = new Map(contests.events.map((event) => [event.id, event]));
   .metadata {
     font-size: 90%;
     color: rgba(255, 255, 255, 0.5);
+  }
+
+  .postContent {
+    pre {
+      padding: 1rem;
+    }
   }
 </style>
