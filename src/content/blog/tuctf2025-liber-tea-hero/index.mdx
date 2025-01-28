@@ -1,0 +1,140 @@
+---
+title: TUCTF 2025 Liber-Tea Hero
+date: 2025-01-28T08:39:06.459Z
+draft: false
+author: dajeff
+tags: [misc]
+---
+
+import css from "css/styles.css?url";
+import website from "images/website.png?url";
+import solveScript from "./solve.js?url";
+
+<link rel="stylesheet" href={css}></link>
+
+> Hey there diver! You haven't completed your annual strategem training yet! You want to be mince meat for the enemies of managed democracy? I didn't think so. Hop to it, or I'll be speaking with your Democracy Officer!
+>
+> https://liber-tea-hero.tuctf.com
+
+The URL leads to a website with content similar to the screenshot below. Pressing WASD or the arrow keys displays that an input is either <span class="correct">correct</span> or <span class="incorrect">incorrect</span>.
+
+<p align="center">
+    <img src={website} alt="Screenshot of https://alien-interference.tuctf.com" width="80%"/>
+</p>
+
+[A Discord message](https://discord.com/channels/1308853321959870515/1308854880282218538/1332847258219315270) notes that we need a score of 250 to get the flag.
+
+Viewing the page source, we find the logic that controls the input result in [`controls.js`](https://liber-tea-hero.tuctf.com/static/controls.js). The code sends a message to a `WebSocket` with a time limit. We can guess that we should input the correct sequence of key presses in order to pass the ``current level''. We also guess that each image displayed corresponds to a fixed sequence of key presses.
+
+We can easily send requests to a `WebSocket` through the Javascript console, so we will write a script to quickly brute force every image given.
+
+In order to answer queries quickly, we keep an object `d` (for dictionary) with the key presses needed for each image.
+```js
+let d = {
+    // ...
+    "data:image/webp;base64,UklGRpwDAABXRUJQVlA4TJADAAAv/8A/APfBKJIkRVV9zOf2fN+XxgbbSJKc3Mz/oyEB8jcJCZMYtGAUSZKirtrdY7Jz/i3dD+c/iGwjAAUqAsMfDQAAGlUpzukQZaD8QSz1rNKvtxP1TLfj3qgCAFFRfdURCAQCIwBRAkFUmyv2qv077d8M36zmyz5t2lz1VadJxTosoppUCAQBAEGU4F4O2QqeuNaTgqK17W3bBiITxu52mr0026JtdqJSWbj/+4IJavz80a3/+7+I/k9AOPv/7P8zHD9/mUjqxSbzfKk4Fa4X+DQ4NOtT4NCty+fQrkvn0K/L5tCwS+bQscvl0LJL5dCzy+TQtEvkUPDdAkR5HIV39fLpdgGiNI7C25/0Ql4VIMriKORn6sXMrgrgkjgKaWaqsTsFcDkchXdMPcYCuBSOQpqCjAVwGRyFNBUZC+ASOAppSrI7BfDTcxTeMTUZC0SlKcooEU1VRnloyrI70twxdRlloSnMKAlNZUY5aEqzO1LcMbXt9fMQbSSHaMeoOhuy0UP2v26+ffR7RcwAZC1JLBd9AsCFhZbk/vJv7ttvtdC0WbfeMRWT3h3m2itGV19LdvMt0p634IGuvYq/au7e4n06+Nun9w4E3MSNH/f3eQw1sVy8SkdsXB4CwHf72//UPXvXpxPkOz/A94pyMp30FvP9/KCjBy+ZhCQf6Kpl55vXSdzXdG+poz/6JDZdR0n0vy/I+P/WQvFQKB4Kxf8tJ+c/t0LxUCgeCsVn/539908zds0sm3nHIXozy2becYjezLKZd5ycKBu6tsmcXSp0NpmzS4XOJnN2aWoihOu7NqP3JfQ2o/cl9Daj91MTIR1W161S8eq6VSpeXbdKExMhHy4zSyMtszTSMksTEzEFfcYxzDiGGScmYhLwMMDTaA/wNNoDPE1LxEQgIO0xIO0xIE1LxGQ8xz6eYx/PMS0R0yGiRBGVF1F5EUr7WowIkedbubYcgBQOqSkVQ6EQDsFfSOSh+LMIEbL30jDoeyELg8YvN3JsLaj81oX1MmztwnWWP5HAgvLfnJqHCtyeUh/qcH4y/SJU44vTeB5qstsdXx/qsvX17rj6RajMpmX3/Jieh0p9dyxvQ70++3AMu6ehZi9/Oty6C1V76+Lyw2F2Xcu6yefb/b17Fip5vi8PFd3v4+dQ14t+zMevUFnAL2VPQ41374fMQ5W37paZO+ts1rB7nEBvm1mdnf1/9v//uQc=": [
+        "down",
+        "left",
+        "down",
+        "down",
+        "up",
+        "left"
+    ],
+    // ...
+};
+```
+To construct this `d` by brute forcing images, we'll first find the first direction at index `i = 0` by brute forcing each direction `directions[di]` for `di = 0` to `3`, then find the second direction at index `i = 1`, and so on. We'll store the correct directions we've accumulated in a list `l`.
+
+Let's first define these variables and a couple of constants.
+```js
+const directions = ['left', 'up', 'right', 'down'];
+const t = 10; // Timeout used to avoid race conditions
+let l = [];
+let i = 0;
+let di = 0;
+let guess = true;  // Indicates if a new guess should be made. Used to avoid race conditions
+let con = true;  // Used to stop the brute force
+```
+
+When we run the following `bruteforce` function, which sends the next direction(s) to try, we send the list of directions recorded in `d` if it exists. Otherwise, we send all the currently recorded directions `l[i]`, then try new directions `directions[di]`.
+```js
+function bruteforce() {
+    // Setting con = false in the console allows us to stop the brute force at any time
+    if (con) {
+        if (cur in d) {
+            l = null;
+            guess = false;
+            for (const x of d[cur]) {
+                sendMessage(x);
+            }
+            return;
+        }
+
+        if (i < l.length) {
+            sendMessage(l[i]);
+        } else {
+            sendMessage(directions[di]);
+        }
+    }
+}
+```
+
+When we receive a message, we'll want to call this `bruteforce` function again to send the next guess. If the message is incorrect, then we need to resend the recorded sequence of correct directions (i.e. reset `i = 0`), then guess the next possible direction (i.e. increment `di`).
+```js
+if (typeof message.data === "string" && message.data.trim() === 'false') {
+    // ...
+
+    i = 0;
+    di = (di + 1) % directions.length;
+    if (l !== null) {
+        bruteforce();
+    }
+}
+```
+If the message is correct, we can add `directions[di]` to our accumulated list `l`, increment `i`, and reset `di = 0`.
+```js
+else if (typeof message.data === "string" && message.data.trim() === 'true') {
+    // ...
+
+    if (guess) {
+        if (i >= l.length) {
+            l.push(directions[di]);
+            di = 0;
+        }
+        i += 1;
+        if (l !== null) {
+            bruteforce();
+        }
+    }
+}
+```
+If a new image appears, we'll add `l` to our dictionary, reset our variables, wait a little bit to avoid any possible race conditions from other requests, then run `bruteforce` on the next image.
+```js
+else if (typeof message.data === "object") {
+    const imgElement = document.getElementById('dynamic-image');
+    const base64img = await convertBlobToBase64(message.data);
+    imgElement.src = 'data:image/webp;base64,' + base64img;
+
+    if (!(cur in d)) {
+        d[cur] = [...l];
+    }
+    cur = imgElement.src;
+
+    l = null;
+    i = 0;
+    di = 0;
+
+    setTimeout(() => {
+        l = [];
+        bruteforce();
+    }, t);
+}
+```
+And that's it! Modifying `console.js` to include these bits of code and copying and pasting it into the console runs our brute force at a speed fast enough to get the flag within a few minutes or so.
+
+Flag: `TUCTF{4_S00p3r_3aRtH_3xP3rT}`
+
+The final solve script can be found <a href={solveScript}>here</a>. We pre-fill `d` with entries gathered (copied and pasted) from previous runs to make the code run faster.
+
+I recommend checking out other writeups, such as [this Discord message by `fr0j`](https://discord.com/channels/1308853321959870515/1308854880282218538/1333155195911143596), for scripts written in other languages (e.g. Python 3). Join the [TUCTF Discord](https://discord.gg/kUeFHD8Y) for access.
+ d
