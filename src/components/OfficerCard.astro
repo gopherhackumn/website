@@ -1,0 +1,30 @@
+---
+const { officer } = Astro.props;
+---
+
+<div class="card">
+  <h3>
+    {
+      officer.authorName ? (
+        <a href={`${import.meta.env.BASE_URL}authors/${officer.authorName}`}>
+          {officer.name}
+        </a>
+      ) : (
+        officer.name
+      )
+    }
+  </h3>
+  <small>{officer.position}</small>
+</div>
+
+<style>
+  .card {
+    border: 1px solid gray;
+    padding: 1rem;
+
+    h3 {
+      color: inherit;
+      margin: inherit;
+    }
+  }
+</style>

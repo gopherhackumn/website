@@ -1,31 +1,19 @@
 ---
+import OfficerCard from "./OfficerCard.astro";
+
 const { officers } = Astro.props;
 ---
 
 <h2>Current</h2>
 
 <div class="cards">
-  {
-    officers.current.map((officer) => (
-      <div class="card">
-        <h3>{officer.name}</h3>
-        <small>{officer.position}</small>
-      </div>
-    ))
-  }
+  {officers.current.map((officer) => <OfficerCard officer={officer} />)}
 </div>
 
 <h2>Alumni</h2>
 
 <div class="cards">
-  {
-    officers.alumni.map((officer) => (
-      <div class="card">
-        <h3>{officer.name}</h3>
-        <small>{officer.position}</small>
-      </div>
-    ))
-  }
+  {officers.alumni.map((officer) => <OfficerCard officer={officer} />)}
 </div>
 
 <style>
@@ -33,15 +21,5 @@ const { officers } = Astro.props;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-  }
-
-  .card {
-    border: 1px solid gray;
-    padding: 1rem;
-
-    h3 {
-      color: inherit;
-      margin: inherit;
-    }
   }
 </style>
