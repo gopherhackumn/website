@@ -1,0 +1,114 @@
+---
+title: TUCTF 2025 Alien Interference
+date: 2025-01-28T07:22:44.781Z
+draft: false
+author: dajeff
+tags: [misc]
+---
+
+import css from "css/styles.css?url";
+import website from "images/website.png?url";
+import hexeditChallenge from "images/hexedit-challenge.png?url";
+import hexeditFour from "images/hexedit-four.png?url";
+import flag from "images/flag.bmp?url";
+import solveScript from "./solve.py?url";
+
+<link rel="stylesheet" href={css}></link>
+
+> *Zinky zoogle, zeep zop beep bop zatas zoshed?> Datas moshed? Vorp? 👨*https://alien-interference.tuctf.com
+
+The URL leads to a website with a button, which upon being clicked plays audio and displays a saucer moving around a strange background.
+
+<p align="center">
+    <img src={website} alt="Screenshot of https://alien-interference.tuctf.com" width="100%"/>
+</p>
+
+The ``chaotic'' look of the background hints that this may be a kind of steganography challenge. Oftentimes, this look may come from an image being XOR'ed with another image or file. We also see various stripes of same-color pixels in the background, further suggesting the image was mixed with another file with some kind of structure to it.
+
+Viewing the page source, we see the background in file [`challenge.bmp`](https://alien-interference.tuctf.com/challenge.bmp), linked as `image/audio` (a nonexistent MIME type).
+```html
+<link type = "image/audio" href="challenge.bmp">
+```
+
+The source also contains code that checks some properties of the [`four.wav`](https://alien-interference.tuctf.com/four.wav) header.
+```js
+const checkFile = async (filename) => {
+    const response = await fetch(filename);
+
+    const buffer = await response.arrayBuffer();
+    const view = new DataView(buffer);
+
+    const chunkID = String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3));
+    const format = String.fromCharCode(view.getUint8(8), view.getUint8(9), view.getUint8(10), view.getUint8(11));
+    console.log(`chunkID: ${chunkID}, format: ${format}`);
+
+    if ((view.getUint8(20) | view.getUint8(21) << 8) !== 7) { // The voices tell me this is very important.
+        alert('Encoding Error!');
+        return;
+    }
+}
+
+
+document.getElementById("play-button").addEventListener("click", () => {
+    document.getElementById("modal-overlay").classList.add("hidden");
+
+    document.getElementById("content").style.display = "block";
+
+    const allFiles = ["four.wav", ]; // TODO
+
+    for(let file of allFiles) {
+        checkFile(file);
+    }
+
+    const audioElem = document.getElementById('bgmusic');
+    audioElem.src = allFiles[0];
+    audioElem.volume = 0.5; // you're welcome.
+    audioElem.play();
+});
+```
+
+Both of these hint at the flag being hidden in these two files. As such, we focus on finding similarities between the two files [`challenge.bmp`](https://alien-interference.tuctf.com/challenge.bmp) and [`four.wav`](https://alien-interference.tuctf.com/four.wav). Looking at the files in a hex editor like [HexEd.it](https://hexed.it/), we see that the files seem quite similar in terms of content, just with an offset.
+
+<div className="flex">
+    <div>
+        <img src={hexeditChallenge} alt="Screenshot of the hex dump of challenge.bmp" width="100%"/>
+    </div>
+    <div>
+        <img src={hexeditFour} alt="Screenshot of the hex dump of four.wav" width="100%"/>
+    </div>
+</div>
+
+In the images above, we find an offset of `0x5c92f - 0x5c8f5 = 58` between the start of two similar chunks. Indeed, we can confirm that offsetting `four.wav` by shifting it `58` bytes to the left results in the most bytes matching up with `challenge.bmp`.
+
+We create a new file with the first `58` bytes (header) of `challenge.bmp` and fill most of the remaining bytes with the XOR between `challenge.bmp` with the shifted version of `four.wav`. We pad the file with the remaining bytes of `challenge.bmp` in order to ensure the `bmp` file header data matches up with the size of the file.
+```py
+with open("challenge.bmp", "rb") as challenge:
+    f1 = challenge.read()
+
+    with open("four.wav", "rb") as four:
+        f2 = four.read()
+
+        with open("flag.bmp", "wb") as flag:
+            offset = 58
+            for i in range(offset):
+                flag.write(f1[i].to_bytes())
+            for i in range(offset, len(f2)):
+                flag.write((f1[i - offset] ^ f2[i]).to_bytes())
+            for i in range(len(f2), len(f1)):
+                flag.write(f1[i].to_bytes())
+```
+
+Viewing the resulting image yields the flag.
+
+<details>
+    <summary>The flag image (viewer discretion advised due to creepiness)</summary>
+
+    <p align="center">
+        <img src={flag} alt="The flag" width="100%"/>
+    </p>
+</details>
+
+
+Flag: `TUCTF{wh0_gl33p3d_up_my_gl0rps}`
+
+The final solve script can be found <a href={solveScript}>here</a>.
