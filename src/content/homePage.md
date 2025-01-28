@@ -26,4 +26,4 @@ Socials:
 - Instagram: [gopherhack](https://www.instagram.com/gopherhack)
 - Discord: [GopherHack][discord]
 
-[discord]: (https://discord.gg/GSmx6FQFfT)
+[discord]: https://discord.gg/GSmx6FQFfT
