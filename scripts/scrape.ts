@@ -92,7 +92,7 @@ export interface EventDetails extends EventPageDetails {
 
 async function loadEventPage(id: number): Promise<EventPageDetails> {
 	const link = `https://ctftime.org/api/v1/events/${id}/`;
-	console.log(link);
+	// console.log(link);
 	const res = await fetch(link);
 	let rawData = await res.text();
 	// console.log(rawData);
