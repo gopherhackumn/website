@@ -13,14 +13,12 @@ const posts = await getCollection("blog");
 const postMap = new Map<string, any[]>();
 posts.forEach((post) => {
   const ctfId = post.data.ctf_id;
-  console.log(post.data);
   if (ctfId === undefined) return;
   if (!postMap.has(ctfId)) {
     postMap.set(ctfId, []);
   }
   postMap.get(ctfId)?.push(post);
 });
-console.log(postMap);
 ---
 
 <h2>Overall Performance</h2>
@@ -93,7 +91,12 @@ console.log(postMap);
                   </div>
                   <div class="chips">
                     {posts !== undefined && (
-                      <div class="chip">{posts.length} writeups</div>
+                      <a
+                        class="chiplink"
+                        href={`${import.meta.env.BASE_URL}contests/${id}`}
+                      >
+                        <div class="chip">{posts.length} writeups</div>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -172,6 +175,11 @@ console.log(postMap);
 
         .chips {
           display: flex;
+        }
+
+        a.chiplink {
+          color: #eee;
+          text-decoration: none;
         }
 
         .chip {
