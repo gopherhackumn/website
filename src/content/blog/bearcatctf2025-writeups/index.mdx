@@ -191,3 +191,204 @@ import animal_kml from "./animal.kml?url"
 > For example: `BCCTF{scientific_name}`
 >
 > <a href={animal_kml}>animal.kml</a>
+
+Opening this file with Google Earth, we find that the location is: https://maps.app.goo.gl/8ZfTa7RAooLqQTcx5
+
+This is a bearcat, whose scientific name is the [_Arctictis binturong_](https://en.wikipedia.org/wiki/Binturong).
+
+Thus, the flag is `BCCTF{Arctictis_binturong}`
+
+## Building Breakers: 200
+
+import building_png from "./building.png?url"
+
+> Hackers have been sighted lurking around this building. Include the building's name in the flag, using underscores to separate words if necessary.
+>
+> For example: `BCCTF{University_of_Cincinnati}`
+>
+> <a href={building_png}>building.png</a>
+
+A quick Google image reverse search tells us this is the Swiss National Museum.
+
+The flag is `BCCTF{Swiss_National_Museum}`
+
+# Crypto
+
+## sqRSA: 400
+
+import sqRSA_py from "./sqRSA.py?url"
+import output_txt from "./output.txt?url"
+
+> Im having trouble with this RSA stuff. I think I'm doing it right but it keeps giving me an error! Can you get my program to work?
+>
+> <a href={sqRSA_py}>sqRSA.py</a> <a href={output_txt}>output.txt</a>
+
+This is actually the [Rabin cryptosystem](https://en.wikipedia.org/wiki/Rabin_cryptosystem), since we additionally satisfy the conditions that `p%4==3` and `q%4==3`.
+
+I implemented this off of the Wikipedia page above:
+
+```py
+from gmpy2 import *                               
+from Crypto.Util.number import *                  
+                                                  
+mp = pow(c, (p + 1) // 4, p)                      
+mq = pow(c, (q + 1) // 4, q)                      
+                                                  
+_, yp, yq = gcdext(p, q)                          
+                                                  
+r1 = (yp * p * mq + yq * q * mp) % n              
+r2 = n - r1                                       
+r3 = (yp * p * mq - yq * q * mp) % n              
+r4 = n - r3                                       
+                                                  
+for choice in [r1, r2, r3, r4]:  
+    print(long_to_bytes(choice)) 
+```
+
+The output contained the flag:
+
+```
+b'gk\xc1\x0el`"8q\xaf\xe35\x8d\xb8\xa0Q\x1c\xc7f{v\xf0\xec4\xf3\x15\xd9\'\xfc\xae\xad\x89\xe9$4>\xea\x81\ x97\xef[\x90\xe9Uj8\x88\x1b4\xcb\x00!*\xffR\xf3\x02\x8b\xbc\xf8n\x1c\xeddH]\xdf\x9d\xa8\xab\xce\x9b\xec\x d0\xef\xc14\xd5X~\x80A:U\xec\xa2\xfeGX`\xceg\xc0\x19\xcd@XE\xfb\xe439@\xa38\xc0O/(3\x1d\x16\xf1\xae\xa7\x8e\xa0\xadqaSH\x8d\x93\xeag\x8c\x8f'                                                                     
+b'\nc$\x11\x04\xe8\xab9=4H\xa4dy\xa6\xfa\x04\x05\x8b\xe1\xaa\x0eu\xa3\xe6\xe8\x1c\xf3\x00\x89\xa0\x12\xd6 \x18\x1b\xad\xc4\xf0\x86\x08\xa4\xd4\xc7\x02\xc1h\xf4X\xf6\n\xca\x1e\xe3\x87\xdf\x08\xd4\x99\xc2<\xa6O\x1 c\xddhPW\x1d\xfe-\xbfFV\xdehbi\x14\x8dx\xb2,0\x03b*\xba\xc0\x14\x06\xfcH\xa9\x97\x0c~\xb2\x13\x16\xfa\xcc\xa6\x07\xa5\x83\x03\x14\x955\x1e\r\xc9G\xc7Q\x7fa5\xed\x88\xb6\xa8\x89\xecz\xf5\xe7*'                   
+b'q\xce\xe5\x1fqH\xcdq\xae\xe4+\xd9\xf22GK \xcc\xf2] \xffa\xd8\xd9\xfd\xf6\x1a\xba\xf5\nHx\xc1\x0b}A:\xbe \x95\xcd\x06{\xf8\xb80\x072\xb8\x90j\xde\xabP\xce\xc6\xa2\xbfG\xfb\xe2\x08\xd1\x11Ow\xfdYn\\S\xa8\tu\x1d\ xe9c\xaf\xab\xbc\xf830\x1f\x14\x93~\xcd2-\x90v/v\x9f\x84\xd0\x1e\xd8\xa4\xc5\xa5\x0e\x0e\x81\x89)\x8a#\x16\xf0\xa5\xff;\xbe\xd3\xc7\xa9$\xaf\xcf\xb6\xddF+#9\x7f'                                                 
+b'BCCTF{Don7_b3_4_squArE_ac6c54f792c90a69b8}::::::::::::::::::::::::::::::::::::::::::::::::::::::::::'  
+```
+
+## Times to Die: 700
+
+import server_py from "./server.py?url"
+import traffic_pcapng from "./traffic.pcapng?url"
+
+> We noticed some suspicious traffic on our network. We think an attacker may have hacked one of our workstations and exfiltrated our flag! We also found this strange python program that may have something to do with it.
+> 
+> <a href={server_py}>server.py</a> <a href={traffic_pcapng}>traffic.pcapng</a>
+
+Looking at the server file first, it's clear to us that this is cleartext TCP traffic, being sent to port 1337.
+
+The encryption being done only depends on time, which we have from the packet capture.
+
+First, let's dump the relevant information:
+
+```
+$ tshark -r traffic.pcapng -Y 'tcp.dstport == 1337' -T fields -E header=y -E separator=, -e frame.time_epoch -e data
+frame.time_epoch,data                                                                                                 
+1738088099.839446000,                                                                                                 
+1738088099.860704000,                                                                                                 
+1738088099.860829000,9d80c4df97fe91a0bb2867c78700c43c4eeb92770ea6ca6934bbcd5ffd40d548aba049344921e1db129e94a382f6678d 
+1738088099.860853000,                                                                                                 
+```
+
+The only important field is the one that has the payload.
+One hiccup is that because we are multiplying the time by 2^16, we need sub-second accuracy.
+Instead of that, I just brute-forced all the possible seeds around the time we are given:
+
+```py
+flag_enc = bytes.fromhex("9d80c4df97fe91a0bb2867c78700c43c4eeb92770ea6ca6934bbcd5ffd40d548aba049344921e1db129e94a382f6678d")
+t = 1738088099.860829000                                                                                                    
+                                                                                                                            
+import random                                                                                                               
+def xor(bytes1, bytes2):                                                                                                    
+    return bytes(a ^ b for a, b in zip(bytes1, bytes2))                                                                     
+                                                                                                                            
+ran = 50000                                                                                                                 
+for td in range(-ran, ran):                                                                                                 
+    k = int(t * 2**16)                                                                                                      
+    random.seed(k + td)                                                                                                     
+                                                                                                                            
+    res = []                                                                                                                
+    for i in range(0, 52, 4):                                                                                               
+        r = random.randbytes(4)                                                                                             
+        pt_block = xor(flag_enc[i:i+4], r)                                                                                  
+        res.append(pt_block)                                                                                                
+                                                                                                                            
+    f = b"".join(res)                                                                                                       
+    if b"BCCTF" in f:                                                                                                       
+        print(f)                                                                                                            
+```
+
+This crunches for a bit and spits out our flag:
+
+```
+❯ python solve-times-to-die.py                               
+b'BCCTF{175_n07_5Ymb0lic_itS_jU57_Hum4n_n47ure}\x03\x03\x03' 
+```
+
+# Pwn
+
+## CallingConvention: 500
+
+import calling_convention_zip from "./calling_convention.zip?url"
+
+> You've almost got a good grasp on this. Time to think past your function variables. Make Mudge proud
+>
+> nc chal.bearcatctf.io 39440
+>
+> <a href={calling_convention_zip}>calling_convention.zip</a>
+
+We are given a binary that contains several functions that look like dead code.
+It seems clear we need to perform a ROP attack.
+Fortunately, we can use pwntools to create this attack.
+
+First, we need to figure out what order these functions need to be called, since some of them overwrite the others.
+The order is:
+
+* number3
+* food
+* set_key1
+* ahhhhhhhh
+* number3 (again)
+
+Putting this ROP chain together, we can override the 8-bit buffer we are provided and start returning to our desired functions.
+
+import solve_calling_convention_py from "./solve_calling_convention.py?url"
+
+See the solve script <a href={solve_calling_convention_py}>here</a>.
+
+# Hashing
+
+## Curly Password: 600
+
+> A modern approach to secure passwords is to use passphrases to create easy to remember and long passwords. A user used this techinque however they picked 3 words from our home page to use separated by underscores ("_"). They also thought it would be funny to wrap it in our slug. The flag is the password. `eb02e84ccdc45f873c633846efa027b4726a9552a7dad42927ec627e929a500d`
+>
+> For example, the passsword may be `BCCTF{word1_word2_word3}`
+
+import homepage_txt from "./homepage.txt?url"
+
+This is a straightforward dictionary attack, implementable in Python by just grabbing the words straight off of https://bearcatctf.io.
+The word list is scraped <a href={homepage_txt}>homepage.txt</a>.
+
+I cleaned it up a bit:
+
+```
+cat homepage.txt | tr ' ' '\n' | sort | uniq > words.txt
+```
+
+Then, we can just brute-force it easily with Python:
+
+```py
+from hashlib import sha256                                                              
+                                                                                        
+goal = bytes.fromhex("eb02e84ccdc45f873c633846efa027b4726a9552a7dad42927ec627e929a500d")
+words = list(map(lambda s: s.strip(), open("words.txt").readlines()))                   
+                                                                                        
+for a in words:                                                                         
+    for b in words:                                                                     
+        for c in words:                                                                 
+            w = bytes(f"BCCTF{{{a}_{b}_{c}}}", "utf-8")                                 
+            if sha256(w).digest() == goal:                                              
+                print(w)                                                                
+```
+
+This returns very quickly:
+
+```
+b'BCCTF{sponsor_cybersecurity_Innovation}'
+```
+
+## City Crack: 850
+
+> International hackers have left two different encrypted hashes behind. The first hash is `1fae39b5bc83699450281dc7bb472d59`, and the second hash is `5f6b9145ac86d19e917a08e6c20de0c907472a90`. To find the flag, decrypt both hashes and combine the results in alphabetical order, separated by an underscore. These paswords are based off of capital cites with some modifications.
+
+Initially, I tried using a dictionary attack, but I decided to also give brute force a try, and it finished faster (and proved that the dictionary attack would not have worked!)
+
+The first one is an MD5 hash:
