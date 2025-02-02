@@ -1,0 +1,193 @@
+---
+title: "BearcatCTF 2025 Writeups"
+date: 2025-02-02T19:49:20.529Z
+draft: true
+author: michael
+tags: [web, rev, osint]
+---
+
+# Web
+
+## global-redirect: 100
+
+> A new "world-class" website is claiming to have top-tier security worthy of an international stage. Unfortunately for them, their defenses are far from impressive. Show how easy it is to navigate their weaknesses and gain admin access.
+>
+> http://chal.bearcatctf.io:39724
+
+This challenge presents us with a login page.
+First course of action is to look at the source.
+We see this Javascript:
+
+```js
+function loginAuthenticate(){
+    var password = document.getElementById("password");
+    var hash = sjcl.hash.sha256.hash(password);
+    var hexRepresentation = sjcl.codec.hex.fromBits(hash);
+    if (hexRepresentation == "2a70282a868c0ca9e6fe5bb5cf2ac2ea6b523062102bada26fb87091d511e3f1"){
+        alert("welcome Home Admin");
+        window.location = "./0078f62f00305b73de6ccace8f9fc1f68a8f1dcec865d33fcacbaf255ddefaa7";
+    }else{
+        alert("Incorrect Password. Please Try Again");
+    }
+    alert(hash);
+}
+```
+
+Great, we can just bypass the authentication and go directly to the redirect!
+Navigating to http://chal.bearcatctf.io:39724/0078f62f00305b73de6ccace8f9fc1f68a8f1dcec865d33fcacbaf255ddefaa7
+gives us the flag: `BCCTF{T1ck3t_t0_0wn3rsh1p!}`.
+
+## unhealthy 2 the sequel: 500
+
+> It seems that some people couldn't wait for me to finish before they started hacking. Well now I have a brand new extra-secure firewall in place! Have fun with that!
+>
+> http://chal.bearcatctf.io:30812
+
+We are greeted with a landing page that says "Under development".
+
+This time, the `robots.txt` hints to us that we need to check: http://chal.bearcatctf.io:30812/health-check.
+This page seems to ask us for an IP and returns an output that suspiciously looks like the CLI output from `ping`:
+
+```
+Health response: PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data. 64 bytes from 127.0.0.1: icmp_seq=1 ttl=255 time=0.017 ms --- 127.0.0.1 ping statistics --- 1 packets transmitted, 1 received, 0% packet loss, time 0ms rtt min/avg/max/mdev = 0.017/0.017/0.017/0.000 ms
+```
+
+This prompted me to try shell injection.
+After some trial and error, I discovered that `127.0.0.1; ba""sh -c 'ls'` worked.
+Here's the app.py code:
+
+```py
+splits = ['||','&&',';','&','|','<','>']
+def validate(cmd : str):
+    if '$(' in cmd: return False
+    if '\\' in cmd: return False
+    if cmd.count('`') > 1: return False
+    if 'IFS' in cmd: return False
+    if 'flag.txt' in cmd: return False
+    parts = [cmd]
+    for s in splits:
+        nparts = []
+        for l in [p.split(s) for p in parts]:
+            nparts += l
+        parts = nparts
+    parts = [p.strip() for p in parts]
+    for p in parts:
+        c = p.split()[0]
+        if run(['which',c],capture_output=True).stdout:
+            return False
+    return True
+```
+
+It seems like as long as all of our bash commands are valid under `which`, we're free to go ahead and run it.
+I also noticed `flag.txt` is explicitly disallowed.
+I found `flag.txt` lying in `/`.
+
+Now, I enter the payload: `127.0.0.1; ba""sh -c 'cat /*.txt | base64'`, which returns the flag: `BCCTF{M4yb3_!_sH0uld_jus7_f011ow_b3s7_pr4ac7ic3s}`
+
+# Rev
+
+## Say Cheese: 150
+
+import cheese_py from "./cheese.py?url"
+
+> ChatGPT made this challenge, I think it has a lot of holes...... much like a certain type of food.
+>
+> <a href={cheese_py}>cheese.py</a>
+
+Pretty straightforward to reverse; I even asked ChatGPT to reverse it: https://chatgpt.com/share/679fcf7e-87bc-8007-8f97-d9d5e5761a59.
+
+## Easy Encrypt: 300
+
+import easy from "./easy?url"
+
+> RE is fun but these binary things are so weird!
+>
+> <a href={easy}>easy</a>
+
+First, let's run the binary:
+
+```
+❯ ./easy                                             
+I dropped my flag somewhere! Can you find it for me? 
+asdf
+Hmmm... No that isn't right at all.
+```
+
+I honestly did not try to look into how this binary worked, because I wanted to get some experience with angr.
+
+I hadn't used it before, and there were some troubles with getting it to work, but it finally worked just with `simgr.run()` and checking the `posix.dumps` to see if the win message was there.
+Then I just crunched the solver on all the constraints gathered along the way.
+
+```
+0x1477                                                                                             
+0x147b, 0x148c                                                                                     
+0x10b0, 0x10b0                                                                                     
+0x180a60, 0x180a60                                                                                 
+0x148a, 0x149b                                                                                     
+0x149b, 0x14b7                                                                                     
+0x14b7, 0x400050                                                                                   
+0x400050, 0x400050                                                                                 
+0x400050                                                                                           
+                                                                                                   
+<SimulationManager with 3 deadended>                                                               
+b"I dropped my flag somewhere! Can you find it for me?\nHmmm... No that isn't right at all.\n"     
+b"I dropped my flag somewhere! Can you find it for me?\nHmmm... No that isn't right at all.\n"     
+b'BCCTF{7H47_w4snt_s0_H4rD}\x01\n'                                                                 
+b'I dropped my flag somewhere! Can you find it for me?\nThere it is!\n'                            
+```
+
+import solve_easy_py from "./solve_easy.py?url"
+
+My solve script can be found <a href={solve_easy_py}>here</a>.
+
+## Shimbles the E-L-F: 450
+
+import Shimbles_the_elf from "./Shimbles-the-elf?url"
+
+> Shimbles the ELF has encrpyted your data, and wants you to suffer. Show Shimbles humans are not to be trifiled with.
+>
+> Hint: Look into the decryption cycle super close, the key is hidden behind two layers of bit rotatation and obfuscation.
+>
+> <a href={Shimbles_the_elf}>Shimbles-the-elf</a>
+
+Again, disregarded the hint and used angr, with surprisingly few modifications from Easy Encrypt.
+
+```
+❯ python solve_shimbles.py                         
+<SimulationManager with 1 active, 1 found>         
+<SimState @ 0x14f2>                                
+b'elfmagic\n'                                      
+```
+
+import solve_shimbles_py from "./solve_shimbles.py?url"
+
+My solve script can be found <a href={solve_shimbles_py}>here</a>.
+
+## Turing Approved: 600
+
+import verificationProgram from "./verificationProgram?url"
+
+> I wrote a flag verification program for this challenge so when you find the flag, you can confirm it's correct! Aren't I just the kindest?
+>
+> NOT ALL ONLINE COMPILERS WORK
+>
+> <a href={verificationProgram}>verificationProgram</a>
+
+This verification program is a Brainfuck program.
+I converted the brainfuck to Python using [this tool](https://github.com/philippwindischhofer/Brainfuck2Python).
+Then, I printed out the state of the tape right after all of the inputs had been taken.
+I observed that the flag was lying directly in memory, although on an offset.
+
+Taking each 3rd byte, you get `BCCTF{blame_the_swiss}`.
+
+# Osint
+
+## Been Touring the Arctic: 150
+
+import animal_kml from "./animal.kml?url"
+
+> A friend of mine said that if I put this file into Google Earth, it'll bring me to his favorite animal from the rainforests of Southeast Asia. I'll take his word for it. The flag is the animal's scientific name, with an underscore instead of a space.
+>
+> For example: `BCCTF{scientific_name}`
+>
+> <a href={animal_kml}>animal.kml</a>
