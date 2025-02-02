@@ -62,8 +62,10 @@ Here’s the app.py code:</p>
 <span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> False</span></span>
 <span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> True</span></span>
 <span class="line"></span></code></pre>
-<p>It seems like as long as all of our bash commands are valid under <code>which</code>, we’re free to go ahead and run it.
-I also noticed <code>flag.txt</code> is explicitly disallowed.
+<p>It seems like as long as all of our bash commands are not valid under <code>which</code>, we’re free to go ahead and run it.
+But the <code>which</code> command does not use the shell, whereas the <code>ping</code> command does, so we can use the shell injection trick of adding empty quoted strings into our commands, like this: <code>ba&quot;&quot;sh</code>.
+This will not trip the validation script, but will run bash as we expected.</p>
+<p>I also noticed <code>flag.txt</code> is explicitly disallowed.
 I found <code>flag.txt</code> lying in <code>/</code>.</p>
 <p>Now, I enter the payload: <code>127.0.0.1; ba&quot;&quot;sh -c &#39;cat /*.txt | base64&#39;</code>, which returns the flag: <code>BCCTF{M4yb3_!_sH0uld_jus7_f011ow_b3s7_pr4ac7ic3s}</code></p>
 <h1 id="rev">Rev</h1>
