@@ -140,7 +140,154 @@ I observed that the flag was lying directly in memory, although on an offset.</p
 <p>A friend of mine said that if I put this file into Google Earth, it’ll bring me to his favorite animal from the rainforests of Southeast Asia. I’ll take his word for it. The flag is the animal’s scientific name, with an underscore instead of a space.</p>
 <p>For example: <code>BCCTF{scientific_name}</code></p>
 <a href="/_astro/animal.D235BHCU.kml">animal.kml</a>
-</blockquote> </div>  </main> <footer data-astro-cid-sckkx6r4>
+</blockquote>
+<p>Opening this file with Google Earth, we find that the location is: <a href="https://maps.app.goo.gl/8ZfTa7RAooLqQTcx5">https://maps.app.goo.gl/8ZfTa7RAooLqQTcx5</a></p>
+<p>This is a bearcat, whose scientific name is the <a href="https://en.wikipedia.org/wiki/Binturong"><em>Arctictis binturong</em></a>.</p>
+<p>Thus, the flag is <code>BCCTF{Arctictis_binturong}</code></p>
+<h2 id="building-breakers-200">Building Breakers: 200</h2>
+
+<blockquote>
+<p>Hackers have been sighted lurking around this building. Include the building’s name in the flag, using underscores to separate words if necessary.</p>
+<p>For example: <code>BCCTF{University_of_Cincinnati}</code></p>
+<a href="/_astro/building.BzugjML2.png">building.png</a>
+</blockquote>
+<p>A quick Google image reverse search tells us this is the Swiss National Museum.</p>
+<p>The flag is <code>BCCTF{Swiss_National_Museum}</code></p>
+<h1 id="crypto">Crypto</h1>
+<h2 id="sqrsa-400">sqRSA: 400</h2>
+
+<blockquote>
+<p>Im having trouble with this RSA stuff. I think I’m doing it right but it keeps giving me an error! Can you get my program to work?</p>
+<a href="/_astro/sqRSA.I55Pcyi0.py">sqRSA.py</a>
+<a href="/_astro/output.BfUHF7SS.txt">output.txt</a>
+</blockquote>
+<p>This is actually the <a href="https://en.wikipedia.org/wiki/Rabin_cryptosystem">Rabin cryptosystem</a>, since we additionally satisfy the conditions that <code>p%4==3</code> and <code>q%4==3</code>.</p>
+<p>I implemented this off of the Wikipedia page above:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> gmpy2 </span><span style="color:#F97583">import</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8">                               </span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> Crypto.Util.number </span><span style="color:#F97583">import</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8">                  </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                  </span></span>
+<span class="line"><span style="color:#E1E4E8">mp </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> pow</span><span style="color:#E1E4E8">(c, (p </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">//</span><span style="color:#79B8FF"> 4</span><span style="color:#E1E4E8">, p)                      </span></span>
+<span class="line"><span style="color:#E1E4E8">mq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> pow</span><span style="color:#E1E4E8">(c, (q </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">//</span><span style="color:#79B8FF"> 4</span><span style="color:#E1E4E8">, q)                      </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                  </span></span>
+<span class="line"><span style="color:#E1E4E8">_, yp, yq </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> gcdext(p, q)                          </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                  </span></span>
+<span class="line"><span style="color:#E1E4E8">r1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (yp </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> mq </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> yq </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> q </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> mp) </span><span style="color:#F97583">%</span><span style="color:#E1E4E8"> n              </span></span>
+<span class="line"><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> r1                                       </span></span>
+<span class="line"><span style="color:#E1E4E8">r3 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (yp </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> mq </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> yq </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> q </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> mp) </span><span style="color:#F97583">%</span><span style="color:#E1E4E8"> n              </span></span>
+<span class="line"><span style="color:#E1E4E8">r4 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> r3                                       </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                  </span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> choice </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [r1, r2, r3, r4]:  </span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(long_to_bytes(choice)) </span></span>
+<span class="line"></span></code></pre>
+<p>The output contained the flag:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>b&#39;gk\xc1\x0el`&quot;8q\xaf\xe35\x8d\xb8\xa0Q\x1c\xc7f{v\xf0\xec4\xf3\x15\xd9\&#39;\xfc\xae\xad\x89\xe9$4&gt;\xea\x81\ x97\xef[\x90\xe9Uj8\x88\x1b4\xcb\x00!*\xffR\xf3\x02\x8b\xbc\xf8n\x1c\xeddH]\xdf\x9d\xa8\xab\xce\x9b\xec\x d0\xef\xc14\xd5X~\x80A:U\xec\xa2\xfeGX`\xceg\xc0\x19\xcd@XE\xfb\xe439@\xa38\xc0O/(3\x1d\x16\xf1\xae\xa7\x8e\xa0\xadqaSH\x8d\x93\xeag\x8c\x8f&#39;                                                                     </span></span>
+<span class="line"><span>b&#39;\nc$\x11\x04\xe8\xab9=4H\xa4dy\xa6\xfa\x04\x05\x8b\xe1\xaa\x0eu\xa3\xe6\xe8\x1c\xf3\x00\x89\xa0\x12\xd6 \x18\x1b\xad\xc4\xf0\x86\x08\xa4\xd4\xc7\x02\xc1h\xf4X\xf6\n\xca\x1e\xe3\x87\xdf\x08\xd4\x99\xc2&lt;\xa6O\x1 c\xddhPW\x1d\xfe-\xbfFV\xdehbi\x14\x8dx\xb2,0\x03b*\xba\xc0\x14\x06\xfcH\xa9\x97\x0c~\xb2\x13\x16\xfa\xcc\xa6\x07\xa5\x83\x03\x14\x955\x1e\r\xc9G\xc7Q\x7fa5\xed\x88\xb6\xa8\x89\xecz\xf5\xe7*&#39;                   </span></span>
+<span class="line"><span>b&#39;q\xce\xe5\x1fqH\xcdq\xae\xe4+\xd9\xf22GK \xcc\xf2] \xffa\xd8\xd9\xfd\xf6\x1a\xba\xf5\nHx\xc1\x0b}A:\xbe \x95\xcd\x06{\xf8\xb80\x072\xb8\x90j\xde\xabP\xce\xc6\xa2\xbfG\xfb\xe2\x08\xd1\x11Ow\xfdYn\\S\xa8\tu\x1d\ xe9c\xaf\xab\xbc\xf830\x1f\x14\x93~\xcd2-\x90v/v\x9f\x84\xd0\x1e\xd8\xa4\xc5\xa5\x0e\x0e\x81\x89)\x8a#\x16\xf0\xa5\xff;\xbe\xd3\xc7\xa9$\xaf\xcf\xb6\xddF+#9\x7f&#39;                                                 </span></span>
+<span class="line"><span>b&#39;BCCTF{Don7_b3_4_squArE_ac6c54f792c90a69b8}::::::::::::::::::::::::::::::::::::::::::::::::::::::::::&#39;  </span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="times-to-die-700">Times to Die: 700</h2>
+
+<blockquote>
+<p>We noticed some suspicious traffic on our network. We think an attacker may have hacked one of our workstations and exfiltrated our flag! We also found this strange python program that may have something to do with it.</p>
+<a href="/_astro/server.BPH1s9v-.py">server.py</a>
+<a href="/_astro/traffic.mQnP-g7t.pcapng">traffic.pcapng</a>
+</blockquote>
+<p>Looking at the server file first, it’s clear to us that this is cleartext TCP traffic, being sent to port 1337.</p>
+<p>The encryption being done only depends on time, which we have from the packet capture.</p>
+<p>First, let’s dump the relevant information:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ tshark -r traffic.pcapng -Y &#39;tcp.dstport == 1337&#39; -T fields -E header=y -E separator=, -e frame.time_epoch -e data</span></span>
+<span class="line"><span>frame.time_epoch,data                                                                                                 </span></span>
+<span class="line"><span>1738088099.839446000,                                                                                                 </span></span>
+<span class="line"><span>1738088099.860704000,                                                                                                 </span></span>
+<span class="line"><span>1738088099.860829000,9d80c4df97fe91a0bb2867c78700c43c4eeb92770ea6ca6934bbcd5ffd40d548aba049344921e1db129e94a382f6678d </span></span>
+<span class="line"><span>1738088099.860853000,                                                                                                 </span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The only important field is the one that has the payload.
+One hiccup is that because we are multiplying the time by 2^16, we need sub-second accuracy.
+Instead of that, I just brute-forced all the possible seeds around the time we are given:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#E1E4E8">flag_enc </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">.fromhex(</span><span style="color:#9ECBFF">&quot;9d80c4df97fe91a0bb2867c78700c43c4eeb92770ea6ca6934bbcd5ffd40d548aba049344921e1db129e94a382f6678d&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">t </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1738088099.860829000</span><span style="color:#E1E4E8">                                                                                                    </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                                                            </span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> random                                                                                                               </span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> xor</span><span style="color:#E1E4E8">(bytes1, bytes2):                                                                                                    </span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">(a </span><span style="color:#F97583">^</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> a, b </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> zip</span><span style="color:#E1E4E8">(bytes1, bytes2))                                                                     </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                                                            </span></span>
+<span class="line"><span style="color:#E1E4E8">ran </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50000</span><span style="color:#E1E4E8">                                                                                                                 </span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> td </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">ran, ran):                                                                                                 </span></span>
+<span class="line"><span style="color:#E1E4E8">    k </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(t </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">)                                                                                                      </span></span>
+<span class="line"><span style="color:#E1E4E8">    random.seed(k </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> td)                                                                                                     </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                                                            </span></span>
+<span class="line"><span style="color:#E1E4E8">    res </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []                                                                                                                </span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">52</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">):                                                                                               </span></span>
+<span class="line"><span style="color:#E1E4E8">        r </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> random.randbytes(</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)                                                                                             </span></span>
+<span class="line"><span style="color:#E1E4E8">        pt_block </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> xor(flag_enc[i:i</span><span style="color:#F97583">+</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">], r)                                                                                  </span></span>
+<span class="line"><span style="color:#E1E4E8">        res.append(pt_block)                                                                                                </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                                                            </span></span>
+<span class="line"><span style="color:#E1E4E8">    f </span><span style="color:#F97583">=</span><span style="color:#F97583"> b</span><span style="color:#9ECBFF">&quot;&quot;</span><span style="color:#E1E4E8">.join(res)                                                                                                       </span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#F97583"> b</span><span style="color:#9ECBFF">&quot;BCCTF&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> f:                                                                                                       </span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(f)                                                                                                            </span></span>
+<span class="line"></span></code></pre>
+<p>This crunches for a bit and spits out our flag:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ python solve-times-to-die.py                               </span></span>
+<span class="line"><span>b&#39;BCCTF{175_n07_5Ymb0lic_itS_jU57_Hum4n_n47ure}\x03\x03\x03&#39; </span></span>
+<span class="line"><span></span></span></code></pre>
+<h1 id="pwn">Pwn</h1>
+<h2 id="callingconvention-500">CallingConvention: 500</h2>
+
+<blockquote>
+<p>You’ve almost got a good grasp on this. Time to think past your function variables. Make Mudge proud</p>
+<p>nc chal.bearcatctf.io 39440</p>
+<a href="/_astro/calling_convention.BFZpI70U.zip">calling_convention.zip</a>
+</blockquote>
+<p>We are given a binary that contains several functions that look like dead code.
+It seems clear we need to perform a ROP attack.
+Fortunately, we can use pwntools to create this attack.</p>
+<p>First, we need to figure out what order these functions need to be called, since some of them overwrite the others.
+The order is:</p>
+<ul>
+<li>number3</li>
+<li>food</li>
+<li>set_key1</li>
+<li>ahhhhhhhh</li>
+<li>number3 (again)</li>
+</ul>
+<p>Putting this ROP chain together, we can override the 8-bit buffer we are provided and start returning to our desired functions.</p>
+
+<p>See the solve script <a href="/_astro/solve_calling_convention.BPgnwXIb.py">here</a>.</p>
+<h1 id="hashing">Hashing</h1>
+<h2 id="curly-password-600">Curly Password: 600</h2>
+<blockquote>
+<p>A modern approach to secure passwords is to use passphrases to create easy to remember and long passwords. A user used this techinque however they picked 3 words from our home page to use separated by underscores (”_”). They also thought it would be funny to wrap it in our slug. The flag is the password. <code>eb02e84ccdc45f873c633846efa027b4726a9552a7dad42927ec627e929a500d</code></p>
+<p>For example, the passsword may be <code>BCCTF{word1_word2_word3}</code></p>
+</blockquote>
+
+<p>This is a straightforward dictionary attack, implementable in Python by just grabbing the words straight off of <a href="https://bearcatctf.io">https://bearcatctf.io</a>.
+The word list is scraped <a href="/_astro/homepage.B8bUfdIw.txt">homepage.txt</a>.</p>
+<p>I cleaned it up a bit:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>cat homepage.txt | tr &#39; &#39; &#39;\n&#39; | sort | uniq &gt; words.txt</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Then, we can just brute-force it easily with Python:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> hashlib </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> sha256                                                              </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                        </span></span>
+<span class="line"><span style="color:#E1E4E8">goal </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">.fromhex(</span><span style="color:#9ECBFF">&quot;eb02e84ccdc45f873c633846efa027b4726a9552a7dad42927ec627e929a500d&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">words </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> list</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">map</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> s: s.strip(), </span><span style="color:#79B8FF">open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;words.txt&quot;</span><span style="color:#E1E4E8">).readlines()))                   </span></span>
+<span class="line"><span style="color:#E1E4E8">                                                                                        </span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> words:                                                                         </span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> words:                                                                     </span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> c </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> words:                                                                 </span></span>
+<span class="line"><span style="color:#E1E4E8">            w </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;BCCTF</span><span style="color:#79B8FF">{{{</span><span style="color:#E1E4E8">a</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">_</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">b</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">_</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">c</span><span style="color:#79B8FF">}}}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;utf-8&quot;</span><span style="color:#E1E4E8">)                                 </span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> sha256(w).digest() </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> goal:                                              </span></span>
+<span class="line"><span style="color:#79B8FF">                print</span><span style="color:#E1E4E8">(w)                                                                </span></span>
+<span class="line"></span></code></pre>
+<p>This returns very quickly:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>b&#39;BCCTF{sponsor_cybersecurity_Innovation}&#39;</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="city-crack-850">City Crack: 850</h2>
+<blockquote>
+<p>International hackers have left two different encrypted hashes behind. The first hash is <code>1fae39b5bc83699450281dc7bb472d59</code>, and the second hash is <code>5f6b9145ac86d19e917a08e6c20de0c907472a90</code>. To find the flag, decrypt both hashes and combine the results in alphabetical order, separated by an underscore. These paswords are based off of capital cites with some modifications.</p>
+</blockquote>
+<p>Initially, I tried using a dictionary attack, but I decided to also give brute force a try, and it finished faster (and proved that the dictionary attack would not have worked!)</p>
+<p>The first one is an MD5 hash:</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
 &mdash;
 <a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
 &mdash;
