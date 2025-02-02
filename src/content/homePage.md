@@ -15,7 +15,8 @@ Stay tuned in our [Discord] for updates on our Spring 2025 meetings!
 
 Schedule:
 
-- When: Fridays 5pm - 6pm
+- When: Every other Friday, 5pm - 6pm
+  - The Fridays are: Jan 31, Feb 14, Feb 28, Mar 14, Mar 28, Apr 11, Apr 25, May 9
 - Where: Keller 3-125
 
 Socials:
