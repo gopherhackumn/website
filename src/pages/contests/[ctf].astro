@@ -1,0 +1,38 @@
+---
+import type { GetStaticPaths } from "astro";
+import contests from "../../content/pages/contests.json";
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog");
+
+  const contestMap = new Map<string, any[]>();
+  posts.forEach((post) => {
+    if (post.data.ctf_id) {
+      if (!contestMap.has(post.data.ctf_id))
+        contestMap.set(post.data.ctf_id, []);
+
+      contestMap.get(post.data.ctf_id)?.push(post);
+    }
+  });
+
+  return contests.events.map((event) => ({
+    params: { ctf: event.id },
+    props: { event, posts: contestMap.get(event.id) ?? [] },
+  }));
+}) satisfies GetStaticPaths;
+
+const { event, posts } = Astro.props;
+const { id, name } = event;
+---
+
+<Layout>
+  <h1>{name}</h1>
+
+  <h2>Writeups</h2>
+
+  <ul>
+    {posts.map((post) => <li>{post.data.title}</li>)}
+  </ul>
+</Layout>

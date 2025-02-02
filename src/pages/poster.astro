@@ -1,0 +1,16 @@
+---
+import PosterDisplay from "../components/Poster.astro";
+---
+
+<div class="posters">
+  <PosterDisplay posterPaper={true} qrCodes={true} />
+  <PosterDisplay posterPaper={false} qrCodes={false} />
+</div>
+
+<style>
+  .posters {
+    align-items: center;
+    display: flex;
+    gap: 0.25in;
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog");
+  const nameMap = new Map<string, any[]>();
+  posts.forEach((post) => {
+    const authors = [];
+    if (typeof post.data.author === "string") {
+      authors.push(post.data.author);
+    } else {
+      authors.push(...post.data.author);
+    }
+
+    for (const author of authors) {
+      if (!nameMap.has(author)) {
+        nameMap.set(author, []);
+      }
+
+      nameMap.get(author)?.push(post);
+    }
+  });
+
+  return [...nameMap.entries()].map(([name, posts]) => ({
+    params: { name },
+    props: { name, posts },
+  }));
+}) satisfies GetStaticPaths;
+
+const { name, posts } = Astro.props;
+---
+
+<Layout>
+  <h1>{name}</h1>
+
+  Posts:
+
+  <ul>
+    {posts.map((post) => <li>{post.data.title}</li>)}
+  </ul>
+</Layout>
