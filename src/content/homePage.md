@@ -11,8 +11,6 @@ These competitions test a variety of skills including binary exploitation,
 cryptography, cyber forensics, OSINT, reverse engineering, web exploitation, and
 more!
 
-Stay tuned in our [Discord] for updates on our Spring 2025 meetings!
-
 Schedule:
 
 - When: Every other Friday, 5pm - 6pm
