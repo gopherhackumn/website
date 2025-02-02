@@ -1,9 +1,8 @@
 ---
 title: "BearcatCTF 2025 Writeups"
 date: 2025-02-02T19:49:20.529Z
-draft: true
 author: michael
-tags: [web, rev, osint]
+tags: [web, rev, osint, crypto, pwn, brute-force]
 ---
 
 # Web
@@ -392,3 +391,25 @@ b'BCCTF{sponsor_cybersecurity_Innovation}'
 Initially, I tried using a dictionary attack, but I decided to also give brute force a try, and it finished faster (and proved that the dictionary attack would not have worked!)
 
 The first one is an MD5 hash:
+
+```
+❯ ./hashcat -m 0 -a 3 -1 "?l?d?s?u" --increment 1fae39b5bc83699450281dc7bb472d59 "?1?1?1?1?1?1?1?1"
+...
+1fae39b5bc83699450281dc7bb472d59:T0kyO
+...
+```
+
+The next one is SHA1:
+
+```
+❯ ./hashcat -m 100 -a 3 -1 "?l?d?s?u" --increment 5f6b9145ac86d19e917a08e6c20de0c907472a90 "?1?1?1?1?1?1?1?1"
+...
+5f6b9145ac86d19e917a08e6c20de0c907472a90:p@R!s
+...
+```
+
+Putting them in alphabetical order, the flag is `BCCTF{p@R!s_T0kyO}`.
+
+# Conclusion
+
+Overall I had a lot of fun with this CTF, though I wish they went with dynamic scoring though since some of the challenges seemed a little bit easier than their point values.
