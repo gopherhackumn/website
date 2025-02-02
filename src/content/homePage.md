@@ -11,11 +11,13 @@ These competitions test a variety of skills including binary exploitation,
 cryptography, cyber forensics, OSINT, reverse engineering, web exploitation, and
 more!
 
-Schedule:
+In-person club meetings:
 
 - When: Every other Friday, 5pm - 6pm
   - The Fridays are: Jan 31, Feb 14, Feb 28, Mar 14, Mar 28, Apr 11, Apr 25, May 9
 - Where: Keller 3-125
+
+We also meet on Discord in [`#ctf-general`](https://discord.gg/zM8Uf9CTXx) every weekend to participate in CTF!
 
 Socials:
 
