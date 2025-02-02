@@ -78,7 +78,10 @@ def validate(cmd : str):
     return True
 ```
 
-It seems like as long as all of our bash commands are valid under `which`, we're free to go ahead and run it.
+It seems like as long as all of our bash commands are not valid under `which`, we're free to go ahead and run it.
+But the `which` command does not use the shell, whereas the `ping` command does, so we can use the shell injection trick of adding empty quoted strings into our commands, like this: `ba""sh`.
+This will not trip the validation script, but will run bash as we expected.
+
 I also noticed `flag.txt` is explicitly disallowed.
 I found `flag.txt` lying in `/`.
 
