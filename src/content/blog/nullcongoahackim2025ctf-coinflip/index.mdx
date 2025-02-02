@@ -1,5 +1,5 @@
 ---
-title: Nullcon Goa HackIM 2025 CTF Coinflip
+title: "Nullcon Goa HackIM 2025 CTF Coinflip"
 date: 2025-02-02T09:26:39.091Z
 draft: false
 author: dajeff
@@ -60,7 +60,7 @@ Observe that we only need to know one bit in `self.state` before it is revealed.
 
 For the bit that we aim to know, we focus our attention to the units bit, as it is special and can sometimes be predicted when doing these types of operations. In particular, if `self.m` is even, then `self.a` and `self.state` are guaranteed to be odd as they are relatively prime to `self.m`. When this happens, `self.state` starts out as odd, and `self.a * pow(self.state, 3, self.m) % self.m` will continue to be odd. As such, in this case we can reliably predict units bit (i.e. every 64th bit) to be a 1.
 
-The script below predicts 0 for all non-units bits (as it is slightly more frequent due to [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law)) and 1 for all units bits. We'll rerun the script until we obtain a `m` that is even and luckily gain enough `balance` so that the bets of amount 1 are not enough to bankrupt us.
+The script below predicts `head` (0) for all non-units bits (as it is slightly more frequent due to [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law)) and `tails` (1) for all units bits. We'll rerun the script until we obtain a `m` that is even and luckily gain enough `balance` so that the bets of amount 1 are not enough to bankrupt us.
 
 ```py
 from pwn import *
