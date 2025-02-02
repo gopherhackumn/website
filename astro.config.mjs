@@ -11,6 +11,9 @@ export default defineConfig({
         plugins: [yaml()],
         esbuild: {
             keepNames: true
+        },
+        build: {
+            assetsInlineLimit: 0
         }
     }
 });
