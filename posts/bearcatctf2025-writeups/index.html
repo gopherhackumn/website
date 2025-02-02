@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
 <link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
 <link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
-&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp> <span class="draft" data-astro-cid-quoef3qp>[draft]</span> BearcatCTF 2025 Writeups </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-02T19:49:20.529Z" data-astro-cid-quoef3qp> Sunday, February 2, 2025 </div> <div data-astro-cid-quoef3qp>
-Authored by <a href="/authors/michael">michael</a> </div>  <div data-astro-cid-quoef3qp>Tags: web, rev, osint</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <h1 id="web">Web</h1>
+&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  BearcatCTF 2025 Writeups </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-02T19:49:20.529Z" data-astro-cid-quoef3qp> Sunday, February 2, 2025 </div> <div data-astro-cid-quoef3qp>
+Authored by <a href="/authors/michael">michael</a> </div>  <div data-astro-cid-quoef3qp>Tags: web, rev, osint, crypto, pwn, brute-force</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <h1 id="web">Web</h1>
 <h2 id="global-redirect-100">global-redirect: 100</h2>
 <blockquote>
 <p>A new “world-class” website is claiming to have top-tier security worthy of an international stage. Unfortunately for them, their defenses are far from impressive. Show how easy it is to navigate their weaknesses and gain admin access.</p>
@@ -287,7 +287,21 @@ The word list is scraped <a href="/_astro/homepage.B8bUfdIw.txt">homepage.txt</a
 <p>International hackers have left two different encrypted hashes behind. The first hash is <code>1fae39b5bc83699450281dc7bb472d59</code>, and the second hash is <code>5f6b9145ac86d19e917a08e6c20de0c907472a90</code>. To find the flag, decrypt both hashes and combine the results in alphabetical order, separated by an underscore. These paswords are based off of capital cites with some modifications.</p>
 </blockquote>
 <p>Initially, I tried using a dictionary attack, but I decided to also give brute force a try, and it finished faster (and proved that the dictionary attack would not have worked!)</p>
-<p>The first one is an MD5 hash:</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
+<p>The first one is an MD5 hash:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ ./hashcat -m 0 -a 3 -1 &quot;?l?d?s?u&quot; --increment 1fae39b5bc83699450281dc7bb472d59 &quot;?1?1?1?1?1?1?1?1&quot;</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span>1fae39b5bc83699450281dc7bb472d59:T0kyO</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The next one is SHA1:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ ./hashcat -m 100 -a 3 -1 &quot;?l?d?s?u&quot; --increment 5f6b9145ac86d19e917a08e6c20de0c907472a90 &quot;?1?1?1?1?1?1?1?1&quot;</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span>5f6b9145ac86d19e917a08e6c20de0c907472a90:p@R!s</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Putting them in alphabetical order, the flag is <code>BCCTF{p@R!s_T0kyO}</code>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Overall I had a lot of fun with this CTF, though I wish they went with dynamic scoring though since some of the challenges seemed a little bit easier than their point values.</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
 &mdash;
 <a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
 &mdash;
