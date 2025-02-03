@@ -1,0 +1,93 @@
+---
+title: "Nullcon Goa HackIM 2025 CTF many caesars"
+date: 2025-02-03T07:43:39.112Z
+draft: false
+author: dajeff
+tags: [crypto]
+---
+
+import css from "css/styles.css?url";
+import chall from "./chall.py?url";
+import output from "./output.txt?url";
+
+<link rel="stylesheet" href={css}></link>
+
+> I took an old cipher and modified it to make it secure again. By breaking the regular patterns I made sure the known attacks don't work. Now I can use it to encrypt texts with my favourite Chat partner.
+> <div>
+>     <div className="row">
+>         <a className="btn" href={chall}>chall.py</a>
+>     </div>
+>     <div className="row">
+>         <a className="btn" href={output}>output.txt</a>
+>     </div>
+> </div>
+
+Inspecting <a href={chall}>chall.py</a> and running it with a custom `text.txt` and `flag.txt`, we see that every token (substring of lowercase characters separated by spaces) is Caesar shifted by an amount to produce <a href={output}>output.txt</a>. Specifically, the `count`th token is shifted by `chars.index(flag[count % len(flag)])` for all tokens. We annotate the code below.
+```py
+def caesar(msg, shift):
+	return ''.join(chars[(chars.index(c) + shift) % len(chars)] for c in msg)
+
+i = 0
+count = 0
+while i < len(text):
+	if text[i] not in string.ascii_lowercase:
+		print(text[i], end = '')
+		i += 1
+	else:
+		# Get the next token
+		j = i
+		while text[j] in string.ascii_lowercase: j += 1
+
+		# Shift the token text[i:j]
+		print(caesar(text[i:j], chars.index(flag[count % len(flag)])), end = '')
+		count += 1
+		i = j
+```
+
+Since each token is Caesar ciphered, we can recover each token by checking all possible `len(chars) = 65` possible keys for each individual token and seeing which keys yields alphabetic English words.
+
+For example, trying all shifts for the first token `AtvDxK` in <a href={output}>output.txt</a> yields the alphabetic plaintext : key pairs
+```
+piksmz : l
+ohjrly : m
+ngiqkx : n
+mfhpjw : o
+legoiv : p
+kdfnhu : q
+jcemgt : r
+ibdlfs : s
+hacker : t
+```
+Clearly, the first word of the decrypted <a href={output}>output.txt</a> is `hacker`, meaning the first character of the flag is `t`.
+
+Running the following script to list the possible plaintext : key pairs and manually choosing the English words as well as corresponding keys yields the flag when concatenating all the keys together.
+```py
+import string
+
+text = "AtvDxK lAopjz /i + vhw c6 uwnshnuqjx ymfy kymhi Kyv 47+3l/eh Bs kpfkxkfwcnu Als 9phdgj9 +ka ymzuBGxmFq 6fdglk8i CICDowC, sjxir bjme+pfwfkd 6li=fj=kp, nCplEtGtEJ, lyo qeb INKLNBM vm ademb7697. ollqba lq DitCmA xzhm fx ef7dd7ii, wIvv eggiww GB kphqtocvkqp, 3d6 MAx ilsplm /d rpfkd vnloov hc nruwtAj xDxyjrx vexliv KyrE +3hc Gurz, jcemgt ixlmgw 9f7gmj5/9k obpmlkpf/ib mzp 8k/=64c ECo sj qb=eklildv. =k loGznlEpD qzC qo+kpm+obk=v, vHEEtuHKtMBHG, huk h7if75j/d9 mofs+=v, zkloh lqAkwCzioqvo rfqnhntzx fhynAnynjx b/a7 JKvrCzEx hexe BE ecwukpi 63c397. MAxLx wypujpwslz 3/c ql irvwhu 9bbcj1h9cb fsi f tswmxmzi zDGrtK ed FBpvrGL vjtqwij ixlmgep 5f8 =lkpqor=qfsb tmowuzs."
+
+chars = string.ascii_letters + string.digits + '+/='
+
+
+def caesar(msg, shift):
+    return ''.join(chars[(chars.index(c) - shift) % len(chars)] for c in msg)
+
+
+i = 0
+count = 0
+while i < len(text):
+    if text[i] not in chars:
+        i += 1
+    else:
+        j = i
+        while j < len(text) and text[j] in chars: j += 1
+        for k in range(len(chars)):
+            word = caesar(text[i:j], k)
+            if word.isalpha() and word.islower():
+                print(word, ":", chars[k])
+        print()
+        count += 1
+        i = j
+```
+
+Flag: `ENO{th3_d1ffer3nce5_m4ke_4ll_th3_diff3renc3}`
