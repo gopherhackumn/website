@@ -12,6 +12,8 @@ const { limit, drafts } = Astro.props;
 
 posts = posts.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
+if (limit !== undefined) posts = posts.slice(0, limit);
+
 switch (drafts) {
   case "show":
     break;

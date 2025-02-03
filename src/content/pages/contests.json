@@ -1,13 +1,33 @@
 {
   "years": [
     {
-      "place": 47,
-      "points": 36.236,
+      "place": 50,
+      "points": 44.139,
       "year": 2025,
       "countryPlace": 7
     }
   ],
   "events": [
+    {
+      "id": "ctftime-2596",
+      "place": 24,
+      "name": "BearcatCTF 2025: World Tour",
+      "link": "https://ctftime.org/event/2596",
+      "points": 5500,
+      "ratingPoints": 0,
+      "start": "2025-02-01T12:00:00.000Z",
+      "end": "2025-02-02T12:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2642",
+      "place": 64,
+      "name": "Nullcon Goa HackIM 2025 CTF",
+      "link": "https://ctftime.org/event/2642",
+      "points": 963,
+      "ratingPoints": 7.903,
+      "start": "2025-02-01T08:30:00.000Z",
+      "end": "2025-02-02T08:30:00.000Z"
+    },
     {
       "id": "ctftime-2648",
       "place": 198,
