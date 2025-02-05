@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
+<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
+<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  Nullcon Goa HackIM 2025 CTF: many caesars </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-03T07:57:26.242Z" data-astro-cid-quoef3qp> Monday, February 3, 2025 </div> <div data-astro-cid-quoef3qp>
+Authored by <a href="/authors/dajeff">dajeff</a> </div> <div data-astro-cid-quoef3qp>
+CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Goa HackIM 2025 CTF </a> </div> <div data-astro-cid-quoef3qp>Tags: crypto</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DHdN6dA9.css"/>
+<blockquote>
+<p>I took an old cipher and modified it to make it secure again. By breaking the regular patterns I made sure the known attacks don’t work. Now I can use it to encrypt texts with my favourite Chat partner.</p>
+<div><div class="row"><a class="btn" href="/_astro/chall.DMiKsQlL.py">chall.py</a></div><div class="row"><a class="btn" href="/_astro/output.zykns_Ov.txt">output.txt</a></div></div>
+</blockquote>
+<p>Inspecting <a href="/_astro/chall.DMiKsQlL.py">chall.py</a> and running it with a custom <code>text.txt</code> and <code>flag.txt</code>, we see that every token (substring of lowercase characters separated by spaces) is Caesar shifted by an amount to produce <a href="/_astro/output.zykns_Ov.txt">output.txt</a>. Specifically, the <code>count</code>th token is shifted by <code>chars.index(flag[count % len(flag)])</code> for all tokens. We annotate the code below.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> caesar</span><span style="color:#E1E4E8">(msg, shift):</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#9ECBFF"> &#39;&#39;</span><span style="color:#E1E4E8">.join(chars[(chars.index(c) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> shift) </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(chars)] </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> c </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> msg)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">count </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">while</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(text):</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> text[i] </span><span style="color:#F97583">not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> string.ascii_lowercase:</span></span>
+<span class="line"><span style="color:#79B8FF">		print</span><span style="color:#E1E4E8">(text[i], </span><span style="color:#FFAB70">end</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &#39;&#39;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		i </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">	else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">		# Get the next token</span></span>
+<span class="line"><span style="color:#E1E4E8">		j </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> i</span></span>
+<span class="line"><span style="color:#F97583">		while</span><span style="color:#E1E4E8"> text[j] </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> string.ascii_lowercase: j </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">		# Shift the token text[i:j]</span></span>
+<span class="line"><span style="color:#79B8FF">		print</span><span style="color:#E1E4E8">(caesar(text[i:j], chars.index(flag[count </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(flag)])), </span><span style="color:#FFAB70">end</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &#39;&#39;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		count </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">		i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span>
+<span class="line"></span></code></pre>
+<p>Since each token is Caesar ciphered, we can recover each token by checking all possible <code>len(chars) = 65</code> possible keys for each individual token and seeing which keys yields alphabetic English words.</p>
+<p>For example, trying all shifts for the first token <code>AtvDxK</code> in <a href="/_astro/output.zykns_Ov.txt">output.txt</a> yields the alphabetic plaintext : key pairs</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>piksmz : l</span></span>
+<span class="line"><span>ohjrly : m</span></span>
+<span class="line"><span>ngiqkx : n</span></span>
+<span class="line"><span>mfhpjw : o</span></span>
+<span class="line"><span>legoiv : p</span></span>
+<span class="line"><span>kdfnhu : q</span></span>
+<span class="line"><span>jcemgt : r</span></span>
+<span class="line"><span>ibdlfs : s</span></span>
+<span class="line"><span>hacker : t</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Clearly, the first word of the decrypted <a href="/_astro/output.zykns_Ov.txt">output.txt</a> is <code>hacker</code>, meaning the first character of the flag is <code>t</code>.</p>
+<p>Running the following script to list the possible plaintext : key pairs and manually choosing the English words as well as corresponding keys yields the flag when concatenating all the keys together.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> string</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">text </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;AtvDxK lAopjz /i + vhw c6 uwnshnuqjx ymfy kymhi Kyv 47+3l/eh Bs kpfkxkfwcnu Als 9phdgj9 +ka ymzuBGxmFq 6fdglk8i CICDowC, sjxir bjme+pfwfkd 6li=fj=kp, nCplEtGtEJ, lyo qeb INKLNBM vm ademb7697. ollqba lq DitCmA xzhm fx ef7dd7ii, wIvv eggiww GB kphqtocvkqp, 3d6 MAx ilsplm /d rpfkd vnloov hc nruwtAj xDxyjrx vexliv KyrE +3hc Gurz, jcemgt ixlmgw 9f7gmj5/9k obpmlkpf/ib mzp 8k/=64c ECo sj qb=eklildv. =k loGznlEpD qzC qo+kpm+obk=v, vHEEtuHKtMBHG, huk h7if75j/d9 mofs+=v, zkloh lqAkwCzioqvo rfqnhntzx fhynAnynjx b/a7 JKvrCzEx hexe BE ecwukpi 63c397. MAxLx wypujpwslz 3/c ql irvwhu 9bbcj1h9cb fsi f tswmxmzi zDGrtK ed FBpvrGL vjtqwij ixlmgep 5f8 =lkpqor=qfsb tmowuzs.&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">chars </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> string.ascii_letters </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> string.digits </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> &#39;+/=&#39;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> caesar</span><span style="color:#E1E4E8">(msg, shift):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#9ECBFF"> &#39;&#39;</span><span style="color:#E1E4E8">.join(chars[(chars.index(c) </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> shift) </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(chars)] </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> c </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> msg)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">count </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">while</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(text):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> text[i] </span><span style="color:#F97583">not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> chars:</span></span>
+<span class="line"><span style="color:#E1E4E8">        i </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        j </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> i</span></span>
+<span class="line"><span style="color:#F97583">        while</span><span style="color:#E1E4E8"> j </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(text) </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> text[j] </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> chars: j </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(chars)):</span></span>
+<span class="line"><span style="color:#E1E4E8">            word </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> caesar(text[i:j], k)</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> word.isalpha() </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> word.islower():</span></span>
+<span class="line"><span style="color:#79B8FF">                print</span><span style="color:#E1E4E8">(word, </span><span style="color:#9ECBFF">&quot;:&quot;</span><span style="color:#E1E4E8">, chars[k])</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">        count </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">        i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span>
+<span class="line"></span></code></pre>
+<p>Flag: <code>ENO{th3_d1ffer3nce5_m4ke_4ll_th3_diff3renc3}</code></p> </div>  </main> <footer data-astro-cid-sckkx6r4>
+&mdash;
+<a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
+&mdash;
+</footer> </div> </section> </body></html> 
