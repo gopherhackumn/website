@@ -164,10 +164,8 @@ Continuing with our analysis of `lmao` to account for this, we have
     \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((-1)(-2)\cdots (k - 1))^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\} \pmod n
     \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((-1)^\{k-1\}(k - 1)!)^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\} \pmod n
     \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)(-(k - 1)!k!)^\{-1\} \pmod n
-    \\\\ &\equiv (-1)^k(-(k - 1)!k!)^\{-1\} \pmod n
-    \\\\ &\equiv ((k - 1)!k!)^\{-1\} \pmod n,
+    \\\\ &\equiv (-(k - 1)!k!)^\{-1\} \pmod n,
 \end\{align*\}\\]
-where the last line is justified since \\(k\\) is odd.
 
 ### Note
 The above is finished; the below is unfinished. Essentially, observe that for the above output `lucky`, `lucky * factorial(k - 1) * factorial(k) + 1` has `r` as a factor, so take `r = gcd(large, pseudo_n)`, find `modulo, p` by factoring `(lucky * factorial(k - 1) * factorial(k) + 1) / r`, and solve the RSA modulo `p`.
