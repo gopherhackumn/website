@@ -1,8 +1,8 @@
 {
   "years": [
     {
-      "place": 50,
-      "points": 44.139,
+      "place": 48,
+      "points": 48.306,
       "year": 2025,
       "countryPlace": 7
     }
@@ -29,12 +29,32 @@
       "end": "2025-02-02T08:30:00.000Z"
     },
     {
+      "id": "ctftime-2663",
+      "place": 35,
+      "name": "ECTF",
+      "link": "https://ctftime.org/event/2663",
+      "points": 5000,
+      "ratingPoints": 0,
+      "start": "2025-01-31T11:00:00.000Z",
+      "end": "2025-02-02T11:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2665",
+      "place": 70,
+      "name": "ATC Winter Vibes Community CTF",
+      "link": "https://ctftime.org/event/2665",
+      "points": 550,
+      "ratingPoints": 0,
+      "start": "2025-01-31T07:00:00.000Z",
+      "end": "2025-02-01T07:00:00.000Z"
+    },
+    {
       "id": "ctftime-2648",
       "place": 198,
       "name": "Codefest CTF 2025",
       "link": "https://ctftime.org/event/2648",
       "points": 900,
-      "ratingPoints": 0,
+      "ratingPoints": 4.167,
       "start": "2025-01-25T12:30:00.000Z",
       "end": "2025-01-27T00:30:00.000Z"
     },
