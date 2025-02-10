@@ -1,0 +1,175 @@
+---
+title: "BITSCTF 2025: RSA Bummer"
+date: 2025-02-02T11:56:00.487Z
+draft: true
+author: dajeff
+tags: [crypto]
+---
+
+import css from "css/styles.css?url";
+import chall from "./chall.py?url";
+
+<link rel="stylesheet" href={css}></link>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossOrigin="anonymous"
+></link>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossOrigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossOrigin="anonymous"
+  onLoad="renderMathInElement(document.body);"
+></script>
+
+### Problem Summary
+
+> RSA was bad as it was, but now it has gone to dogs!
+>
+> Wrap the flag inside BITSCTF\{..\}.
+>
+> `nc chals.bitskrieg.in 7001`
+>
+> > Metapod_04
+> 
+> <a href={chall}>chall.py</a>
+
+<a href={chall}>chall.py</a> starts by defining a function `lmao` (shown later in this writeup) and variables `e, p, q, r, modulo, pseudo_n, multiplier, flag`.
+```py
+e = 27525540
+
+while True:
+    p = getPrime(1024)
+    if (((15-GCD(e,(p-1)))>>(31))==0):
+        break
+q = getPrime(1024)
+r = getPrime(1024)
+
+modulo = p*r
+pseudo_n = r*(pow(e,p,q))
+multiplier = getPrime(4)
+
+flag = bytes(FLAG)
+```
+
+Notably, \\(e = 2^2\cdot 3\cdot 5\cdot 7\cdot 65537\\) and `multiplier` is a 4-bit prime, which is small.
+
+We are given `pseudo_n, e` as well as a version of the flag, which is broken into three parts and encrypted with RSA.
+```py
+print("Pseudo_n = ", pseudo_n)
+print("e = ", e)
+
+for i in range(3):
+    pt = flag [ i*len(flag)//3 : (i+1)*len(flag)//3 ]
+    ct = pow(bytes_to_long(pt),e,(p*q))
+    print(f"Ciphertext {i+1} =", ct)
+```
+
+We then have five chances to enter an integer `x` such that `3 <= x <= 23`. The server then outputs a result equivalent to that of `lmao(modulo,multiplier,x)`.
+```py
+def lmao(n,k,x):  #Better function needed
+    pseudo_p = 1 
+    for i in range(2,k*n-x):
+        try:
+            if (GCD(i,n-1)^(n-1)!=0):
+                pseudo_p = (pseudo_p*inverse(i,n))%n
+        except:
+            continue
+    return inverse(pseudo_p,n)
+```
+
+Our goal is to recover the flag from the ciphertexts.
+
+### Solution
+
+`lmao` looks a bit strange, so let's clean it up a bit. The condition `GCD(i,n-1)^(n-1)!=0` is equivalent to `GCD(i, n - 1) != n - 1` (due to properties of XOR), which is in turn equivalent to `i % (n - 1) != 0` (since \\(\gcd(i, n - 1) = n - 1\Longleftrightarrow n - 1\mid i\\)).
+
+Moreover, an exception will only be thrown from `inverse(i, n)`, under the condition that `i` does not have an inverse modulo `n`, i.e. \\(\gcd(i, n) \neq 1\\). Thus, we only take the product for `i` such that \\(\gcd(i, n) = 1\\).
+
+Finally, after we compute `pseudo_p`, which is a product of inverses \\(i^\{-1\}\bmod n\\), we take the inverse of the whole product again, meaning `pseudo_p` is effectively just a product of \\(i\bmod n\\) (since the inverses cancel out).
+
+Cleaning up, `lmao` produces the same output as
+```py
+def lmao(n, k, x):
+    pseudo_p = 1
+    for i in range(2, k * n - x):
+        if i % (n - 1) != 0 and GCD(i, n) == 1:
+            pseudo_p = (pseudo_p * i) % n
+    return pseudo_p
+```
+
+We may notice something special might happen when `x` is around `k`, as the condition `i % (n - 1) != 0` is false when `i == k * n - k`. Let's formalize it.
+
+In mathematical notation, we'll write
+\\[\operatorname\{lmao\}(n, k, x) := \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-x-1\} i\right) \bmod n\\]
+in reference to how `lmao` does this product.
+
+Observe that
+\\[\begin\{align*\}
+    \operatorname\{lmao\}(n, k, k - 1) &= \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right) \bmod n
+    \\\\ &= \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k-1\} i\right) \bmod n
+    \\\\ &= \operatorname\{lmao\}(n, k, k)
+\end\{align*\}\\]
+since \\(n - 1\mid kn - k\\), meaning it is not included in the product. Also recall that the server returns the value of `lmao(modulo,multiplier,x)` (we'll use \\(k = \mathrm\{multiplier\}\\) from here on out). Since `multiplier` is a 4-bit prime (i.e. it is either \\(11\\) or \\(13\\)), we can determine the value of `multiplier` by sending \\(x = 10, 11, 12, 13\\). If the return values for \\(x = 10, 11\\) are the same, then \\(k = 11\\) by the above equation; otherwise \\(k = 13\\).
+
+Now that we know the value of \\(k\\), let's do some more analysis on \\(\operatorname\{lmao\}(n, k, k - 1)\\). The set of \\(i\\) such that \\(\gcd(i, n) = 1\\) (i.e. the multiplicative inverse of \\(i\\) exists) called the set of units, is special, and is well studied. We may notice that there is a sort of cyclic nature in the product (e.g. the product is essentially a product of \\(k\\) sets of units, minus a few elements), so we'll focus on the product of these units.
+
+[Wilson's Theorem](https://en.wikipedia.org/wiki/Wilson%27s_theorem) states that for all primes \\(p\\), we have that the product of all units \\((p - 1)!\\) satisfies \\((p - 1)!\equiv -1\pmod p\\). The proof is that all units come in multiplicative inverse pairs that will cancel out in the product except for the units \\(u\\) that are their own mulitplicative inverse, i.e.
+\\[\begin\{align*\}
+    u&\equiv u^\{-1\}\pmod p
+    \\\\ u^2&\equiv 1\pmod p
+    \\\\ u^2 - 1&\equiv 0\pmod p
+    \\\\ u&\equiv -1, 1\pmod p,
+\end\{align*\}\\]
+where the last step comes from a famous result in field theory that states that a polynomial of degree \\(d\\) modulo a prime \\(p\\) as at most \\(d\\) roots. Thus, the product of all units is \\(-1\cdot 1 = -1\\).
+
+The product of units for semiprime \\(n = p\cdot r\\), such as the `modulo = p * r` used as input in the challenge, is slightly different, as we cannot directly apply the previously mentioned result from field theory. Instead, all units come in multiplicative inverse pairs except for the units \\(u\\) that satisfy
+\\[\begin\{align*\}
+    u&\equiv u^\{-1\}\pmod n
+    \\\\ u^2 - 1&\equiv 0\pmod n
+\end\{align*\}\\]
+\\[\begin\{align*\}
+    u^2 - 1&\equiv 0\pmod p & u^2 - 1&\equiv 0\pmod q
+    \\\\ u&\equiv -1, 1\pmod p & u&\equiv -1, 1\pmod q
+\end\{align*\}\\]
+by the Chinese Remainder Theorem. Thus, there are \\(2\cdot 2 = 4\\) units whose inverse is themselves, namely \\(u_1, u_2, u_3, u_4\\) that satisfy
+\\[\begin\{align*\}
+    u_0&\equiv -1\pmod p & u_0&\equiv -1\pmod q
+    \\\\ u_1&\equiv -1\pmod p & u_1&\equiv 1\pmod q
+    \\\\ u_2&\equiv 1\pmod p & u_2&\equiv -1\pmod q
+    \\\\ u_3&\equiv 1\pmod p & u_3&\equiv 1\pmod q.
+\end\{align*\}\\]
+The product of these units is
+\\[(-1)(-1)\cdot 1\cdot 1 \equiv 1\pmod p\\]
+and
+\\[(-1)\cdot 1\cdot(-1)\cdot 1 \equiv 1\pmod q,\\]
+so by the Chinese Remainder Theorem, the product is \\(1\\) modulo \\(n\\).
+
+Continuing with our analysis of `lmao` to account for this, we have
+\\[\begin\{align*\}
+    \prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)\left(\prod_\{\substack\{i=2,\\\\n - 1\mid i\}\}^\{kn-k\} i\right)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)((n - 1)(2n - 2)\cdots (kn - k))^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)((n - 1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)((-1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)\left(\prod_\{\substack\{i=kn-k+1,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)^\{-1\}((-1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((kn - 1)(kn - 2)\cdots (kn - k + 1))^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((-1)(-2)\cdots (k - 1))^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((-1)^\{k-1\}(k - 1)!)^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)(-(k - 1)!k!)^\{-1\} \pmod n
+    \\\\ &\equiv (-1)^k(-(k - 1)!k!)^\{-1\} \pmod n
+    \\\\ &\equiv ((k - 1)!k!)^\{-1\} \pmod n,
+\end\{align*\}\\]
+where the last line is justified since \\(k\\) is odd.
+
+### Note
+The above is finished; the below is unfinished. Essentially, observe that for the above output `lucky`, `lucky * factorial(k - 1) * factorial(k) + 1` has `r` as a factor, so take `r = gcd(large, pseudo_n)`, find `modulo, p` by factoring `(lucky * factorial(k - 1) * factorial(k) + 1) / r`, and solve the RSA modulo `p`.
+
+Flag: `BITSCTF{s0_fun_7o_50lv3_5ef78a03}`
