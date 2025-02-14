@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
+<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
+<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  BITSCTF 2025: Noob RSA Returns </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-13T21:30:56.748Z" data-astro-cid-quoef3qp> Thursday, February 13, 2025 </div> <div data-astro-cid-quoef3qp>
+Authored by <a href="/authors/dajeff">dajeff</a> </div>  <div data-astro-cid-quoef3qp>Tags: crypto</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DOL_VcOL.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossOrigin="anonymous"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh" crossOrigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossOrigin="anonymous" onLoad="renderMathInElement(document.body);"></script>
+<h3 id="problem-summary">Problem Summary</h3>
+<blockquote>
+<p>break it this time</p>
+<div><a href="/_astro/chall.BByJY2eA.txt">chall.txt</a></div>
+<div><a href="/_astro/encrypt.WYK3Z_rC.py">encrypt.py</a></div>
+</blockquote>
+<p>We are given <code>e, n, ct</code> as in standard RSA and <code>K = (A*p**2 - C*p + D)*d</code>, where <code>p, d</code> are as in standard RSA and</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#E1E4E8">C </span><span style="color:#F97583">=</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">baaaaaad</span></span>
+<span class="line"><span style="color:#E1E4E8">D </span><span style="color:#F97583">=</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">deadbeef</span></span>
+<span class="line"><span style="color:#E1E4E8">A</span><span style="color:#F97583">=</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">baadf00d</span></span>
+<span class="line"></span></code></pre>
+<p>Our goal is to decrypt <code>ct</code>.</p>
+<h3 id="solution">Solution</h3>
+<p>Since there is a factor of <code>d</code> in <code>K</code>, it’s natural to consider what happens when we take \(2^{Ke}\bmod n\):
+\[\begin{align*}
+2^{Ke} &amp;\equiv 2^{(Ap^2 - Cp + D)de}\pmod n
+\\ &amp;\equiv 2^{Ap^2 - Cp + D}\pmod n
+\end{align*}\]
+We have \(Ap^2 + Cp + D\equiv A - C + D\pmod{p - 1}\), so
+\[2^{Ke} \equiv 2^{Ap^2 - Cp + D} \equiv 2^{A - C + D}\pmod p.\]
+Hence, \(2^{Ke} - 2^{A - C + D}\) has a factor of \(p\), so we can obtain \(p\) by taking
+\[\gcd(2^{Ke} - 2^{A - C + D}, n) = p.\]
+From this we derive the prime factorization of \(n\), and standard RSA decryption follows.</p>
+<p>Flag: <code>BITSCTF{I_H0P3_Y0UR3_H4V1NG_FUN_S0_F4R_EHEHEHEHEHO_93A5B675}</code></p>
+<p>The final solve script can be found <a href="/_astro/solve.CXbNlQH_.py">here</a>.</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
+&mdash;
+<a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
+&mdash;
+</footer> </div> </section> </body></html> 
