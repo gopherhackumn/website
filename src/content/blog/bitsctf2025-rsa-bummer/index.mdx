@@ -1,0 +1,235 @@
+---
+title: "BITSCTF 2025: RSA Bummer"
+date: 2025-02-14T08:57:16.633Z
+draft: false
+author: dajeff
+tags: [crypto]
+---
+
+import css from "css/styles.css?url";
+import chall from "./chall.py?url";
+import solveScript from "./solve.sage?url";
+
+<link rel="stylesheet" href={css}></link>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossOrigin="anonymous"
+></link>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossOrigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossOrigin="anonymous"
+  onLoad="renderMathInElement(document.body);"
+></script>
+
+### Problem Summary
+
+> RSA was bad as it was, but now it has gone to dogs!
+>
+> Wrap the flag inside BITSCTF\{..\}.
+>
+> `nc chals.bitskrieg.in 7001`
+>
+> > Metapod_04
+> 
+> <a href={chall}>chall.py</a>
+
+<a href={chall}>chall.py</a> starts by defining a function `lmao` (shown later in this writeup) and variables `e, p, q, r, modulo, pseudo_n, multiplier, flag`.
+```py
+e = 27525540
+
+while True:
+    p = getPrime(1024)
+    if (((15-GCD(e,(p-1)))>>(31))==0):
+        break
+q = getPrime(1024)
+r = getPrime(1024)
+
+modulo = p*r
+pseudo_n = r*(pow(e,p,q))
+multiplier = getPrime(4)
+
+flag = bytes(FLAG)
+```
+
+Notably, \\(e = 2^2\cdot 3\cdot 5\cdot 7\cdot 65537\\) and `multiplier` is a 4-bit prime, which is small.
+
+We are given `pseudo_n, e` as well as a version of the flag, which is broken into three parts and encrypted with RSA.
+```py
+print("Pseudo_n = ", pseudo_n)
+print("e = ", e)
+
+for i in range(3):
+    pt = flag [ i*len(flag)//3 : (i+1)*len(flag)//3 ]
+    ct = pow(bytes_to_long(pt),e,(p*q))
+    print(f"Ciphertext {i+1} =", ct)
+```
+
+We have five chances to enter an integer `x` such that `3 <= x <= 23`. The server then outputs a result equivalent to that of `lmao(modulo,multiplier,x)`.
+```py
+def lmao(n,k,x):  #Better function needed
+    pseudo_p = 1 
+    for i in range(2,k*n-x):
+        try:
+            if (GCD(i,n-1)^(n-1)!=0):
+                pseudo_p = (pseudo_p*inverse(i,n))%n
+        except:
+            continue
+    return inverse(pseudo_p,n)
+```
+
+Our goal is to recover the flag from the ciphertexts.
+
+### Solution
+
+`lmao` looks a bit strange, so let's clean it up a bit.
+- The condition `GCD(i,n-1)^(n-1)!=0` is equivalent to `GCD(i, n - 1) != n - 1` (due to properties of XOR), which is in turn equivalent to `i % (n - 1) != 0` (since \\(\gcd(i, n - 1) = n - 1\\) iff \\(n - 1\mid i\\)).
+- Moreover, an exception will only be thrown from `inverse(i, n)`, under the condition that `i` does not have an inverse modulo `n`, i.e. \\(\gcd(i, n) \neq 1\\). Thus, we only take the product for `i` such that \\(\gcd(i, n) = 1\\).
+- Finally, after we compute `pseudo_p`, which is a product of inverses \\(i^\{-1\}\bmod n\\), we take the inverse of the whole product again, meaning `pseudo_p` is effectively just a product of \\(i\bmod n\\) (since the inverses cancel out).
+
+Cleaning up, `lmao` produces the same output as
+```py
+def lmao(n, k, x):
+    pseudo_p = 1
+    for i in range(2, k * n - x):
+        if i % (n - 1) != 0 and GCD(i, n) == 1:
+            pseudo_p = (pseudo_p * i) % n
+    return pseudo_p
+```
+
+We may notice something special might happen when `x` is around `k`, as the condition `i % (n - 1) != 0` is false when `i == k * n - k`. Let's formalize it.
+
+In mathematical notation, we'll write
+\\[\operatorname\{lmao\}(n, k, x) := \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-x-1\} i\right) \bmod n\\]
+in reference to how `lmao` does this product.
+
+Observe that
+\\[\begin\{align*\}
+    \operatorname\{lmao\}(n, k, k - 1) &= \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right) \bmod n
+    \\\\ &= \left(\prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k-1\} i\right) \bmod n
+    \\\\ &= \operatorname\{lmao\}(n, k, k)
+\end\{align*\}\\]
+since \\(n - 1\mid kn - k\\), meaning it is not included in the product. Also recall that the server returns the value of `lmao(modulo,multiplier,x)` (we'll use \\(n = \mathrm\{modulo\}, k = \mathrm\{multiplier\}\\) from here on out). Since \\(k\\) is a 4-bit prime (i.e. it is either \\(11\\) or \\(13\\)), **we can determine the value of \\(k\\)** by sending \\(x = 10, 11, 12, 13\\). If the return values for \\(x = 10, 11\\) are the same, then \\(k = 11\\) by the above equation; otherwise \\(k = 13\\).
+
+Now that we know the value of \\(k\\), let's do some more analysis on \\(\operatorname\{lmao\}(n, k, k - 1)\\). The set of \\(i\\) such that \\(\gcd(i, n) = 1\\) (i.e. the multiplicative inverse of \\(i\\) exists) is called the set of units and is well studied. We may notice that there is a sort of cyclic nature in the product (e.g. the product is essentially a product of \\(k\\) sets of units, minus a few elements), so we'll focus on the product of these units.
+
+As it turns out, the product of units modulo a semiprime \\(n\\) is \\(1\\).
+
+<details>
+<summary>Why is the product of units modulo a semiprime \\(1\\)?</summary>
+
+[Wilson's Theorem](https://en.wikipedia.org/wiki/Wilson%27s_theorem) states that for all primes \\(p\\), we have that the product of all units \\((p - 1)!\\) satisfies \\((p - 1)!\equiv -1\pmod p\\). The proof is that all units come in multiplicative inverse pairs that will cancel out in the product except for the units \\(u\\) that are their own mulitplicative inverse, i.e.
+\\[\begin\{align*\}
+    u&\equiv u^\{-1\}\pmod p
+    \\\\ u^2&\equiv 1\pmod p
+    \\\\ u^2 - 1&\equiv 0\pmod p
+    \\\\ u&\equiv -1, 1\pmod p,
+\end\{align*\}\\]
+where the last step comes from a famous result in field theory that states that a nonzero polynomial of degree \\(d\\) modulo a prime \\(p\\) as at most \\(d\\) roots. Thus, the product of all units is \\(-1\cdot 1 = -1\\).
+
+The product of units for semiprime \\(n = pr\\) is slightly different, as we cannot directly apply the previously mentioned result from field theory. Instead, all units come in multiplicative inverse pairs except for the units \\(u\\) that satisfy
+\\[\begin\{align*\}
+    u&\equiv u^\{-1\}\pmod n
+    \\\\ u^2 - 1&\equiv 0\pmod n
+\end\{align*\}\\]
+\\[\begin\{align*\}
+    u^2 - 1&\equiv 0\pmod p & u^2 - 1&\equiv 0\pmod r
+    \\\\ u&\equiv -1, 1\pmod p & u&\equiv -1, 1\pmod r
+\end\{align*\}\\]
+by the Chinese Remainder Theorem. Thus, there are \\(2\cdot 2 = 4\\) units whose inverse is themselves, namely \\(u_1, u_2, u_3, u_4\\) that satisfy
+\\[\begin\{align*\}
+    u_0&\equiv -1\pmod p & u_0&\equiv -1\pmod r
+    \\\\ u_1&\equiv -1\pmod p & u_1&\equiv 1\pmod r
+    \\\\ u_2&\equiv 1\pmod p & u_2&\equiv -1\pmod r
+    \\\\ u_3&\equiv 1\pmod p & u_3&\equiv 1\pmod r.
+\end\{align*\}\\]
+The product of these units is
+\\[(-1)(-1)\cdot 1\cdot 1 \equiv 1\pmod p\\]
+and
+\\[(-1)\cdot 1\cdot(-1)\cdot 1 \equiv 1\pmod r,\\]
+so by the Chinese Remainder Theorem, the product is \\(1\\) modulo \\(n\\).
+</details>
+
+Continuing with our analysis of `lmao` to account for this, let's first get rid of some conditions by separating \\(i\\) such that \\(n - 1\mid i\\) out of the product.
+\\[\begin\{align*\}
+    \prod_\{\substack\{i=2,\\\\n-1\nmid i,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)\left(\prod_\{\substack\{i=2,\\\\n - 1\mid i\}\}^\{kn-k\} i\right)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)((n - 1)(2n - 2)\cdots (kn - k))^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)((-1)^k\cdot k!)^\{-1\} \pmod n
+\end\{align*\}\\]
+Focusing on the first term, let's again simplify the problem by making the product range from \\(i = 2\\) to \\(kn\\) (instead of \\(kn - k\\)).
+\\[\begin\{align*\}
+    \\\\ \prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)\left(\prod_\{\substack\{i=kn-k+1,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((kn - 1)(kn - 2)\cdots (kn - k + 1))^\{-1\} \pmod n
+    \\\\ &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)((-1)^\{k-1\}(k - 1)!)^\{-1\} \pmod n
+\end\{align*\}\\]
+Finally, the product of units is \\(1\\), so 
+\\[\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn\} i \equiv 1\pmod n.\\]
+Combining this all together, we have
+\\[\begin\{align*\}
+    \operatorname\{lmao\}(n, k, k - 1) &\equiv \left(\prod_\{\substack\{i=2,\\\\\gcd(i,n)=1\}\}^\{kn-k\} i\right)\left(\prod_\{\substack\{i=kn-k+1,\\\\\gcd(i,n)=1\}\}^\{kn\} i\right)^\{-1\}\left(\prod_\{\substack\{i=2,\\\\n - 1\mid i\}\}^\{kn-k\} i\right)^\{-1\}\pmod n
+    \\\\ &\equiv 1\cdot ((-1)^\{k-1\}(k - 1)!)^\{-1\}\cdot ((-1)^k\cdot k!)^\{-1\}\pmod n
+    \\\\ &\equiv (-(k - 1)!k!)^\{-1\} \pmod n.
+\end\{align*\}\\]
+
+This means that
+\\[\begin\{align*\}
+    \operatorname\{lmao\}(n, k, k - 1)(k - 1)!k! &\equiv -1\pmod n.
+    \\\\ \mathrm\{large\} := \operatorname\{lmao\}(n, k, k - 1)(k - 1)!k! + 1 &\equiv 0\pmod n.
+\end\{align*\}\\]
+so we can find a prime factor \\(r\\) of \\(n\\) by taking \\(\gcd(\mathrm\{large\}, \mathrm\{pseudo\\_n\})\\).
+```python
+lucky = 5013846788728970106981286568035850741510050958651719688793565241746763951237597385789456422355290131911960893124306704535430840764505962087579852251387223473408382775532681027486642795845613056526111047319999052391171988132594264091105556738766092622128123234218481277217365462624251865908413965413703317915494455334209190162571673453780337597871238287728383297279201323086922663893401420724242318735169522781251476879432026866527168584211903251695041263496038018323762440787331977006619381253641478882038701393969473301303678923181843766561832650727043140511451419703017904887191617608727752859093957833065767210051
+# ...
+large = lucky * factorial(k - 1) * factorial(k) + 1
+r = gcd(large, pseudo_n)
+```
+To find the other prime factor \\(p\\) of \\(n = pr\\), we can note that \\(\mathrm\{large\} = \operatorname\{lmao\}(n, k, k - 1)(k - 1)!k!\\) is at most around \\((k - 1)!k!\cdot n\\). Hence all prime factors of \\(\mathrm\{large\}\\) other than \\(p, r\\) are small, meaning prime factoring \\(\mathrm\{large\} / r\\) and taking the largest prime factor yields \\(p\\).
+```python
+print("large / r:", factor(large / r))
+
+p = 97024739464998702506669770040122555405744744329112361431296849602425176888706677027168942602346601410275677551642583542221372889929921169129152046628767518204950634335610816971646728944584206197909423063817745571547831875610836246031230531848786470473211134081105553332730836486257401821895577462008987410887
+```
+
+We have a factor of the modulus used for the RSA encryption, so we can decrypt the flag now (by looking at the flag modulo \\(p\\)). A potential problem may be that \\(e, p - 1\\) are not relatively prime, but we can resolve this in a similar way to the [Rabin cryptosystem](https://en.wikipedia.org/wiki/Rabin_cryptosystem).
+```python
+print("GCD:", gcd(e, p - 1))  # 2
+d = pow(e // 4, -1, p - 1)
+
+print(binascii.unhexlify(hex(isqrt(pow(c1, d * (p + 1) // 4, p)))[2:]) + binascii.unhexlify(hex(isqrt(pow(c2, d * (p + 1) // 4, p)))[2:]) + binascii.unhexlify(hex(isqrt(pow(c3, d * (p + 1) // 4, p)))[2:]))
+```
+<details>
+<summary>Why does this code work?</summary>
+
+Assume that \\(\gcd(e/4, p - 1) = 1\\); see the comment after this section if not. Let \\(\mathrm\{pt\}, \mathrm\{ct\}\\) be the plaintext and ciphertext respectively. Let \\(\mathrm\{d\} := (e/4)^\{-1\}\bmod\{p - 1\}\\). Then,
+\\[\begin\{align*\}
+    \mathrm\{pt\}^e &\equiv \mathrm\{ct\}\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^\{e/4\cdot 4\} &\equiv \mathrm\{ct\}\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^\{(e/4\cdot d)\cdot 4\} &\equiv \mathrm\{ct\}^d\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^4 &\equiv \mathrm\{ct\}^d\pmod\{p - 1\}.
+\end\{align*\}\\]
+If \\(\mathrm\{pt\}\\) is small enough we can compute \\(\sqrt[4]\{\mathrm\{ct\}^d\bmod\{p - 1\}\}\\) to retrieve the flag. In fact, this is an alternative approach; try it! What happens if you replace `isqrt(pow(c1, d * (p + 1) // 4, p))` with `isqrt(isqrt(pow(c1, d, p)))` in the above code/in the solve script?
+
+If \\(\mathrm\{pt\}\\) is not small enough and \\(p\equiv 3\pmod 4\\), we can note
+\\[\begin\{align*\}
+    \mathrm\{pt\}^4 &\equiv \mathrm\{ct\}^d\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^\{4\cdot (p + 1)/4\} &\equiv \mathrm\{ct\}^\{d(p + 1)/4\}\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^\{p + 1\} &\equiv \mathrm\{ct\}^\{d(p + 1)/4\}\pmod\{p - 1\}
+    \\\\ \mathrm\{pt\}^2 &\equiv \mathrm\{ct\}^\{d(p + 1)/4\}\pmod\{p - 1\}
+\end\{align*\}\\]
+and compute a potential plaintext \\(\sqrt\{\mathrm\{ct\}^\{d(p + 1)/4\}\bmod\{p - 1\}\}\\).
+</details>
+
+If the GCD is not a power of \\(2\\) (e.g. the GCD contains a factor of \\(5\\)), we can instead compute something like \\(d = (e/20)^\{-1\}\bmod\{p - 1\}\\) and take the tenth root of the result instead of the square root.
+
+Flag: `BITSCTF{s0_fun_7o_50lv3_5ef78a03}`
+
+The final solve script can be found <a href={solveScript}>here</a>.
