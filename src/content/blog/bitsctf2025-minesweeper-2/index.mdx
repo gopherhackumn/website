@@ -1,0 +1,51 @@
+---
+title: "BITSCTF 2025: Minesweeper 2"
+date: 2025-02-14T08:57:16.633Z
+draft: true
+author: dajeff
+tags: [crypto]
+---
+
+import css from "css/styles.css?url";
+import readme from "./README.md?url";
+import solveScript from "./solve.py?url";
+
+<link rel="stylesheet" href={css}></link>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossOrigin="anonymous"
+></link>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossOrigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossOrigin="anonymous"
+  onLoad="renderMathInElement(document.body);"
+></script>
+
+> Minesweeper has a wierd name don't you think you don't actually sweep any mines in it so I decided to make it better.
+> 
+> `nc chals.bitskrieg.in 7006`
+> 
+>> dipper
+> 
+> <div>
+>     <a href={readme}>README.md</a>
+> </div>
+
+A \\(m\times n\\) board yields a system of linear equations in \\(mn\\) variables. Each variable \\(a_\{ij\}\\) represents the number of mines at row \\(i\\), column \\(j\\). Each equation sets a constraint on how many mines can be at a location's neighbors based on the number in its tile. For example, if there are \\(b_\{23\}\\) mines adjacent to a non-edge tile at row \\(2\\), column \\(3\\), the correpsonding equation is
+\\[a_\{13\} + a_\{22\} + a_\{33\} + a_\{24\} = b_\{23\}.\\]
+
+Normally, such systems are solved using Gaussian elimination in \\(O((mn)^3)\\). Luckily, our system of equations is very sparse, so `scipy.sparse` can solve the system more quickly.
+
+Flag: `BITSCTF{D0_u_y34rn_f0R_th3_m1n3s?}`
+
+The final solve script can be found <a href={solveScript}>here</a>.
