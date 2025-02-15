@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.1.9"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
 <link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
-<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
-<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
 &#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  TUCTF 2025: Liber-Tea Hero </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-01-28T08:39:06.459Z" data-astro-cid-quoef3qp> Tuesday, January 28, 2025 </div> <div data-astro-cid-quoef3qp>
 Authored by <a href="/authors/dajeff">dajeff</a> </div> <div data-astro-cid-quoef3qp>
 CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024 </a> </div> <div data-astro-cid-quoef3qp>Tags: misc</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.YnPl4Our.css"/>
@@ -26,8 +25,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#9ECBFF">        &quot;left&quot;</span></span>
 <span class="line"><span style="color:#E1E4E8">    ],</span></span>
 <span class="line"><span style="color:#6A737D">    // ...</span></span>
-<span class="line"><span style="color:#E1E4E8">};</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
 <p>To construct this <code>d</code> by brute forcing images, we’ll first find the first direction at index <code>i = 0</code> by brute forcing each direction <code>directions[di]</code> for <code>di = 0</code> to <code>3</code>, then find the second direction at index <code>i = 1</code>, and so on. We’ll store the correct directions we’ve accumulated in a list <code>l</code>.</p>
 <p>Let’s first define these variables and a couple of constants.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> directions</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">&#39;left&#39;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;up&#39;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;right&#39;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;down&#39;</span><span style="color:#E1E4E8">];</span></span>
@@ -36,8 +34,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
 <span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> di </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
 <span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> guess </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Indicates if a new guess should be made. Used to avoid race conditions</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> con </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Used to stop the brute force</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> con </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Used to stop the brute force</span></span></code></pre>
 <p>When we run the following <code>bruteforce</code> function, which sends the next direction(s) to try, we send the list of directions recorded in <code>d</code> if it exists. Otherwise, we send all the currently recorded directions <code>l[i]</code>, then try new directions <code>directions[di]</code>.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> bruteforce</span><span style="color:#E1E4E8">() {</span></span>
 <span class="line"><span style="color:#6A737D">    // Setting con = false in the console allows us to stop the brute force at any time</span></span>
@@ -57,8 +54,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#B392F0">            sendMessage</span><span style="color:#E1E4E8">(directions[di]);</span></span>
 <span class="line"><span style="color:#E1E4E8">        }</span></span>
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>When we receive a message, we’ll want to call this <code>bruteforce</code> function again to send the next guess. If the message is incorrect, then we need to resend the recorded sequence of correct directions (i.e. reset <code>i = 0</code>), then guess the next possible direction (i.e. increment <code>di</code>).</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">typeof</span><span style="color:#E1E4E8"> message.data </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &quot;string&quot;</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#E1E4E8"> message.data.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &#39;false&#39;</span><span style="color:#E1E4E8">) {</span></span>
 <span class="line"><span style="color:#6A737D">    // ...</span></span>
@@ -68,8 +64,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (l </span><span style="color:#F97583">!==</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">) {</span></span>
 <span class="line"><span style="color:#B392F0">        bruteforce</span><span style="color:#E1E4E8">();</span></span>
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>If the message is correct, we can add <code>directions[di]</code> to our accumulated list <code>l</code>, increment <code>i</code>, and reset <code>di = 0</code>.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">else</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">typeof</span><span style="color:#E1E4E8"> message.data </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &quot;string&quot;</span><span style="color:#F97583"> &amp;&amp;</span><span style="color:#E1E4E8"> message.data.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &#39;true&#39;</span><span style="color:#E1E4E8">) {</span></span>
 <span class="line"><span style="color:#6A737D">    // ...</span></span>
@@ -84,8 +79,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#B392F0">            bruteforce</span><span style="color:#E1E4E8">();</span></span>
 <span class="line"><span style="color:#E1E4E8">        }</span></span>
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>If a new image appears, we’ll add <code>l</code> to our dictionary, reset our variables, wait a little bit to avoid any possible race conditions from other requests, then run <code>bruteforce</code> on the next image.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">else</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">typeof</span><span style="color:#E1E4E8"> message.data </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &quot;object&quot;</span><span style="color:#E1E4E8">) {</span></span>
 <span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> imgElement</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> document.</span><span style="color:#B392F0">getElementById</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&#39;dynamic-image&#39;</span><span style="color:#E1E4E8">);</span></span>
@@ -105,8 +99,7 @@ CTF:  <a href="/pages/contests#ctftime-2584" data-astro-cid-quoef3qp> TUCTF 2024
 <span class="line"><span style="color:#E1E4E8">        l </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [];</span></span>
 <span class="line"><span style="color:#B392F0">        bruteforce</span><span style="color:#E1E4E8">();</span></span>
 <span class="line"><span style="color:#E1E4E8">    }, t);</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>And that’s it! Modifying <code>console.js</code> to include these bits of code and copying and pasting it into the console runs our brute force at a speed fast enough to get the flag within a few minutes or so.</p>
 <p>Flag: <code>TUCTF{4_S00p3r_3aRtH_3xP3rT}</code></p>
 <p>The final solve script can be found <a href="/_astro/solve.BFs8FhrF.js">here</a>. We pre-fill <code>d</code> with entries gathered (copied and pasted) from previous runs to make the code run faster.</p>

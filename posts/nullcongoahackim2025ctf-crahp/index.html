@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.1.9"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
 <link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
-<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
-<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
 &#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  Nullcon Goa HackIM 2025 CTF: Crahp </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-02T12:13:04.998Z" data-astro-cid-quoef3qp> Sunday, February 2, 2025 </div> <div data-astro-cid-quoef3qp>
 Authored by <a href="/authors/dajeff">dajeff</a> </div> <div data-astro-cid-quoef3qp>
 CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Goa HackIM 2025 CTF </a> </div> <div data-astro-cid-quoef3qp>Tags: web</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DHdN6dA9.css"/>
@@ -40,16 +39,14 @@ CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Go
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
 <span class="line"><span style="color:#E1E4E8">} </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
 <span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> &quot;Try harder!&quot;</span><span style="color:#E1E4E8">;</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p><code>crc8</code> and <code>crc16</code> produce 8-bit and 16-bit checksums respectively, which we can verify by checking <code>crc8(&quot;AdM1nP@assW0rd!&quot;)</code> and <code>crc16(&quot;AdM1nP@assW0rd!&quot;)</code>.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="php"><code><span class="line"><span style="color:#E1E4E8">$c8 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> crc8</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;AdM1nP@assW0rd!&quot;</span><span style="color:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#E1E4E8">$c16 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> crc16</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;AdM1nP@assW0rd!&quot;</span><span style="color:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#79B8FF">echo</span><span style="color:#E1E4E8"> $c8;  </span><span style="color:#6A737D">// 167</span></span>
 <span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> &quot;</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">;</span></span>
 <span class="line"><span style="color:#79B8FF">echo</span><span style="color:#E1E4E8"> $c16;  </span><span style="color:#6A737D">// 25010</span></span>
-<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> &quot;</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">;</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> &quot;</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">;</span></span></code></pre>
 <p>We should therefore expect to test around <code>(2 ** 8) * (2 ** 16) = 16777216</code> strings before we find a collision, which is brute-forceable.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="php"><code><span class="line"><span style="color:#E1E4E8">$c8 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> crc8</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;AdM1nP@assW0rd!&quot;</span><span style="color:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#E1E4E8">$c16 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> crc16</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;AdM1nP@assW0rd!&quot;</span><span style="color:#E1E4E8">);</span></span>
@@ -58,8 +55,7 @@ CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Go
 <span class="line"><span style="color:#79B8FF">        echo</span><span style="color:#79B8FF"> strval</span><span style="color:#E1E4E8">($x);</span></span>
 <span class="line"><span style="color:#79B8FF">        echo</span><span style="color:#9ECBFF"> &quot;</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">;</span></span>
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>Submitting <code>100000010130312</code> to the website yields the flag.</p>
 <p>Flag: <code>ENO{Cr4hP_CRC_Collison_1N_P@ssw0rds!}</code></p> </div>  </main> <footer data-astro-cid-sckkx6r4>
 &mdash;

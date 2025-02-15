@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.1.9"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
 <link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
-<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
-<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
 &#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  BearcatCTF 2025 Writeups </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-02T19:49:20.529Z" data-astro-cid-quoef3qp> Sunday, February 2, 2025 </div> <div data-astro-cid-quoef3qp>
 Authored by <a href="/authors/michael">michael</a> </div> <div data-astro-cid-quoef3qp>
 CTF:  <a href="/pages/contests#ctftime-2596" data-astro-cid-quoef3qp> BearcatCTF 2025: World Tour </a> </div> <div data-astro-cid-quoef3qp>Tags: web, rev, osint, crypto, pwn, brute-force</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <h1 id="web">Web</h1>
@@ -24,8 +23,7 @@ We see this Javascript:</p>
 <span class="line"><span style="color:#B392F0">        alert</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Incorrect Password. Please Try Again&quot;</span><span style="color:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#E1E4E8">    }</span></span>
 <span class="line"><span style="color:#B392F0">    alert</span><span style="color:#E1E4E8">(hash);</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
 <p>Great, we can just bypass the authentication and go directly to the redirect!
 Navigating to <a href="http://chal.bearcatctf.io:39724/0078f62f00305b73de6ccace8f9fc1f68a8f1dcec865d33fcacbaf255ddefaa7">http://chal.bearcatctf.io:39724/0078f62f00305b73de6ccace8f9fc1f68a8f1dcec865d33fcacbaf255ddefaa7</a>
 gives us the flag: <code>BCCTF{T1ck3t_t0_0wn3rsh1p!}</code>.</p>
@@ -37,8 +35,7 @@ gives us the flag: <code>BCCTF{T1ck3t_t0_0wn3rsh1p!}</code>.</p>
 <p>We are greeted with a landing page that says “Under development”.</p>
 <p>This time, the <code>robots.txt</code> hints to us that we need to check: <a href="http://chal.bearcatctf.io:30812/health-check">http://chal.bearcatctf.io:30812/health-check</a>.
 This page seems to ask us for an IP and returns an output that suspiciously looks like the CLI output from <code>ping</code>:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Health response: PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data. 64 bytes from 127.0.0.1: icmp_seq=1 ttl=255 time=0.017 ms --- 127.0.0.1 ping statistics --- 1 packets transmitted, 1 received, 0% packet loss, time 0ms rtt min/avg/max/mdev = 0.017/0.017/0.017/0.000 ms</span></span>
-<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Health response: PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data. 64 bytes from 127.0.0.1: icmp_seq=1 ttl=255 time=0.017 ms --- 127.0.0.1 ping statistics --- 1 packets transmitted, 1 received, 0% packet loss, time 0ms rtt min/avg/max/mdev = 0.017/0.017/0.017/0.000 ms</span></span></code></pre>
 <p>This prompted me to try shell injection.
 After some trial and error, I discovered that <code>127.0.0.1; ba&quot;&quot;sh -c &#39;ls&#39;</code> worked.
 Here’s the app.py code:</p>
@@ -60,8 +57,7 @@ Here’s the app.py code:</p>
 <span class="line"><span style="color:#E1E4E8">        c </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> p.split()[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
 <span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> run([</span><span style="color:#9ECBFF">&#39;which&#39;</span><span style="color:#E1E4E8">,c],</span><span style="color:#FFAB70">capture_output</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">).stdout:</span></span>
 <span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> False</span></span>
-<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> True</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> True</span></span></code></pre>
 <p>It seems like as long as all of our bash commands are not valid under <code>which</code>, we’re free to go ahead and run it.
 But the <code>which</code> command does not use the shell, whereas the <code>ping</code> command does, so we can use the shell injection trick of adding empty quoted strings into our commands, like this: <code>ba&quot;&quot;sh</code>.
 This will not trip the validation script, but will run bash as we expected.</p>
@@ -86,8 +82,7 @@ I found <code>flag.txt</code> lying in <code>/</code>.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ ./easy                                             </span></span>
 <span class="line"><span>I dropped my flag somewhere! Can you find it for me? </span></span>
 <span class="line"><span>asdf</span></span>
-<span class="line"><span>Hmmm... No that isn&#39;t right at all.</span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>Hmmm... No that isn&#39;t right at all.</span></span></code></pre>
 <p>I honestly did not try to look into how this binary worked, because I wanted to get some experience with angr.</p>
 <p>I hadn’t used it before, and there were some troubles with getting it to work, but it finally worked just with <code>simgr.run()</code> and checking the <code>posix.dumps</code> to see if the win message was there.
 Then I just crunched the solver on all the constraints gathered along the way.</p>
@@ -105,8 +100,7 @@ Then I just crunched the solver on all the constraints gathered along the way.</
 <span class="line"><span>b&quot;I dropped my flag somewhere! Can you find it for me?\nHmmm... No that isn&#39;t right at all.\n&quot;     </span></span>
 <span class="line"><span>b&quot;I dropped my flag somewhere! Can you find it for me?\nHmmm... No that isn&#39;t right at all.\n&quot;     </span></span>
 <span class="line"><span>b&#39;BCCTF{7H47_w4snt_s0_H4rD}\x01\n&#39;                                                                 </span></span>
-<span class="line"><span>b&#39;I dropped my flag somewhere! Can you find it for me?\nThere it is!\n&#39;                            </span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>b&#39;I dropped my flag somewhere! Can you find it for me?\nThere it is!\n&#39;                            </span></span></code></pre>
 
 <p>My solve script can be found <a href="/_astro/solve_easy.BPxn4izW.py">here</a>.</p>
 <h2 id="shimbles-the-e-l-f-450">Shimbles the E-L-F: 450</h2>
@@ -120,8 +114,7 @@ Then I just crunched the solver on all the constraints gathered along the way.</
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ python solve_shimbles.py                         </span></span>
 <span class="line"><span>&lt;SimulationManager with 1 active, 1 found&gt;         </span></span>
 <span class="line"><span>&lt;SimState @ 0x14f2&gt;                                </span></span>
-<span class="line"><span>b&#39;elfmagic\n&#39;                                      </span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>b&#39;elfmagic\n&#39;                                      </span></span></code></pre>
 
 <p>My solve script can be found <a href="/_astro/solve_shimbles.DTYDmorN.py">here</a>.</p>
 <h2 id="turing-approved-600">Turing Approved: 600</h2>
@@ -180,14 +173,12 @@ I observed that the flag was lying directly in memory, although on an offset.</p
 <span class="line"><span style="color:#E1E4E8">r4 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> r3                                       </span></span>
 <span class="line"><span style="color:#E1E4E8">                                                  </span></span>
 <span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> choice </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [r1, r2, r3, r4]:  </span></span>
-<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(long_to_bytes(choice)) </span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(long_to_bytes(choice)) </span></span></code></pre>
 <p>The output contained the flag:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>b&#39;gk\xc1\x0el`&quot;8q\xaf\xe35\x8d\xb8\xa0Q\x1c\xc7f{v\xf0\xec4\xf3\x15\xd9\&#39;\xfc\xae\xad\x89\xe9$4&gt;\xea\x81\ x97\xef[\x90\xe9Uj8\x88\x1b4\xcb\x00!*\xffR\xf3\x02\x8b\xbc\xf8n\x1c\xeddH]\xdf\x9d\xa8\xab\xce\x9b\xec\x d0\xef\xc14\xd5X~\x80A:U\xec\xa2\xfeGX`\xceg\xc0\x19\xcd@XE\xfb\xe439@\xa38\xc0O/(3\x1d\x16\xf1\xae\xa7\x8e\xa0\xadqaSH\x8d\x93\xeag\x8c\x8f&#39;                                                                     </span></span>
 <span class="line"><span>b&#39;\nc$\x11\x04\xe8\xab9=4H\xa4dy\xa6\xfa\x04\x05\x8b\xe1\xaa\x0eu\xa3\xe6\xe8\x1c\xf3\x00\x89\xa0\x12\xd6 \x18\x1b\xad\xc4\xf0\x86\x08\xa4\xd4\xc7\x02\xc1h\xf4X\xf6\n\xca\x1e\xe3\x87\xdf\x08\xd4\x99\xc2&lt;\xa6O\x1 c\xddhPW\x1d\xfe-\xbfFV\xdehbi\x14\x8dx\xb2,0\x03b*\xba\xc0\x14\x06\xfcH\xa9\x97\x0c~\xb2\x13\x16\xfa\xcc\xa6\x07\xa5\x83\x03\x14\x955\x1e\r\xc9G\xc7Q\x7fa5\xed\x88\xb6\xa8\x89\xecz\xf5\xe7*&#39;                   </span></span>
 <span class="line"><span>b&#39;q\xce\xe5\x1fqH\xcdq\xae\xe4+\xd9\xf22GK \xcc\xf2] \xffa\xd8\xd9\xfd\xf6\x1a\xba\xf5\nHx\xc1\x0b}A:\xbe \x95\xcd\x06{\xf8\xb80\x072\xb8\x90j\xde\xabP\xce\xc6\xa2\xbfG\xfb\xe2\x08\xd1\x11Ow\xfdYn\\S\xa8\tu\x1d\ xe9c\xaf\xab\xbc\xf830\x1f\x14\x93~\xcd2-\x90v/v\x9f\x84\xd0\x1e\xd8\xa4\xc5\xa5\x0e\x0e\x81\x89)\x8a#\x16\xf0\xa5\xff;\xbe\xd3\xc7\xa9$\xaf\xcf\xb6\xddF+#9\x7f&#39;                                                 </span></span>
-<span class="line"><span>b&#39;BCCTF{Don7_b3_4_squArE_ac6c54f792c90a69b8}::::::::::::::::::::::::::::::::::::::::::::::::::::::::::&#39;  </span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>b&#39;BCCTF{Don7_b3_4_squArE_ac6c54f792c90a69b8}::::::::::::::::::::::::::::::::::::::::::::::::::::::::::&#39;  </span></span></code></pre>
 <h2 id="times-to-die-700">Times to Die: 700</h2>
 
 <blockquote>
@@ -203,8 +194,7 @@ I observed that the flag was lying directly in memory, although on an offset.</p
 <span class="line"><span>1738088099.839446000,                                                                                                 </span></span>
 <span class="line"><span>1738088099.860704000,                                                                                                 </span></span>
 <span class="line"><span>1738088099.860829000,9d80c4df97fe91a0bb2867c78700c43c4eeb92770ea6ca6934bbcd5ffd40d548aba049344921e1db129e94a382f6678d </span></span>
-<span class="line"><span>1738088099.860853000,                                                                                                 </span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>1738088099.860853000,                                                                                                 </span></span></code></pre>
 <p>The only important field is the one that has the payload.
 One hiccup is that because we are multiplying the time by 2^16, we need sub-second accuracy.
 Instead of that, I just brute-forced all the possible seeds around the time we are given:</p>
@@ -228,12 +218,10 @@ Instead of that, I just brute-forced all the possible seeds around the time we a
 <span class="line"><span style="color:#E1E4E8">                                                                                                                            </span></span>
 <span class="line"><span style="color:#E1E4E8">    f </span><span style="color:#F97583">=</span><span style="color:#F97583"> b</span><span style="color:#9ECBFF">&quot;&quot;</span><span style="color:#E1E4E8">.join(res)                                                                                                       </span></span>
 <span class="line"><span style="color:#F97583">    if</span><span style="color:#F97583"> b</span><span style="color:#9ECBFF">&quot;BCCTF&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> f:                                                                                                       </span></span>
-<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(f)                                                                                                            </span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(f)                                                                                                            </span></span></code></pre>
 <p>This crunches for a bit and spits out our flag:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ python solve-times-to-die.py                               </span></span>
-<span class="line"><span>b&#39;BCCTF{175_n07_5Ymb0lic_itS_jU57_Hum4n_n47ure}\x03\x03\x03&#39; </span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>b&#39;BCCTF{175_n07_5Ymb0lic_itS_jU57_Hum4n_n47ure}\x03\x03\x03&#39; </span></span></code></pre>
 <h1 id="pwn">Pwn</h1>
 <h2 id="callingconvention-500">CallingConvention: 500</h2>
 
@@ -267,8 +255,7 @@ The order is:</p>
 <p>This is a straightforward dictionary attack, implementable in Python by just grabbing the words straight off of <a href="https://bearcatctf.io">https://bearcatctf.io</a>.
 The word list is scraped <a href="/_astro/homepage.B8bUfdIw.txt">homepage.txt</a>.</p>
 <p>I cleaned it up a bit:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>cat homepage.txt | tr &#39; &#39; &#39;\n&#39; | sort | uniq &gt; words.txt</span></span>
-<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>cat homepage.txt | tr &#39; &#39; &#39;\n&#39; | sort | uniq &gt; words.txt</span></span></code></pre>
 <p>Then, we can just brute-force it easily with Python:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> hashlib </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> sha256                                                              </span></span>
 <span class="line"><span style="color:#E1E4E8">                                                                                        </span></span>
@@ -280,11 +267,9 @@ The word list is scraped <a href="/_astro/homepage.B8bUfdIw.txt">homepage.txt</a
 <span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> c </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> words:                                                                 </span></span>
 <span class="line"><span style="color:#E1E4E8">            w </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> bytes</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;BCCTF</span><span style="color:#79B8FF">{{{</span><span style="color:#E1E4E8">a</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">_</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">b</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">_</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">c</span><span style="color:#79B8FF">}}}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;utf-8&quot;</span><span style="color:#E1E4E8">)                                 </span></span>
 <span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> sha256(w).digest() </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> goal:                                              </span></span>
-<span class="line"><span style="color:#79B8FF">                print</span><span style="color:#E1E4E8">(w)                                                                </span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#79B8FF">                print</span><span style="color:#E1E4E8">(w)                                                                </span></span></code></pre>
 <p>This returns very quickly:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>b&#39;BCCTF{sponsor_cybersecurity_Innovation}&#39;</span></span>
-<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>b&#39;BCCTF{sponsor_cybersecurity_Innovation}&#39;</span></span></code></pre>
 <h2 id="city-crack-850">City Crack: 850</h2>
 <blockquote>
 <p>International hackers have left two different encrypted hashes behind. The first hash is <code>1fae39b5bc83699450281dc7bb472d59</code>, and the second hash is <code>5f6b9145ac86d19e917a08e6c20de0c907472a90</code>. To find the flag, decrypt both hashes and combine the results in alphabetical order, separated by an underscore. These paswords are based off of capital cites with some modifications.</p>
@@ -294,14 +279,12 @@ The word list is scraped <a href="/_astro/homepage.B8bUfdIw.txt">homepage.txt</a
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ ./hashcat -m 0 -a 3 -1 &quot;?l?d?s?u&quot; --increment 1fae39b5bc83699450281dc7bb472d59 &quot;?1?1?1?1?1?1?1?1&quot;</span></span>
 <span class="line"><span>...</span></span>
 <span class="line"><span>1fae39b5bc83699450281dc7bb472d59:T0kyO</span></span>
-<span class="line"><span>...</span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>...</span></span></code></pre>
 <p>The next one is SHA1:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ ./hashcat -m 100 -a 3 -1 &quot;?l?d?s?u&quot; --increment 5f6b9145ac86d19e917a08e6c20de0c907472a90 &quot;?1?1?1?1?1?1?1?1&quot;</span></span>
 <span class="line"><span>...</span></span>
 <span class="line"><span>5f6b9145ac86d19e917a08e6c20de0c907472a90:p@R!s</span></span>
-<span class="line"><span>...</span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>...</span></span></code></pre>
 <p>Putting them in alphabetical order, the flag is <code>BCCTF{p@R!s_T0kyO}</code>.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>Overall I had a lot of fun with this CTF, though I wish they went with dynamic scoring though since some of the challenges seemed a little bit easier than their point values.</p> </div>  </main> <footer data-astro-cid-sckkx6r4>

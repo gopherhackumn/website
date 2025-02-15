@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.0.3"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.1.9"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
 <link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
-<link rel="stylesheet" href="/_astro/_post_.Dsfu0bp3.css">
-<link rel="stylesheet" href="/_astro/image.CVYE6UPY.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
 &#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  Nullcon Goa HackIM 2025 CTF: many caesars </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-02-03T07:57:26.242Z" data-astro-cid-quoef3qp> Monday, February 3, 2025 </div> <div data-astro-cid-quoef3qp>
 Authored by <a href="/authors/dajeff">dajeff</a> </div> <div data-astro-cid-quoef3qp>
 CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Goa HackIM 2025 CTF </a> </div> <div data-astro-cid-quoef3qp>Tags: crypto</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DHdN6dA9.css"/>
@@ -27,8 +26,7 @@ CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Go
 <span class="line"><span style="color:#6A737D">		# Shift the token text[i:j]</span></span>
 <span class="line"><span style="color:#79B8FF">		print</span><span style="color:#E1E4E8">(caesar(text[i:j], chars.index(flag[count </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(flag)])), </span><span style="color:#FFAB70">end</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &#39;&#39;</span><span style="color:#E1E4E8">)</span></span>
 <span class="line"><span style="color:#E1E4E8">		count </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
-<span class="line"><span style="color:#E1E4E8">		i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">		i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span></code></pre>
 <p>Since each token is Caesar ciphered, we can recover each token by checking all possible <code>len(chars) = 65</code> possible keys for each individual token and seeing which keys yields alphabetic English words.</p>
 <p>For example, trying all shifts for the first token <code>AtvDxK</code> in <a href="/_astro/output.zykns_Ov.txt">output.txt</a> yields the alphabetic plaintext : key pairs</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>piksmz : l</span></span>
@@ -39,8 +37,7 @@ CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Go
 <span class="line"><span>kdfnhu : q</span></span>
 <span class="line"><span>jcemgt : r</span></span>
 <span class="line"><span>ibdlfs : s</span></span>
-<span class="line"><span>hacker : t</span></span>
-<span class="line"><span></span></span></code></pre>
+<span class="line"><span>hacker : t</span></span></code></pre>
 <p>Clearly, the first word of the decrypted <a href="/_astro/output.zykns_Ov.txt">output.txt</a> is <code>hacker</code>, meaning the first character of the flag is <code>t</code>.</p>
 <p>Running the following script to list the possible plaintext : key pairs and manually choosing the English words as well as corresponding keys yields the flag when concatenating all the keys together.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="py"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> string</span></span>
@@ -68,8 +65,7 @@ CTF:  <a href="/pages/contests#ctftime-2642" data-astro-cid-quoef3qp> Nullcon Go
 <span class="line"><span style="color:#79B8FF">                print</span><span style="color:#E1E4E8">(word, </span><span style="color:#9ECBFF">&quot;:&quot;</span><span style="color:#E1E4E8">, chars[k])</span></span>
 <span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">()</span></span>
 <span class="line"><span style="color:#E1E4E8">        count </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
-<span class="line"><span style="color:#E1E4E8">        i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span>
-<span class="line"></span></code></pre>
+<span class="line"><span style="color:#E1E4E8">        i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> j</span></span></code></pre>
 <p>Flag: <code>ENO{th3_d1ffer3nce5_m4ke_4ll_th3_diff3renc3}</code></p> </div>  </main> <footer data-astro-cid-sckkx6r4>
 &mdash;
 <a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
