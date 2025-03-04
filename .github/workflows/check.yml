@@ -10,6 +10,8 @@ jobs:
           bun-version: latest
       - name: print bun version
         run: bun --version
+      - name: import lockfile
+        run: bun pm migrate
       - name: install dependencies
         run: bun install --frozen-lockfile
       - name: build
