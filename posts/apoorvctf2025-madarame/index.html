@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.3.0"><title>GopherHack</title><link rel="stylesheet" href="/_astro/poster.B_Cpo-Oc.css">
+<link rel="stylesheet" href="/_astro/_name_.B51i_3Fs.css">
+<link rel="stylesheet" href="/_astro/_post_.aVDCQf0I.css"></head> <body data-astro-cid-sckkx6r4> <section class="mainSection" data-astro-cid-sckkx6r4> <div class="content" data-astro-cid-sckkx6r4> <header data-astro-cid-sckkx6r4> <div data-astro-cid-sckkx6r4> <!-- left --> <a href="/" id="logo" data-astro-cid-sckkx6r4>
+&#x1F6A9; GopherHack</a> </div> <div data-astro-cid-sckkx6r4> <!-- right --> <div class="links" data-astro-cid-sckkx6r4> <a href="/pages/contests" data-astro-cid-sckkx6r4>Contests</a> <a href="/pages/blog" data-astro-cid-sckkx6r4>Blog</a> <a href="/pages/resources" data-astro-cid-sckkx6r4>Resources</a> <a href="/pages/officers" data-astro-cid-sckkx6r4>Officers</a> </div> <div class="buttons" data-astro-cid-sckkx6r4></div> </div> </header> <main data-astro-cid-sckkx6r4>  <h1 data-astro-cid-quoef3qp>  ApoorvCTF 2025: AI challenges (2/4) </h1> <div class="metadata" data-astro-cid-quoef3qp> <div title="2025-03-04T08:57:16.633Z" data-astro-cid-quoef3qp> Tuesday, March 4, 2025 </div> <div data-astro-cid-quoef3qp>
+Authored by <a href="/authors/madarame">madarame</a> </div> <div data-astro-cid-quoef3qp>
+CTF:  <a href="/pages/contests#ctftime-2638" data-astro-cid-quoef3qp> ApoorvCTF 2025 </a> </div> <div data-astro-cid-quoef3qp>Tags: ai</div> </div> <div class="postContent" data-astro-cid-quoef3qp> <link rel="stylesheet" href="/_astro/styles.DOL_VcOL.css"/>
+<h3 id="challenge-1-pokédex-neural-network">Challenge #1: Pokédex Neural Network</h3>
+<h3 id="points-498">Points: [498]</h3>
+<blockquote>
+<p>Professor Oak, the renowned Pokémon researcher, has developed an advanced Pokédex upgrade that utilizes neural networks to classify Pokémon types. However, a mishap caused by an overexcited Pikachu has disrupted crucial data files, leaving the system in chaos. Now, trainers must step up to the challenge—training a CNN model to restore order and complete the classifier, ensuring the Pokédex can once again identify Pokémon with precision.</p>
+</blockquote>
+<blockquote>
+<p>For further details, access the PDF. Heads up!! It’s password protected. The password is the name of the pokemon Ash first captured. Good Luck Trainer !!!</p>
+</blockquote>
+<blockquote>
+<p><code>nc chals2.apoorvctf.xyz 4000</code></p>
+<blockquote>
+<p>GL3MON</p>
+</blockquote>
+<div><a href="/_astro/HiTrainer_protected.BbcEPzrD.pdf">HiTrainer_protected.pdf</a></div>
+<div><a href="/_astro/core_dump.C3fNqGSt.txt">core_dump.txt</a></div>
+</blockquote>
+<h3 id="solution">Solution</h3>
+<p>To start of, I read the core dump file and saw a base64 encoded string. So I ran the following command to decode it.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> base64</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> core_dump.txt</span></span></code></pre>
+<p>I got this output:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>PokemonCNN</span></span>
+<span class="line"><span>├── Initial Input: (256, 256, 4)</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── Feature Extraction Layers</span></span>
+<span class="line"><span>│   ├── Conv2D (4-&gt;32)</span></span>
+<span class="line"><span>│   ├── BatchNorm2D</span></span>
+<span class="line"><span>│   ├── ReLU Activation</span></span>
+<span class="line"><span>│   ├── MaxPool2D(K Size = 3)</span></span>
+<span class="line"><span>│   ├── Dropout (p=0.25)</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── Deeper Processing</span></span>
+<span class="line"><span>│   ├── Conv2D(32-&gt;64)</span></span>
+<span class="line"><span>│   ├── BatchNorm2D (64)</span></span>
+<span class="line"><span>│   ├── ReLU Activation</span></span>
+<span class="line"><span>│   ├── MaxPool2D(K Size = 3)</span></span>
+<span class="line"><span>│   ├── Dropout (p=0.25)</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── More Feature Extraction</span></span>
+<span class="line"><span>│   ├── Conv2D(64-&gt;128)</span></span>
+<span class="line"><span>│   ├── BatchNorm2D</span></span>
+<span class="line"><span>│   ├── ReLU Activation</span></span>
+<span class="line"><span>│   ├── MaxPool2D(K Size = 3)</span></span>
+<span class="line"><span>│   ├── Dropout (p=0.25)</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── Fully Connected Layers</span></span>
+<span class="line"><span>│   ├── Flatten</span></span>
+<span class="line"><span>│   ├── Linear (512 Neurons)</span></span>
+<span class="line"><span>│   ├── BatchNorm1D</span></span>
+<span class="line"><span>│   ├── Dropout (p=0.5)</span></span>
+<span class="line"><span>│   ├── Linear</span></span>
+<span class="line"><span>│   ├── Softmax Activation</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>└── Output: 18 classes</span></span></code></pre>
+<p>Dind’t expect the format to look this readable so huge W to the author to make it look good with this small extra touch.
+Anyways, back to the challenge. Initially, I thought I would just recreate the model from the architecture provided using PyTorch and nc to the server.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> nc</span><span style="color:#9ECBFF"> chals2.apoorvctf.xyz</span><span style="color:#79B8FF"> 4000</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>🔥 Welcome, Pokémon Trainer! 🔥</span></span>
+<span class="line"><span>Professor Oak&#39;s Neural Network Challenge</span></span>
+<span class="line"><span>---------------------------------------</span></span>
+<span class="line"><span>A Pikachu&#39;s thundershock scrambled our data and we need your help to recover it!</span></span>
+<span class="line"><span>Help restore the Pokédex neural network by answering these questions!</span></span>
+<span class="line"><span>Watch out for Bidoofs! 🐹</span></span>
+<span class="line"><span>---------------------------------------</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Question 1/4: What is the seed for the given pytorch code?</span></span></code></pre>
+<p>At this point I would just craft a bruteforce script for the correct seed and got 6 as the correct answer.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Question 1/4: What is the seed for the given pytorch code?</span></span>
+<span class="line"><span>6</span></span>
+<span class="line"><span>6</span></span>
+<span class="line"><span>Correct! That&#39;s the seed value we used!</span></span>
+<span class="line"><span>Question 2/4: What&#39;s the number of input features of the first linear layer?</span></span></code></pre>
+<p>The second question is just asking for the number of input features of the first linear layer, which is (9 _ 9 _ 128) = 10368. This came from the final convolutional layer’s output shape after three rounds of convolution and 3×3 max pooling, reducing the 256 × 256 input to 9 × 9 spatial dimensions with 128 feature maps, which is then flattened for the fully connected layer. If you are curious about how this number is calculated, I highly recommend you to take the Deep Learning Specilization course from <a href="https://www.coursera.org/specializations/deep-learning/">DeepLearning.AI</a>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Question 2/4: What&#39;s the number of input features of the first linear layer?</span></span>
+<span class="line"><span>10368</span></span>
+<span class="line"><span>10368</span></span>
+<span class="line"><span>Correct! Our neural network processes 10,368 pixels from each Pokémon image!</span></span>
+<span class="line"><span>Question 3/4: Find the sum of values in the weights of the first row in the first linear layer.</span></span></code></pre>
+<p>For the next question, I recreated the model using PyTorch.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PokemonCNN</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">nn</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Module</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">(PokemonCNN, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">).</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # === FEATURE EXTRACTION LAYERS ===</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.conv1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Conv2d(</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">32</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">kernel_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.bn1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.BatchNorm2d(</span><span style="color:#79B8FF">32</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.conv2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Conv2d(</span><span style="color:#79B8FF">32</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">kernel_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.bn2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.BatchNorm2d(</span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.conv3 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Conv2d(</span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">128</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">kernel_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.bn3 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.BatchNorm2d(</span><span style="color:#79B8FF">128</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # === MAXPOOLING AND DROPOUT ===</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.pool </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.MaxPool2d(</span><span style="color:#FFAB70">kernel_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.dropout1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Dropout(</span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.dropout2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Dropout(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # === FULLY CONNECTED LAYERS ===</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.flatten </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Flatten()</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.fc1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Linear(</span><span style="color:#79B8FF">128</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 9</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 9</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.bn4 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.BatchNorm1d(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.fc2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> nn.Linear(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">18</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> forward</span><span style="color:#E1E4E8">(self, x):</span></span>
+<span class="line"><span style="color:#6A737D">        # === FEATURE EXTRACTION ===</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.pool(pt.relu(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.bn1(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.conv1(x))))</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.dropout1(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.pool(pt.relu(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.bn2(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.conv2(x))))</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.dropout1(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.pool(pt.relu(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.bn3(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.conv3(x))))</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.dropout1(x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # === FULLY CONNECTED LAYERS ===</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.flatten(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.bn4(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.fc1(x))</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.dropout2(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.fc2(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pt.softmax(x, </span><span style="color:#FFAB70">dim</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> x</span></span></code></pre>
+<p>However, I kept getting the wrong answer for the third question with different values for the parameters of the kernel size, padding, etc because there were no clear answers for the parameters from the core dump. This is when I realized I totally forgot the PDF file 💀.
+So the password was the name of the pokemon Ash first captured, which is “caterpie”. I opened the PDF file and found the link to a <a href="https://www.kaggle.com/code/gl3mon/apoorvquestion">Kaggle Notebook</a>.
+I cloned the notebook (<a href="https://www.kaggle.com/code/aureliusnguyen/ai-pokedex/">here</a>) and completed the code. I still got the wrong answer for the third question so I opened a ticket and asked the author because I was sure I did everything correctly. Then the author told me that I should use the kernel size of 2 for the kernel size of the convolutional layers, which was kinda guessy. I eventually got the correct answer for the third question.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Question 3/4: Find the sum of values in the weights of the first row in the first linear layer.</span></span>
+<span class="line"><span>(This answer should be a decimal number with 4 decimal places X.XXXX!)</span></span>
+<span class="line"><span>-13.7474</span></span>
+<span class="line"><span>-13.7474</span></span>
+<span class="line"><span>Correct! Those weights help identify patterns in our neural network!</span></span>
+<span class="line"><span>Question 4/4: Enter the value of the weight matrix of the second linear layer, 2nd row, 15th column.</span></span>
+<span class="line"><span>(This answer should be a decimal number with 4 decimal places X.XXXX!)</span></span></code></pre>
+<p>I added some more code to the notebook to get the correct answer for the fourth question.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>Question 4/4: Enter the value of the weight matrix of the second linear layer, 2nd row, 15th column.</span></span>
+<span class="line"><span>(This answer should be a decimal number with 4 decimal places X.XXXX!)</span></span>
+<span class="line"><span>-0.0283</span></span>
+<span class="line"><span>-0.0283</span></span>
+<span class="line"><span>Correct! That specific weight is crucial for our neural network&#39;s functionality!</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>---------------------------------------</span></span>
+<span class="line"><span>🏆 CONGRATULATIONS! You answered all 4 questions correctly!</span></span>
+<span class="line"><span>Professor Oak&#39;s neural network is now fully operational!</span></span>
+<span class="line"><span>Your Pokédex has been upgraded to the Ultra Neural Classification System!</span></span>
+<span class="line"><span>Here&#39;s your reward: apoorvctf{Squ1rtl3_1_ch0053_y0u}</span></span></code></pre>
+<p>Final remarks: I was the third person (out of 12 solvers) to complete this challenge, and I could have easily first blood it if it was not for the guessy kernel size (or I should have opened the ticket earlier). Anyways, this is the first time I see an AI challenge in a CTF and it feels good that I was able to solve it and get a good amount of points.</p>
+<p>Flag: <code>apoorvctf{Squ1rtl3_1_ch0053_y0u}</code></p>
+<hr/>
+<h3 id="challenge-2-crime-coefficient-grpos-hidden-verdict">Challenge #2: Crime Coefficient GRPO’s Hidden Verdict</h3>
+<h3 id="points-500">Points: [500]</h3>
+<blockquote>
+<p>In a dystopian future where intelligence is the ultimate currency, the Grand Council of DeepSeek operates in secrecy, using advanced AI to shape the fate of humanity. Hidden within their classified manuscript—the DeepSeek R1 research paper—lies a value that dictates the first step of enlightenment: GRPO from the first iteration.</p>
+</blockquote>
+<blockquote>
+<p>Much like the Sibyl System, which assigns a Psycho-Pass score to every citizen, GRPO is the foundation of reinforcement learning without a single critic, relying instead on collective wisdom. To uncover this truth, you must become an Inspector of Knowledge—an enforcer of AI mastery.</p>
+</blockquote>
+<blockquote>
+<p>Your mission:</p>
+<p>Read the sacred manuscript (DeepSeek R1 research paper). Analyze its mathematical foundations. Extract the first recorded GRPO value from Iteration 1. Only those with a Crime Coefficient of Pure Deduction may unlock the flag and ascend to the ranks of the Grand Council.</p>
+</blockquote>
+<blockquote>
+<p><code>nc chals2.apoorvctf.xyz 5000</code></p>
+<blockquote>
+<p>GL3MON</p>
+</blockquote>
+<div><a href="/_astro/Deepseek_paper.8C-W-Bgx.pdf">DeepSeek R1 research paper</a></div>
+<div><a href="/_astro/functions_and_params.DY8-TqlQ.pdf">functions_and_params.pdf</a></div>
+</blockquote>
+<h3 id="solution-1">Solution</h3>
+<p>For this challenge, we were given 2 files:</p>
+<ul>
+<li><code>DeepSeek R1 research paper</code></li>
+<li><code>functions_and_params.pdf</code></li>
+</ul>
+<p>The first file is the research paper and the second file contains the functions and parameters for the model.</p>
+<p>I started by reading the research paper and found the formula for GRPO.</p>
+<p><img src="/_astro/grpo.YgC2aFPJ_Z26rI4f.webp" alt="grpo" width="906" height="408" loading="lazy" decoding="async"></p>
+<p>I just put the corresponding values in the formula and got the correct answer honestly 💀. Here’s the code I used to get the answer.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> numpy </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> np</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Given reward values</span></span>
+<span class="line"><span style="color:#E1E4E8">rewards </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.array([</span><span style="color:#79B8FF">1.27</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.7</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Compute mean and standard deviation</span></span>
+<span class="line"><span style="color:#E1E4E8">mean_reward </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.mean(rewards)  </span><span style="color:#6A737D"># 0.9675</span></span>
+<span class="line"><span style="color:#E1E4E8">std_reward </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.std(rewards)  </span><span style="color:#6A737D"># 0.3087</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Compute A_i values</span></span>
+<span class="line"><span style="color:#E1E4E8">A_values </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (rewards </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean_reward) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> std_reward</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(A_values)</span></span>
+<span class="line"><span style="color:#6A737D"># A_values = [ 0.94638171  1.04023775 -1.14973646 -0.836883  ]</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Define the policy functions</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> policy_current</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> (x</span><span style="color:#F97583">**</span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> np.sqrt(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> policy_old</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> np.sqrt(x </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 7</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> policy_ref</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> (x</span><span style="color:#F97583">**</span><span style="color:#79B8FF">0.3</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Compute KL divergence (with respect to reference policy)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> kl_divergence</span><span style="color:#E1E4E8">(x_values):</span></span>
+<span class="line"><span style="color:#E1E4E8">    kl_values </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> x_values:</span></span>
+<span class="line"><span style="color:#E1E4E8">        pi_theta </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> policy_current(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        pi_ref </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> policy_ref(x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        ratio </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pi_ref </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> pi_theta</span></span>
+<span class="line"><span style="color:#6A737D">        # KL(π_theta || π_ref) = π_ref/π_theta − log(π_ref/π_theta) − 1</span></span>
+<span class="line"><span style="color:#E1E4E8">        kl </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ratio </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> np.log(ratio) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">        kl_values.append(kl)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> kl_values</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># x-values used in iteration</span></span>
+<span class="line"><span style="color:#E1E4E8">x_values </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.array([</span><span style="color:#79B8FF">0.6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># KL results (averaged across these x-values)</span></span>
+<span class="line"><span style="color:#E1E4E8">kl_results </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> kl_divergence(x_values)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(kl_results)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Hyperparameters</span></span>
+<span class="line"><span style="color:#E1E4E8">epsilon </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0.5</span></span>
+<span class="line"><span style="color:#E1E4E8">beta </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0.2</span></span>
+<span class="line"><span style="color:#E1E4E8">G </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(A_values)  </span><span style="color:#6A737D"># 4 samples</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(G)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">J_GRPO</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.0</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#6A737D">    # ratio = π_current / π_old</span></span>
+<span class="line"><span style="color:#E1E4E8">    ratio </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> policy_current(x_values[i]) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> policy_old(x_values[i])</span></span>
+<span class="line"><span style="color:#E1E4E8">    unclipped </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ratio </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> A_values[i]</span></span>
+<span class="line"><span style="color:#E1E4E8">    clipped </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.clip(ratio, </span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> epsilon, </span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> epsilon) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> A_values[i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    # Take the more conservative objective (min)</span></span>
+<span class="line"><span style="color:#79B8FF">    J_GRPO</span><span style="color:#F97583"> +=</span><span style="color:#79B8FF"> min</span><span style="color:#E1E4E8">(unclipped, clipped)</span></span>
+<span class="line"><span style="color:#79B8FF">    J_GRPO</span><span style="color:#F97583"> -=</span><span style="color:#E1E4E8"> beta </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> kl_results[i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">J_GRPO</span><span style="color:#F97583"> *=</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> G</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;The GRPO objective value for the first iteration is: </span><span style="color:#79B8FF">{J_GRPO</span><span style="color:#F97583">:.5f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> nc</span><span style="color:#9ECBFF"> chals2.apoorvctf.xyz</span><span style="color:#79B8FF"> 5000</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>QUESTION: What is the value of the GRPO function considering only the first iteration of it?</span></span>
+<span class="line"><span>(The answer should be a decimal number, precise to 4 decimal places)</span></span>
+<span class="line"><span>0.1530</span></span>
+<span class="line"><span>0.1530</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>⭐ CORRECT! ⭐ You have discovered the sacred value of GRPO at its first iteration!</span></span>
+<span class="line"><span>The Grand Council of DeepSeek acknowledges your wisdom and grants you access to their hidden knowledge.</span></span>
+<span class="line"><span>Here is the secret you seek: apoorvctf{Cr1m3_C0eff1c13nt_B3l0w_Thr3sh0ld}</span></span></code></pre>
+<p>Final remarks: Nice challenge, I liked it. That’s it.</p>
+<p>Flag: <code>apoorvctf{Cr1m3_C0eff1c13nt_B3l0w_Thr3sh0ld}</code></p>
+<hr/>
+<h2 id="overall-remarks">Overall remarks</h2>
+<p>I really enjoyed solving these AI challenges, they were a lot of fun and I got many points from them. I would like to thank the author for creating such interesting and engaging AI challenges. However, the 2 other AI challenges are not really pure AI anymore because they are mixed with other categories like web and forensics so I could not solve them.
+But overall, it feels nice to be able to implement my main interest (AI) in a CTF and get to solve it. Thank you for reading my writeups, hope to see you in the next one!</p> </div>  </main> <footer data-astro-cid-sckkx6r4>
+&mdash;
+<a href="https://github.com/gopherhackumn/website" target="_blank" rel="noopener" data-astro-cid-sckkx6r4>Website source</a>
+&mdash;
+</footer> </div> </section> </body></html> 
