@@ -1,20 +1,100 @@
 {
   "years": [
     {
-      "place": 48,
-      "points": 48.306,
+      "place": 43,
+      "points": 79.789,
       "year": 2025,
-      "countryPlace": 7
+      "countryPlace": 5
     }
   ],
   "events": [
+    {
+      "id": "ctftime-2638",
+      "place": 23,
+      "name": "ApoorvCTF 2025",
+      "link": "https://ctftime.org/event/2638",
+      "points": 4766,
+      "ratingPoints": 0,
+      "start": "2025-02-28T15:30:00.000Z",
+      "end": "2025-03-02T15:30:00.000Z"
+    },
+    {
+      "id": "ctftime-2654",
+      "place": 55,
+      "name": "TRX CTF 2025",
+      "link": "https://ctftime.org/event/2654",
+      "points": 611,
+      "ratingPoints": 2.405,
+      "start": "2025-02-22T14:00:00.000Z",
+      "end": "2025-02-23T14:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2668",
+      "place": 125,
+      "name": "Kashi CTF 2025",
+      "link": "https://ctftime.org/event/2668",
+      "points": 1605,
+      "ratingPoints": 3.25,
+      "start": "2025-02-22T12:00:00.000Z",
+      "end": "2025-02-23T12:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2657",
+      "place": 29,
+      "name": "BroncoCTF 2025",
+      "link": "https://ctftime.org/event/2657",
+      "points": 6498,
+      "ratingPoints": 13.613,
+      "start": "2025-02-15T19:00:00.000Z",
+      "end": "2025-02-16T19:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2677",
+      "place": 151,
+      "name": "EHAX CTF 2025",
+      "link": "https://ctftime.org/event/2677",
+      "points": 587,
+      "ratingPoints": 1.474,
+      "start": "2025-02-15T16:00:00.000Z",
+      "end": "2025-02-16T16:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2592",
+      "place": 483,
+      "name": "LA CTF 2025",
+      "link": "https://ctftime.org/event/2592",
+      "points": 950,
+      "ratingPoints": 2.093,
+      "start": "2025-02-08T04:00:00.000Z",
+      "end": "2025-02-09T22:00:00.000Z"
+    },
+    {
+      "id": "ctftime-2608",
+      "place": 357,
+      "name": "Pragyan CTF 2025",
+      "link": "https://ctftime.org/event/2608",
+      "points": 10,
+      "ratingPoints": 0,
+      "start": "2025-02-07T12:30:00.000Z",
+      "end": "2025-02-08T18:30:00.000Z"
+    },
+    {
+      "id": "ctftime-2607",
+      "place": 30,
+      "name": "BITSCTF 2025",
+      "link": "https://ctftime.org/event/2607",
+      "points": 2569,
+      "ratingPoints": 6.44,
+      "start": "2025-02-07T12:00:00.000Z",
+      "end": "2025-02-09T12:00:00.000Z"
+    },
     {
       "id": "ctftime-2596",
       "place": 24,
       "name": "BearcatCTF 2025: World Tour",
       "link": "https://ctftime.org/event/2596",
       "points": 5500,
-      "ratingPoints": 0,
+      "ratingPoints": 11.553,
       "start": "2025-02-01T12:00:00.000Z",
       "end": "2025-02-02T12:00:00.000Z"
     },
@@ -54,7 +134,7 @@
       "name": "Codefest CTF 2025",
       "link": "https://ctftime.org/event/2648",
       "points": 900,
-      "ratingPoints": 4.167,
+      "ratingPoints": 4.186,
       "start": "2025-01-25T12:30:00.000Z",
       "end": "2025-01-27T00:30:00.000Z"
     },
