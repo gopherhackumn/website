@@ -37,6 +37,7 @@ General:
 
 Crypto:
 
+- [CryptoHack](https://cryptohack.org): CTF-style cryptography learning resource.
 - [CryptoPals](https://cryptopals.com): Hands-on introduction to cryptographic
   principles, including block / stream ciphers, randomness, Diffie-Hellman,
   RSA, and more
