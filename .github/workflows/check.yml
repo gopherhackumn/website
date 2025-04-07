@@ -17,6 +17,10 @@ jobs:
         run: bun pm migrate
       - name: install dependencies
         run: bun install --frozen-lockfile
+
+      - name: run scraping
+        run: bun run scripts/scrape.ts
+      
       - name: build
         run: bunx --bun astro build
 
