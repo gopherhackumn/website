@@ -1,0 +1,339 @@
+---
+title: "ApoorvCTF 2025: AI challenges (2/4)"
+date: 2025-03-04T08:57:16.633Z
+draft: false
+author: madarame
+tags: [ai]
+ctf_id: ctftime-2638
+---
+
+import css from "css/styles.css?url";
+import core_dump from "./core_dump.txt?url";
+import pokemon from "./HiTrainer_protected.pdf?url";
+import deepseek from "./Deepseek_paper.pdf?url";
+import fandp from "./functions_and_params.pdf?url";
+import grpo from "./grpo.png?url";
+
+<link rel="stylesheet" href={css}></link>
+
+### Challenge #1: Pokédex Neural Network
+
+### Points: [498]
+
+> Professor Oak, the renowned Pokémon researcher, has developed an advanced Pokédex upgrade that utilizes neural networks to classify Pokémon types. However, a mishap caused by an overexcited Pikachu has disrupted crucial data files, leaving the system in chaos. Now, trainers must step up to the challenge—training a CNN model to restore order and complete the classifier, ensuring the Pokédex can once again identify Pokémon with precision.
+
+> For further details, access the PDF. Heads up!! It's password protected. The password is the name of the pokemon Ash first captured. Good Luck Trainer !!!
+
+> `nc chals2.apoorvctf.xyz 4000`
+>
+> > GL3MON
+>
+> <div>
+>   <a href={pokemon}>HiTrainer_protected.pdf</a>
+> </div>
+> <div>
+>   <a href={core_dump}>core_dump.txt</a>
+> </div>
+
+### Solution
+
+To start of, I read the core dump file and saw a base64 encoded string. So I ran the following command to decode it.
+
+```bash
+$ base64 -d core_dump.txt
+```
+
+I got this output:
+
+```
+PokemonCNN
+├── Initial Input: (256, 256, 4)
+│
+├── Feature Extraction Layers
+│   ├── Conv2D (4->32)
+│   ├── BatchNorm2D
+│   ├── ReLU Activation
+│   ├── MaxPool2D(K Size = 3)
+│   ├── Dropout (p=0.25)
+│
+├── Deeper Processing
+│   ├── Conv2D(32->64)
+│   ├── BatchNorm2D (64)
+│   ├── ReLU Activation
+│   ├── MaxPool2D(K Size = 3)
+│   ├── Dropout (p=0.25)
+│
+├── More Feature Extraction
+│   ├── Conv2D(64->128)
+│   ├── BatchNorm2D
+│   ├── ReLU Activation
+│   ├── MaxPool2D(K Size = 3)
+│   ├── Dropout (p=0.25)
+│
+├── Fully Connected Layers
+│   ├── Flatten
+│   ├── Linear (512 Neurons)
+│   ├── BatchNorm1D
+│   ├── Dropout (p=0.5)
+│   ├── Linear
+│   ├── Softmax Activation
+│
+└── Output: 18 classes
+```
+
+Dind't expect the format to look this readable so huge W to the author to make it look good with this small extra touch.
+Anyways, back to the challenge. Initially, I thought I would just recreate the model from the architecture provided using PyTorch and nc to the server.
+
+```bash
+$ nc chals2.apoorvctf.xyz 4000
+```
+
+```
+🔥 Welcome, Pokémon Trainer! 🔥
+Professor Oak's Neural Network Challenge
+---------------------------------------
+A Pikachu's thundershock scrambled our data and we need your help to recover it!
+Help restore the Pokédex neural network by answering these questions!
+Watch out for Bidoofs! 🐹
+---------------------------------------
+
+Question 1/4: What is the seed for the given pytorch code?
+```
+
+At this point I would just craft a bruteforce script for the correct seed and got 6 as the correct answer.
+
+```
+Question 1/4: What is the seed for the given pytorch code?
+6
+6
+Correct! That's the seed value we used!
+Question 2/4: What's the number of input features of the first linear layer?
+```
+
+The second question is just asking for the number of input features of the first linear layer, which is (9 _ 9 _ 128) = 10368. This came from the final convolutional layer's output shape after three rounds of convolution and 3×3 max pooling, reducing the 256 × 256 input to 9 × 9 spatial dimensions with 128 feature maps, which is then flattened for the fully connected layer. If you are curious about how this number is calculated, I highly recommend you to take the Deep Learning Specilization course from [DeepLearning.AI](https://www.coursera.org/specializations/deep-learning/).
+
+```
+Question 2/4: What's the number of input features of the first linear layer?
+10368
+10368
+Correct! Our neural network processes 10,368 pixels from each Pokémon image!
+Question 3/4: Find the sum of values in the weights of the first row in the first linear layer.
+```
+
+For the next question, I recreated the model using PyTorch.
+
+```python
+class PokemonCNN(nn.Module):
+    def __init__(self):
+        super(PokemonCNN, self).__init__()
+
+        # === FEATURE EXTRACTION LAYERS ===
+        self.conv1 = nn.Conv2d(4, 32, kernel_size=2)
+        self.bn1 = nn.BatchNorm2d(32)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=2)
+        self.bn2 = nn.BatchNorm2d(64)
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=2)
+        self.bn3 = nn.BatchNorm2d(128)
+
+        # === MAXPOOLING AND DROPOUT ===
+        self.pool = nn.MaxPool2d(kernel_size=3)
+        self.dropout1 = nn.Dropout(0.25)
+        self.dropout2 = nn.Dropout(0.5)
+
+        # === FULLY CONNECTED LAYERS ===
+        self.flatten = nn.Flatten()
+        self.fc1 = nn.Linear(128 * 9 * 9, 512)
+        self.bn4 = nn.BatchNorm1d(512)
+        self.fc2 = nn.Linear(512, 18)
+
+    def forward(self, x):
+        # === FEATURE EXTRACTION ===
+        x = self.pool(pt.relu(self.bn1(self.conv1(x))))
+        x = self.dropout1(x)
+        x = self.pool(pt.relu(self.bn2(self.conv2(x))))
+        x = self.dropout1(x)
+        x = self.pool(pt.relu(self.bn3(self.conv3(x))))
+        x = self.dropout1(x)
+
+        # === FULLY CONNECTED LAYERS ===
+        x = self.flatten(x)
+        x = self.bn4(self.fc1(x))
+        x = self.dropout2(x)
+        x = self.fc2(x)
+        x = pt.softmax(x, dim=1)
+
+        return x
+```
+
+However, I kept getting the wrong answer for the third question with different values for the parameters of the kernel size, padding, etc because there were no clear answers for the parameters from the core dump. This is when I realized I totally forgot the PDF file 💀.
+So the password was the name of the pokemon Ash first captured, which is "caterpie". I opened the PDF file and found the link to a [Kaggle Notebook](https://www.kaggle.com/code/gl3mon/apoorvquestion).
+I cloned the notebook ([here](https://www.kaggle.com/code/aureliusnguyen/ai-pokedex/)) and completed the code. I still got the wrong answer for the third question so I opened a ticket and asked the author because I was sure I did everything correctly. Then the author told me that I should use the kernel size of 2 for the kernel size of the convolutional layers, which was kinda guessy. I eventually got the correct answer for the third question.
+
+```
+Question 3/4: Find the sum of values in the weights of the first row in the first linear layer.
+(This answer should be a decimal number with 4 decimal places X.XXXX!)
+-13.7474
+-13.7474
+Correct! Those weights help identify patterns in our neural network!
+Question 4/4: Enter the value of the weight matrix of the second linear layer, 2nd row, 15th column.
+(This answer should be a decimal number with 4 decimal places X.XXXX!)
+```
+
+I added some more code to the notebook to get the correct answer for the fourth question.
+
+```
+Question 4/4: Enter the value of the weight matrix of the second linear layer, 2nd row, 15th column.
+(This answer should be a decimal number with 4 decimal places X.XXXX!)
+-0.0283
+-0.0283
+Correct! That specific weight is crucial for our neural network's functionality!
+
+---------------------------------------
+🏆 CONGRATULATIONS! You answered all 4 questions correctly!
+Professor Oak's neural network is now fully operational!
+Your Pokédex has been upgraded to the Ultra Neural Classification System!
+Here's your reward: apoorvctf{Squ1rtl3_1_ch0053_y0u}
+```
+
+Final remarks: I was the third person (out of 12 solvers) to complete this challenge, and I could have easily first blood it if it was not for the guessy kernel size (or I should have opened the ticket earlier). Anyways, this is the first time I see an AI challenge in a CTF and it feels good that I was able to solve it and get a good amount of points.
+
+Flag: `apoorvctf{Squ1rtl3_1_ch0053_y0u}`
+
+---
+
+### Challenge #2: Crime Coefficient GRPO’s Hidden Verdict
+
+### Points: [500]
+
+> In a dystopian future where intelligence is the ultimate currency, the Grand Council of DeepSeek operates in secrecy, using advanced AI to shape the fate of humanity. Hidden within their classified manuscript—the DeepSeek R1 research paper—lies a value that dictates the first step of enlightenment: GRPO from the first iteration.
+
+> Much like the Sibyl System, which assigns a Psycho-Pass score to every citizen, GRPO is the foundation of reinforcement learning without a single critic, relying instead on collective wisdom. To uncover this truth, you must become an Inspector of Knowledge—an enforcer of AI mastery.
+
+> Your mission:
+>
+> Read the sacred manuscript (DeepSeek R1 research paper). Analyze its mathematical foundations. Extract the first recorded GRPO value from Iteration 1. Only those with a Crime Coefficient of Pure Deduction may unlock the flag and ascend to the ranks of the Grand Council.
+
+> `nc chals2.apoorvctf.xyz 5000`
+>
+> > GL3MON
+>
+> <div>
+>   <a href={deepseek}>DeepSeek R1 research paper</a>
+> </div>
+> <div>
+>   <a href={fandp}>functions_and_params.pdf</a>
+> </div>
+
+### Solution
+
+For this challenge, we were given 2 files:
+
+- `DeepSeek R1 research paper`
+- `functions_and_params.pdf`
+
+The first file is the research paper and the second file contains the functions and parameters for the model.
+
+I started by reading the research paper and found the formula for GRPO.
+
+![grpo](grpo.png)
+
+I just put the corresponding values in the formula and got the correct answer honestly 💀. Here's the code I used to get the answer.
+
+```python
+import numpy as np
+
+# Given reward values
+rewards = np.array([1.27, 1.3, 0.6, 0.7])
+
+# Compute mean and standard deviation
+mean_reward = np.mean(rewards)  # 0.9675
+std_reward = np.std(rewards)  # 0.3087
+
+# Compute A_i values
+A_values = (rewards - mean_reward) / std_reward
+print(A_values)
+# A_values = [ 0.94638171  1.04023775 -1.14973646 -0.836883  ]
+
+
+# Define the policy functions
+def policy_current(x):
+    return (x**1.5) / np.sqrt(5)
+
+
+def policy_old(x):
+    return np.sqrt(x / 7)
+
+
+def policy_ref(x):
+    return (x**0.3) / 10
+
+
+# Compute KL divergence (with respect to reference policy)
+def kl_divergence(x_values):
+    kl_values = []
+    for x in x_values:
+        pi_theta = policy_current(x)
+        pi_ref = policy_ref(x)
+
+        ratio = pi_ref / pi_theta
+        # KL(π_theta || π_ref) = π_ref/π_theta − log(π_ref/π_theta) − 1
+        kl = ratio - np.log(ratio) - 1
+        kl_values.append(kl)
+    return kl_values
+
+
+# x-values used in iteration
+x_values = np.array([0.6, 0.5, 0.2, 0.5])
+
+# KL results (averaged across these x-values)
+kl_results = kl_divergence(x_values)
+print(kl_results)
+
+# Hyperparameters
+epsilon = 0.5
+beta = 0.2
+G = len(A_values)  # 4 samples
+print(G)
+
+
+J_GRPO = 0.0
+for i in range(1):
+    # ratio = π_current / π_old
+    ratio = policy_current(x_values[i]) / policy_old(x_values[i])
+    unclipped = ratio * A_values[i]
+    clipped = np.clip(ratio, 1 - epsilon, 1 + epsilon) * A_values[i]
+
+    # Take the more conservative objective (min)
+    J_GRPO += min(unclipped, clipped)
+    J_GRPO -= beta * kl_results[i]
+
+J_GRPO *= 1 / G
+
+print(f"The GRPO objective value for the first iteration is: {J_GRPO:.5f}")
+```
+
+```bash
+$ nc chals2.apoorvctf.xyz 5000
+```
+
+```
+QUESTION: What is the value of the GRPO function considering only the first iteration of it?
+(The answer should be a decimal number, precise to 4 decimal places)
+0.1530
+0.1530
+
+⭐ CORRECT! ⭐ You have discovered the sacred value of GRPO at its first iteration!
+The Grand Council of DeepSeek acknowledges your wisdom and grants you access to their hidden knowledge.
+Here is the secret you seek: apoorvctf{Cr1m3_C0eff1c13nt_B3l0w_Thr3sh0ld}
+```
+
+Final remarks: Nice challenge, I liked it. That's it.
+
+Flag: `apoorvctf{Cr1m3_C0eff1c13nt_B3l0w_Thr3sh0ld}`
+
+---
+
+## Overall remarks
+
+I really enjoyed solving these AI challenges, they were a lot of fun and I got many points from them. I would like to thank the author for creating such interesting and engaging AI challenges. However, the 2 other AI challenges are not really pure AI anymore because they are mixed with other categories like web and forensics so I could not solve them.
+But overall, it feels nice to be able to implement my main interest (AI) in a CTF and get to solve it. Thank you for reading my writeups, hope to see you in the next one!

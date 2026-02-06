@@ -1,5 +1,8 @@
 name: "Deploy website"
-on: [push]
+on:
+  push:
+  schedule:
+  - cron: "0 12 * * 4" # weekly on thursday
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,8 +13,14 @@ jobs:
           bun-version: latest
       - name: print bun version
         run: bun --version
+      - name: import lockfile
+        run: bun pm migrate
       - name: install dependencies
         run: bun install --frozen-lockfile
+
+      - name: run scraping
+        run: bun run scripts/scrape.ts
+      
       - name: build
         run: bunx --bun astro build
 
