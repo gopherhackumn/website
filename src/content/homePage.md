@@ -13,8 +13,7 @@ more!
 
 In-person club meetings:
 
-- When: Every other Friday, 5pm - 6pm
-  - The Fridays are: Jan 31, Feb 14, Feb 28, Mar 14, Mar 28, Apr 11, Apr 25, May 9
+- When: Thursdays, 5:30 PM to 6:30 PM
 - Where: Keller 3-125
 
 We also meet on Discord in [`#ctf-general`](https://discord.gg/zM8Uf9CTXx) every weekend to participate in CTF!
