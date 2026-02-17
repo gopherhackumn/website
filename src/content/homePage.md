@@ -11,12 +11,12 @@ These competitions test a variety of skills including binary exploitation,
 cryptography, cyber forensics, OSINT, reverse engineering, web exploitation, and
 more!
 
-In-person club meetings:
+In-person club meetings (As of Spring 2026):
 
 - When: Thursdays, 5:30 PM to 6:30 PM
 - Where: Keller 3-125
 
-We also meet on Discord in [`#ctf-general`](https://discord.gg/zM8Uf9CTXx) every weekend to participate in CTF!
+We also meet on Discord in [`#ctf-general`](https://discord.gg/XXJpShZ762) every weekend to participate in CTF!
 
 Socials:
 
@@ -26,4 +26,4 @@ Socials:
 - Instagram: [gopherhack](https://www.instagram.com/gopherhack)
 - Discord: [GopherHack][discord]
 
-[discord]: https://discord.gg/GSmx6FQFfT
+[discord]: https://discord.gg/XXJpShZ762
