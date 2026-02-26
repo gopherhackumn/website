@@ -3,22 +3,17 @@ current:
     position: President
     x500: fares011
 
-  - name: Michael Zhang
-    authorName: michael
-    position: Treasurer
-    x500: zhan4854
-
   - name: Keegan Volk
-    position: Security Researcher
+    position: Vice President
     x500: volk0171
 
-  - name: Andrew O'Konski-Magnuson
+  - name: Braeden Bucher
     position: Security Researcher
-    x500: okons006
+    x500: buche167
 
-  - name: Alex Tatley
-    position: Security Researcher
-    x500: tatle010
+  - name: Jordan McVay
+    position: Treasurer
+    x500: mcvay036
 
   - name: Sophie Paruzynski
     position: Officer
@@ -32,9 +27,21 @@ alumni:
     position: President
     x500: gause030
 
+  - name: Michael Zhang
+    position: Treasurer
+    x500: zhan4854
+
   - name: Gustavo Sakamoto de Toledo
     position: Vice President
     x500: detol001
+
+  - name: Andrew O'Konski-Magnuson
+    position: Security Researcher
+    x500: okons006
+
+  - name: Alex Tatley
+    position: Security Researcher
+    x500: tatle010
 
   - name: Jaden Rodriguez
     position: President
