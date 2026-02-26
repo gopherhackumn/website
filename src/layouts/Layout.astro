@@ -115,12 +115,19 @@ import "@fontsource-variable/public-sans";
       padding-bottom: 2.5rem;
       padding-top: 2.5rem;
 
-      #logo {
-        font-size: 2rem;
-        color: #ffde7a;
-        text-decoration: none;
-        font-family: "Monaspace Neon", monospace;
-      }
+    #logo {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    #logo img {
+      display: block;
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+    }
+
       @media (max-width: 640px) {
         flex-direction: column;
       }
